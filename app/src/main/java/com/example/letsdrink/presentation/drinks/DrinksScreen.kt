@@ -1,6 +1,5 @@
 package com.example.letsdrink.presentation.drinks
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,7 +16,6 @@ import com.example.letsdrink.core.commons.TopBar
 import com.example.letsdrink.core.components.DrinkCard
 import com.example.letsdrink.domain.model.DrinksModel
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DrinksScreen() {

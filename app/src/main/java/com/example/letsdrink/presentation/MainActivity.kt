@@ -1,4 +1,4 @@
-package com.example.letsdrink.ui
+package com.example.letsdrink.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
