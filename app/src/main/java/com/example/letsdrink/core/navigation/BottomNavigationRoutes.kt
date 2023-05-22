@@ -1,26 +1,24 @@
 package com.example.letsdrink.core.navigation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.ui.graphics.vector.ImageVector
+import com.example.letsdrink.R
 
 sealed class BottomNavigationScreens(
     val route: String,
     val title: String,
-    val icon: ImageVector
+    val icon: Int
 ) {
     object DrinksScreen : BottomNavigationScreens(
-        route = "DrinksScreen", title = "Drinks",
-        icon = Icons.Default.Home
+        route = RoutesNavigation.DRINKS_SCREEN, title = "Bebidas",
+        icon = R.drawable.ic_drink
     )
 
-    object Screen2 : BottomNavigationScreens(
-        route = "screen2", title = "Home",
-        icon = Icons.Default.Home
+    object FavoriteScreen : BottomNavigationScreens(
+        route = RoutesNavigation.FAVORITE_SCREEN, title = "Favoritos",
+        icon = R.drawable.ic_favorite
     )
 
     object Screen3 : BottomNavigationScreens(
         route = "screen3", title = "Home",
-        icon = Icons.Default.Home
+        icon = R.drawable.ic_drink
     )
 }

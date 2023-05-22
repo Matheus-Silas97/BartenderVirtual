@@ -1,4 +1,4 @@
-package com.example.letsdrink.presentation.bottom
+package com.example.letsdrink.presentation.main
 
 import android.annotation.SuppressLint
 import androidx.compose.material3.ExperimentalMaterial3Api

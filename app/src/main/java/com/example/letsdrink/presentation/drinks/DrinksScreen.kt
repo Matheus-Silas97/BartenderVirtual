@@ -12,13 +12,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.example.letsdrink.R
 import com.example.letsdrink.core.commons.TopBar
 import com.example.letsdrink.core.components.DrinkCard
+import com.example.letsdrink.core.navigation.RoutesNavigation
 import com.example.letsdrink.domain.model.DrinksModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DrinksScreen() {
+fun DrinksScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopBar(
@@ -34,17 +37,13 @@ fun DrinksScreen() {
                 val lazyState = rememberLazyListState()
                 LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
                     items(items = listDrinksMock()) { drink ->
-                        DrinkCard(drink)
+                        DrinkCard(drink) {
+                            navController.navigate(route = RoutesNavigation.DETAILS_DRINKS_SCREEN)
+                        }
                     }
                 }
             }
         })
-}
-
-@Composable
-@Preview
-fun DrinksScreenPreview() {
-    DrinksScreen()
 }
 
 private fun listDrinksMock(): List<DrinksModel> {

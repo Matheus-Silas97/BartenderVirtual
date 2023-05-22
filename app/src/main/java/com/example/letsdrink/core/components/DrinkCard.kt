@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,17 +24,20 @@ import androidx.compose.ui.unit.dp
 import com.example.letsdrink.core.commons.ImageUrl
 import com.example.letsdrink.domain.model.DrinksModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DrinkCard(model: DrinksModel) {
+fun DrinkCard(model: DrinksModel, onClick: () -> Unit) {
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp).border(
+            .padding(8.dp)
+            .border(
                 width = 0.5.dp,
                 color = Color.Black,
                 shape = RoundedCornerShape(8.dp)
-            )
+            ),
+        onClick = { onClick() }
     ) {
         Row(
             modifier = Modifier
@@ -41,14 +45,16 @@ fun DrinkCard(model: DrinksModel) {
                 .background(
                     color = Color.White,
                     shape = RoundedCornerShape(8.dp)
-                ).padding(all= 8.dp)
+                )
+                .padding(all = 8.dp)
 
         ) {
             ImageUrl(
                 url = model.image,
                 modifier = Modifier
                     .height(50.dp)
-                    .width(50.dp).align(Alignment.CenterVertically)
+                    .width(50.dp)
+                    .align(Alignment.CenterVertically)
             )
 
             Text(
@@ -56,7 +62,9 @@ fun DrinkCard(model: DrinksModel) {
                 color = Color.Black,
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(start = 8.dp).align(Alignment.CenterVertically)
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .align(Alignment.CenterVertically)
             )
         }
     }
@@ -65,5 +73,5 @@ fun DrinkCard(model: DrinksModel) {
 @Preview
 @Composable
 fun CardPreview() {
-    DrinkCard(model = DrinksModel(1, "teste", ""))
+    DrinkCard(model = DrinksModel(1, "teste", ""), {})
 }

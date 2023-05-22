@@ -8,7 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.letsdrink.core.theme.LetsDrinkTheme
-import com.example.letsdrink.presentation.bottom.MainScreen
+import com.example.letsdrink.presentation.main.MainScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

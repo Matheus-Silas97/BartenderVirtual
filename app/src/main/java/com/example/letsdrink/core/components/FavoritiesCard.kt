@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,13 +20,15 @@ import androidx.compose.ui.unit.dp
 import com.example.letsdrink.core.commons.ImageUrl
 import com.example.letsdrink.domain.model.FavoriteModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FavoritiesCard(model: FavoriteModel) {
+fun FavoriteCard(model: FavoriteModel, onClick: () -> Unit) {
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(8.dp),
+        onClick = { onClick()}
     ) {
         Row(
             modifier = Modifier
