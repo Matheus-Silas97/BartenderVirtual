@@ -5,7 +5,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
-import com.example.letsdrink.core.components.BottomBar
+import com.example.letsdrink.core.components.BottomBarComponent
 import com.example.letsdrink.core.navigation.BottomNavigationNavGraph
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -14,7 +14,7 @@ import com.example.letsdrink.core.navigation.BottomNavigationNavGraph
 fun MainScreen(){
     val navController = rememberNavController()
     Scaffold(
-        bottomBar = { BottomBar(navController = navController) }
+        bottomBar = { BottomBarComponent(navController = navController) }
     ) {
         BottomNavigationNavGraph(navController = navController)
     }

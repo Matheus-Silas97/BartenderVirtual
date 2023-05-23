@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsScreen
 import com.example.letsdrink.presentation.drinks.DrinksScreen
-import com.example.letsdrink.presentation.favorities.FavoriteDrinks
+import com.example.letsdrink.presentation.favorite.FavoriteDrinks
 import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsScreen
 
 @Composable
@@ -18,12 +18,7 @@ fun BottomNavigationNavGraph(navController: NavHostController) {
         startDestination = BottomNavigationScreens.DrinksScreen.route
     ) {
         composable(route = BottomNavigationScreens.DrinksScreen.route) { DrinksScreen(navController) }
-        composable(route = BottomNavigationScreens.FavoriteScreen.route) {
-            FavoriteDrinks(
-                navController
-            )
-        }
-        composable(route = BottomNavigationScreens.Screen3.route) { DrinksScreen(navController) }
+        composable(route = BottomNavigationScreens.FavoriteScreen.route) { FavoriteDrinks(navController) }
 
         composable(
             route = "${RoutesNavigation.DETAILS_DRINKS_SCREEN}/drink_id",

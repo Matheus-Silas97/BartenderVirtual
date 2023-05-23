@@ -16,9 +16,4 @@ sealed class BottomNavigationScreens(
         route = RoutesNavigation.FAVORITE_SCREEN, title = "Favoritos",
         icon = R.drawable.ic_favorite
     )
-
-    object Screen3 : BottomNavigationScreens(
-        route = "screen3", title = "Home",
-        icon = R.drawable.ic_drink
-    )
 }

@@ -38,7 +38,7 @@ fun DrinksScreen(navController: NavHostController) {
                 LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
                     items(items = listDrinksMock()) { drink ->
                         DrinkCard(drink) {
-                            navController.navigate(route = RoutesNavigation.DETAILS_DRINKS_SCREEN)
+                            navController.navigate(route = "${RoutesNavigation.DETAILS_DRINKS_SCREEN}/${drink.id}")
                         }
                     }
                 }

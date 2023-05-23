@@ -14,7 +14,7 @@ import androidx.navigation.NavHostController
 import com.example.letsdrink.core.navigation.BottomNavigationScreens
 
 @Composable
-fun BottomBar(navController: NavHostController) {
+fun BottomBarComponent(navController: NavHostController) {
     val screens = listOf(
         BottomNavigationScreens.DrinksScreen,
         BottomNavigationScreens.FavoriteScreen,

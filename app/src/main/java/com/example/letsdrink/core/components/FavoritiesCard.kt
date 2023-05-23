@@ -1,6 +1,7 @@
 package com.example.letsdrink.core.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -9,26 +10,29 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.letsdrink.R
 import com.example.letsdrink.core.commons.ImageUrl
 import com.example.letsdrink.domain.model.FavoriteModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FavoriteCard(model: FavoriteModel, onClick: () -> Unit) {
+fun FavoriteCard(model: FavoriteModel, onClick: () -> Unit, remove: (id: Long) -> Unit) {
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        onClick = { onClick()}
+        onClick = { onClick() }
     ) {
         Row(
             modifier = Modifier
@@ -56,6 +60,14 @@ fun FavoriteCard(model: FavoriteModel, onClick: () -> Unit) {
                 modifier = Modifier
                     .padding(start = 8.dp)
                     .align(Alignment.CenterVertically)
+            )
+
+            Icon(
+                painter = painterResource(id = R.drawable.ic_favorite),
+                contentDescription = "favorite icon",
+                modifier = Modifier
+                    .clickable { remove(model.id) }
+//                    .align(alignment = Alignment.CenterEnd)
             )
         }
     }

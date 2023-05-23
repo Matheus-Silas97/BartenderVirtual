@@ -1,4 +1,4 @@
-package com.example.letsdrink.presentation.favorities
+package com.example.letsdrink.presentation.favorite
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,13 +16,18 @@ import com.example.letsdrink.domain.model.FavoriteModel
 @Composable
 fun FavoriteDrinks(navController: NavHostController) {
     ScaffoldCustom(titlePage = "Favoritos", showNavigationIcon = true, onBackPressedEvent = {}) {
-        LazyColumn(modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp)) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)
+        ) {
             items(listOf<FavoriteModel>()) { favorite ->
-                FavoriteCard(favorite){
-                    navController.navigate(route = RoutesNavigation.DETAILS_DRINKS_SCREEN)
-                }
+                FavoriteCard(
+                    model = favorite,
+                    onClick = { navController.navigate(route = "${RoutesNavigation.DETAILS_DRINKS_SCREEN}/${favorite.id}") },
+                    remove = {
+                        //TODO
+                    })
             }
         }
     }

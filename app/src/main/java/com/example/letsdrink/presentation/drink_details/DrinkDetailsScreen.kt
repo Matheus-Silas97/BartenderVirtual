@@ -44,7 +44,9 @@ fun DrinkDetailsScreen(drinkId: Long, navController: NavHostController) {
             Text(text = "Ingredientes", style = Typography.titleMedium)
             LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
                 items(items = drink.ingredients) { ingredients ->
-                    IngredientsCard(ingredients)
+                    IngredientsCard(ingredients) {
+                        //Todo
+                    }
                 }
             }
 

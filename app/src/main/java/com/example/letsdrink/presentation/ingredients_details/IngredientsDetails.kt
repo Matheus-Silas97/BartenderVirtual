@@ -52,7 +52,7 @@ fun IngredientsDetailsScreen(ingredientId: Long, navController: NavHostControlle
             LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
                 items(items = ingredientInfo.relatedDrinks) { drinks ->
                     DrinkCard(drinks) {
-                        navController.navigate(route = RoutesNavigation.DETAILS_DRINKS_SCREEN)
+                        navController.navigate(route = "${RoutesNavigation.DETAILS_DRINKS_SCREEN}/${drinks.id}")
                     }
                 }
             }
