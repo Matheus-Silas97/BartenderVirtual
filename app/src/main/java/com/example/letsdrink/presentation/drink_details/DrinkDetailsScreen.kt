@@ -9,39 +9,40 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.letsdrink.core.commons.ImageUrl
 import com.example.letsdrink.core.commons.ScaffoldCustom
+import com.example.letsdrink.core.commons.TextSubTitle
+import com.example.letsdrink.core.commons.TextTitle
 import com.example.letsdrink.core.components.IngredientsCard
-import com.example.letsdrink.core.theme.Typography
-import com.example.letsdrink.domain.model.DrinkDetailsModel
+import com.example.letsdrink.domain.model.DrinkDetails
+import org.koin.androidx.compose.getViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DrinkDetailsScreen(drinkId: Long, navController: NavHostController) {
+fun DrinkDetailsScreen(drinkId: Long, navController: NavHostController, viewModel: DrinkDetailsViewModel = getViewModel()) {
 
-    val drink = DrinkDetailsModel()
+    val drink = DrinkDetails()
     val lazyState = rememberLazyListState()
 
-    ScaffoldCustom(titlePage = drink.name, onBackPressedEvent = {}) {
+    ScaffoldCustom(titlePage = drink.name, onBackPressedEvent = { navController.popBackStack()}, showNavigationIcon = true) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxSize().padding(8.dp)
         ) {
             ImageUrl(
                 url = "", modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp)
             )
+            TextTitle(text = drink.name)
 
-            Text(text = drink.name, style = Typography.titleLarge)
+            TextSubTitle(text = "Ingredientes")
 
-            Text(text = "Ingredientes", style = Typography.titleMedium)
             LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
                 items(items = drink.ingredients) { ingredients ->
                     IngredientsCard(ingredients) {
@@ -50,7 +51,7 @@ fun DrinkDetailsScreen(drinkId: Long, navController: NavHostController) {
                 }
             }
 
-            Text(text = "Modo de preparo", style = Typography.titleMedium)
+            TextSubTitle(text = "Modo de preparo")
             LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
                 items(items = drink.modePrepare) { step ->
 //                    IngredientsCard(step)

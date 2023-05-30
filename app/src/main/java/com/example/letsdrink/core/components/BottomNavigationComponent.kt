@@ -17,8 +17,7 @@ import com.example.letsdrink.core.navigation.BottomNavigationScreens
 fun BottomBarComponent(navController: NavHostController) {
     val screens = listOf(
         BottomNavigationScreens.DrinksScreen,
-        BottomNavigationScreens.FavoriteScreen,
-        BottomNavigationScreens.Screen3,
+        BottomNavigationScreens.FavoriteScreen
     )
     var selectedItem by remember { mutableStateOf(0) }
 

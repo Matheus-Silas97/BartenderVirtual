@@ -10,18 +10,17 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.letsdrink.R
 import com.example.letsdrink.core.commons.TopBar
 import com.example.letsdrink.core.components.DrinkCard
 import com.example.letsdrink.core.navigation.RoutesNavigation
-import com.example.letsdrink.domain.model.DrinksModel
+import com.example.letsdrink.domain.model.Drinks
+import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DrinksScreen(navController: NavHostController) {
+fun DrinksScreen(navController: NavHostController, viewModel: DrinksViewModel = getViewModel()) {
     Scaffold(
         topBar = {
             TopBar(
@@ -46,15 +45,15 @@ fun DrinksScreen(navController: NavHostController) {
         })
 }
 
-private fun listDrinksMock(): List<DrinksModel> {
+private fun listDrinksMock(): List<Drinks> {
     val link =
         "https://w7.pngwing.com/pngs/388/999/png-transparent-caipirinha-caipiroska-cocktail-cachaca-brazilian-cuisine-cocktail-cocktail-non-alcoholic-beverage-lime-juice-thumbnail.png"
     return listOf(
-        DrinksModel(1, "Caipirinha", image = link),
-        DrinksModel(1, "Caipirinha", image = link),
-        DrinksModel(1, "Caipirinha", image = link),
-        DrinksModel(1, "Caipirinha", image = link),
-        DrinksModel(1, "Caipirinha", image = link)
+        Drinks(1, "Caipirinha", image = link),
+        Drinks(1, "Caipirinha", image = link),
+        Drinks(1, "Caipirinha", image = link),
+        Drinks(1, "Caipirinha", image = link),
+        Drinks(1, "Caipirinha", image = link)
     )
 }
 

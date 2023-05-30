@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 fun ScaffoldCustom(
     titlePage: String = "",
     showNavigationIcon: Boolean = false,
-    onBackPressedEvent: () -> Unit,
+    onBackPressedEvent: () -> Unit = {},
     contentComponent: @Composable (modifier: Modifier) -> Unit
 ) {
     Scaffold(

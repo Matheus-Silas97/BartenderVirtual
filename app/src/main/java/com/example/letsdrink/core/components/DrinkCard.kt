@@ -3,8 +3,6 @@ package com.example.letsdrink.core.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -12,8 +10,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,11 +18,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.letsdrink.core.commons.ImageUrl
-import com.example.letsdrink.domain.model.DrinksModel
+import com.example.letsdrink.core.commons.TextNormal
+import com.example.letsdrink.domain.model.Drinks
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DrinkCard(model: DrinksModel, onClick: () -> Unit) {
+fun DrinkCard(model: Drinks, onClick: () -> Unit) {
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
@@ -57,12 +54,8 @@ fun DrinkCard(model: DrinksModel, onClick: () -> Unit) {
                     .align(Alignment.CenterVertically)
             )
 
-            Text(
-                text = model.name,
-                color = Color.Black,
-                style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
+            TextNormal(
+                text = model.name, textAlign = TextAlign.Center, modifier = Modifier
                     .padding(start = 8.dp)
                     .align(Alignment.CenterVertically)
             )
@@ -73,5 +66,5 @@ fun DrinkCard(model: DrinksModel, onClick: () -> Unit) {
 @Preview
 @Composable
 fun CardPreview() {
-    DrinkCard(model = DrinksModel(1, "teste", ""), {})
+    DrinkCard(model = Drinks(1, "teste", ""), {})
 }

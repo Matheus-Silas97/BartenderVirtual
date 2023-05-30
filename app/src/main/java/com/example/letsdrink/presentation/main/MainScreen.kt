@@ -6,7 +6,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
 import com.example.letsdrink.core.components.BottomBarComponent
-import com.example.letsdrink.core.navigation.BottomNavigationNavGraph
+import com.example.letsdrink.core.navigation.NavigationNavGraph
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -16,6 +16,6 @@ fun MainScreen(){
     Scaffold(
         bottomBar = { BottomBarComponent(navController = navController) }
     ) {
-        BottomNavigationNavGraph(navController = navController)
+        NavigationNavGraph(navController = navController)
     }
 }

@@ -15,20 +15,22 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.letsdrink.core.commons.ImageUrl
 import com.example.letsdrink.core.commons.ScaffoldCustom
+import com.example.letsdrink.core.commons.TextSubTitle
+import com.example.letsdrink.core.commons.TextTitle
 import com.example.letsdrink.core.components.DrinkCard
-import com.example.letsdrink.core.components.IngredientsCard
 import com.example.letsdrink.core.navigation.RoutesNavigation
 import com.example.letsdrink.core.theme.Typography
-import com.example.letsdrink.domain.model.IngredientsModel
+import com.example.letsdrink.domain.model.Ingredients
+import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun IngredientsDetailsScreen(ingredientId: Long, navController: NavHostController) {
+fun IngredientsDetailsScreen(ingredientId: Long, navController: NavHostController, viewModel: IngredientsDetailsViewModel = getViewModel()) {
     val lazyState = rememberLazyListState()
-    val ingredientInfo = IngredientsModel()
+    val ingredientInfo = Ingredients()
 
     ScaffoldCustom(
         titlePage = ingredientInfo.name,
-        onBackPressedEvent = {},
+        onBackPressedEvent = { navController.popBackStack() },
         showNavigationIcon = true
     ) {
         Column(
@@ -41,14 +43,12 @@ fun IngredientsDetailsScreen(ingredientId: Long, navController: NavHostControlle
                     .height(100.dp)
             )
 
-            Text(text = ingredientInfo.name, style = Typography.titleLarge)
+            TextTitle(text = ingredientInfo.name)
 
-            Text(text = "Descrição", style = Typography.titleMedium)
-
+            TextSubTitle(text = "Descrição")
             Text(text = ingredientInfo.description, style = Typography.bodyMedium)
 
-            Text(text = "Drinks que utilizam esses ingredientes", style = Typography.titleMedium)
-
+            TextSubTitle(text = "Drinks que utilizam esses ingredientes")
             LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
                 items(items = ingredientInfo.relatedDrinks) { drinks ->
                     DrinkCard(drinks) {

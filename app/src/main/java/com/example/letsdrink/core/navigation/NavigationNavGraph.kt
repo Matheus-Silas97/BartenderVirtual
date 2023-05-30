@@ -12,24 +12,31 @@ import com.example.letsdrink.presentation.favorite.FavoriteDrinks
 import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsScreen
 
 @Composable
-fun BottomNavigationNavGraph(navController: NavHostController) {
+fun NavigationNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
         startDestination = BottomNavigationScreens.DrinksScreen.route
     ) {
         composable(route = BottomNavigationScreens.DrinksScreen.route) { DrinksScreen(navController) }
-        composable(route = BottomNavigationScreens.FavoriteScreen.route) { FavoriteDrinks(navController) }
+        composable(route = BottomNavigationScreens.FavoriteScreen.route) {
+            FavoriteDrinks(
+                navController
+            )
+        }
 
         composable(
-            route = "${RoutesNavigation.DETAILS_DRINKS_SCREEN}/drink_id",
-            arguments = listOf(navArgument("drink_id") { type = NavType.StringType })
+            route = "${RoutesNavigation.DETAILS_DRINKS_SCREEN}/{drink_id}",
+            arguments = listOf(navArgument("drink_id") { type = NavType.LongType })
         ) { backStackEntry ->
             DrinkDetailsScreen(
                 drinkId = backStackEntry.arguments?.getLong("drink_id") ?: 0L,
                 navController = navController
             )
         }
-        composable(route = "${RoutesNavigation.INGREDIENTS_DETAILS_SCREEN}/ingredient_id") { backStackEntry ->
+        composable(route = "${RoutesNavigation.INGREDIENTS_DETAILS_SCREEN}/{ingredient_id}",
+            arguments = listOf(
+                navArgument("ingredient_id") { type = NavType.LongType }
+            )) { backStackEntry ->
             IngredientsDetailsScreen(
                 ingredientId = backStackEntry.arguments?.getLong("ingredient_id") ?: 0L,
                 navController = navController
