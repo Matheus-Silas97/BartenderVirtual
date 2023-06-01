@@ -24,13 +24,18 @@ import com.example.letsdrink.domain.model.Ingredients
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun IngredientsDetailsScreen(ingredientId: Long, navController: NavHostController, viewModel: IngredientsDetailsViewModel = getViewModel()) {
+fun IngredientsDetailsScreen(
+    ingredientId: Long,
+    backStack: () -> Unit,
+    goToDetailsDrinkScreen: (id: Long) -> Unit,
+    viewModel: IngredientsDetailsViewModel = getViewModel()
+) {
     val lazyState = rememberLazyListState()
     val ingredientInfo = Ingredients()
 
     ScaffoldCustom(
         titlePage = ingredientInfo.name,
-        onBackPressedEvent = { navController.popBackStack() },
+        onBackPressedEvent = { backStack() },
         showNavigationIcon = true
     ) {
         Column(
@@ -50,9 +55,9 @@ fun IngredientsDetailsScreen(ingredientId: Long, navController: NavHostControlle
 
             TextSubTitle(text = "Drinks que utilizam esses ingredientes")
             LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
-                items(items = ingredientInfo.relatedDrinks) { drinks ->
-                    DrinkCard(drinks) {
-                        navController.navigate(route = "${RoutesNavigation.DETAILS_DRINKS_SCREEN}/${drinks.id}")
+                items(items = ingredientInfo.relatedDrinks) { drink ->
+                    DrinkCard(model = drink) {
+                        goToDetailsDrinkScreen(drink.id ?: 0L)
                     }
                 }
             }

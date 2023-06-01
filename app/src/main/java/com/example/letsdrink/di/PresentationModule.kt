@@ -9,9 +9,9 @@ import org.koin.dsl.module
 
 val presentationModule = module {
 
-    viewModel { DrinkDetailsViewModel() }
+    viewModel { DrinkDetailsViewModel(drinkUseCase = get()) }
 
-    viewModel { DrinksViewModel() }
+    viewModel { DrinksViewModel(drinkUseCase = get()) }
 
     viewModel { FavoriteViewModel() }
 

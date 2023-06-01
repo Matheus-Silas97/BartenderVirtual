@@ -20,7 +20,7 @@ import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DrinksScreen(navController: NavHostController, viewModel: DrinksViewModel = getViewModel()) {
+fun DrinksScreen(goToDetailsDrinksScreen: (id: Long) -> Unit, viewModel: DrinksViewModel = getViewModel()) {
     Scaffold(
         topBar = {
             TopBar(
@@ -37,7 +37,7 @@ fun DrinksScreen(navController: NavHostController, viewModel: DrinksViewModel = 
                 LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
                     items(items = listDrinksMock()) { drink ->
                         DrinkCard(drink) {
-                            navController.navigate(route = "${RoutesNavigation.DETAILS_DRINKS_SCREEN}/${drink.id}")
+                           goToDetailsDrinksScreen(drink.id?: 0L)
                         }
                     }
                 }

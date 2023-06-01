@@ -15,7 +15,7 @@ import com.example.letsdrink.domain.model.Favorite
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun FavoriteDrinks(navController: NavHostController, viewModel: FavoriteViewModel = getViewModel()) {
+fun FavoriteDrinks(goToDetailsDrinkScreen: (id: Long)-> Unit, viewModel: FavoriteViewModel = getViewModel()) {
     ScaffoldCustom(titlePage = "Favoritos") {
         LazyColumn(
             modifier = Modifier
@@ -25,7 +25,7 @@ fun FavoriteDrinks(navController: NavHostController, viewModel: FavoriteViewMode
             items(listOf<Favorite>()) { favorite ->
                 FavoriteCard(
                     model = favorite,
-                    onClick = { navController.navigate(route = "${RoutesNavigation.DETAILS_DRINKS_SCREEN}/${favorite.id}") },
+                    onClick = { goToDetailsDrinkScreen(favorite.id) },
                     remove = {
                         //TODO
                     })

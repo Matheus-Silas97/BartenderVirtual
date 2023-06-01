@@ -24,15 +24,24 @@ import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DrinkDetailsScreen(drinkId: Long, navController: NavHostController, viewModel: DrinkDetailsViewModel = getViewModel()) {
+fun DrinkDetailsScreen(
+    drinkId: Long,
+    backStack: () -> Unit,
+    viewModel: DrinkDetailsViewModel = getViewModel()
+) {
 
     val drink = DrinkDetails()
     val lazyState = rememberLazyListState()
 
-    ScaffoldCustom(titlePage = drink.name, onBackPressedEvent = { navController.popBackStack()}, showNavigationIcon = true) {
+    ScaffoldCustom(
+        titlePage = drink.name,
+        onBackPressedEvent = { backStack() },
+        showNavigationIcon = true
+    ) {
         Column(
             modifier = Modifier
-                .fillMaxSize().padding(8.dp)
+                .fillMaxSize()
+                .padding(8.dp)
         ) {
             ImageUrl(
                 url = "", modifier = Modifier

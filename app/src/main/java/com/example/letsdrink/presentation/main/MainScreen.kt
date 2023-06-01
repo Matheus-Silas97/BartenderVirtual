@@ -11,11 +11,11 @@ import com.example.letsdrink.core.navigation.NavigationNavGraph
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainScreen(){
+fun MainScreen() {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = { BottomBarComponent(navController = navController) }
-    ) {
-        NavigationNavGraph(navController = navController)
+    ) { innerPadding ->
+        NavigationNavGraph(navController = navController, innerPadding = innerPadding)
     }
 }
