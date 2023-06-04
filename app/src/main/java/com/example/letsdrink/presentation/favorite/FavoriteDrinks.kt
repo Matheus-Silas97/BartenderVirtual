@@ -7,10 +7,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import com.example.letsdrink.core.commons.ScaffoldCustom
-import com.example.letsdrink.core.components.FavoriteCard
-import com.example.letsdrink.core.navigation.RoutesNavigation
+import com.example.letsdrink.common.commons_custom.ScaffoldCustom
+import com.example.letsdrink.common.components.FavoriteCard
 import com.example.letsdrink.domain.model.Favorite
 import org.koin.androidx.compose.getViewModel
 

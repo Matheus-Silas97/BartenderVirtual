@@ -82,6 +82,18 @@ dependencies {
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
-    /** Lottie **/
+    // Lottie
     implementation "com.airbnb.android:lottie-compose:5.1.1"
+
+    // Room
+    implementation("androidx.room:room-runtime:2.4.1")
+    annotationProcessor("androidx.room:room-compiler:2.4.1")
+
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+
+    // Accompanist
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.20.0"
+    implementation "com.google.accompanist:accompanist-pager:0.20.0"
+    implementation "com.google.accompanist:accompanist-pager-indicators:0.20.0"
 }

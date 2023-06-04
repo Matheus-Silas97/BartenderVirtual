@@ -5,8 +5,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
-import com.example.letsdrink.core.components.BottomBarComponent
-import com.example.letsdrink.core.navigation.NavigationNavGraph
+import com.example.letsdrink.common.components.BottomBarComponent
+import com.example.letsdrink.common.navigation.NavigationNavGraph
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

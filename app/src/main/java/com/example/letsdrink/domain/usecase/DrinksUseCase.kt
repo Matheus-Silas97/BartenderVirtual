@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface DrinksUseCase {
 
-    fun allDrinks(): Flow<List<Drinks>>
+    suspend fun allDrinks(): Flow<List<Drinks>>
 
-    fun drinkDetail(id: Long) : Flow<DrinkDetails>
+    suspend fun drinkDetail(id: Long) : Flow<DrinkDetails>
 
 }

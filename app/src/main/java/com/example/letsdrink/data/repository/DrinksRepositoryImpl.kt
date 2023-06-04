@@ -1,26 +1,27 @@
 package com.example.letsdrink.data.repository
 
+import com.example.letsdrink.data.datasource.DrinksRemoteDataSource
 import com.example.letsdrink.data.mapper.toDrinkDetailsEntity
 import com.example.letsdrink.data.mapper.toDrinkListEntity
-import com.example.letsdrink.data.service.DrinkService
+import com.example.letsdrink.data.remote.service.DrinkService
 import com.example.letsdrink.domain.model.DrinkDetails
 import com.example.letsdrink.domain.model.Drinks
 import com.example.letsdrink.domain.repository.DrinksRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
 class DrinksRepositoryImpl(
-    private val service: DrinkService,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val drinksRemoteDataSource: DrinksRemoteDataSource
 ) : DrinksRepository {
-    override suspend fun allDrinks(): List<Drinks> =
-        withContext(defaultDispatcher) {
-            service.allDrinks().toDrinkListEntity()
-        }
+    override suspend fun allDrinks(): Flow<List<Drinks>> = flow {
+        emit(drinksRemoteDataSource.allDrinks())
+    }
 
-    override suspend fun drinkDetails(id: Long): DrinkDetails =
-        withContext(defaultDispatcher) {
-            service.getOneDrink(id = id).toDrinkDetailsEntity()
-        }
+    override suspend fun drinkDetails(id: Long): Flow<DrinkDetails> = flow {
+        emit(drinksRemoteDataSource.drinkDetails(id = id))
+    }
+
 }

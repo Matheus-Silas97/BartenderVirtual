@@ -8,21 +8,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import com.example.letsdrink.core.commons.ImageUrl
-import com.example.letsdrink.core.commons.ScaffoldCustom
-import com.example.letsdrink.core.commons.TextSubTitle
-import com.example.letsdrink.core.commons.TextTitle
-import com.example.letsdrink.core.components.IngredientsCard
-import com.example.letsdrink.domain.model.DrinkDetails
+import com.example.letsdrink.common.commons_custom.ImageUrl
+import com.example.letsdrink.common.commons_custom.ScaffoldCustom
+import com.example.letsdrink.common.commons_custom.TextSubTitle
+import com.example.letsdrink.common.commons_custom.TextTitle
+import com.example.letsdrink.common.components.IngredientsCard
 import org.koin.androidx.compose.getViewModel
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DrinkDetailsScreen(
     drinkId: Long,
@@ -30,13 +29,23 @@ fun DrinkDetailsScreen(
     viewModel: DrinkDetailsViewModel = getViewModel()
 ) {
 
-    val drink = DrinkDetails()
+    val state by viewModel.state.collectAsState()
+
     val lazyState = rememberLazyListState()
 
+    viewModel.interact(interaction = DrinkDetailsInteraction.GetDrinkDetails(drinkId = drinkId))
+
+//    LaunchedEffect(Unit) {
+//        viewModel.screenEvent.collect { event ->
+//            viewModel.handleEvent(event)
+//        }
+//    }
+
     ScaffoldCustom(
-        titlePage = drink.name,
+        titlePage = state.name,
         onBackPressedEvent = { backStack() },
-        showNavigationIcon = true
+        showNavigationIcon = true,
+        isLoading = state.isLoading
     ) {
         Column(
             modifier = Modifier
@@ -44,16 +53,16 @@ fun DrinkDetailsScreen(
                 .padding(8.dp)
         ) {
             ImageUrl(
-                url = "", modifier = Modifier
+                url = state.image, modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp)
             )
-            TextTitle(text = drink.name)
+            TextTitle(text = state.name)
 
             TextSubTitle(text = "Ingredientes")
 
             LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
-                items(items = drink.ingredients) { ingredients ->
+                items(items = state.ingredients) { ingredients ->
                     IngredientsCard(ingredients) {
                         //Todo
                     }
@@ -62,7 +71,7 @@ fun DrinkDetailsScreen(
 
             TextSubTitle(text = "Modo de preparo")
             LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
-                items(items = drink.modePrepare) { step ->
+                items(items = state.ingredients) { step ->
 //                    IngredientsCard(step)
                 }
             }

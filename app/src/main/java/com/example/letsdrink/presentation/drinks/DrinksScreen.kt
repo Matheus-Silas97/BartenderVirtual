@@ -11,22 +11,26 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import com.example.letsdrink.core.commons.TopBar
-import com.example.letsdrink.core.components.DrinkCard
-import com.example.letsdrink.core.navigation.RoutesNavigation
+import com.example.letsdrink.common.commons_custom.TopBar
+import com.example.letsdrink.common.components.DrinkCard
 import com.example.letsdrink.domain.model.Drinks
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DrinksScreen(goToDetailsDrinksScreen: (id: Long) -> Unit, viewModel: DrinksViewModel = getViewModel()) {
+fun DrinksScreen(
+    categoryId: Long,
+    categoryName: String,
+    viewModel: DrinksViewModel = getViewModel(),
+    goToDetailsDrinksScreen: (id: Long) -> Unit,
+    backPressed: () -> Unit
+) {
     Scaffold(
         topBar = {
             TopBar(
-                title = "Let's Drinks",
-                showNavigationIcon = false,
-                onBackPressed = { })
+                title = categoryName,
+                showNavigationIcon = true,
+                onBackPressed = { backPressed.invoke() })
         }, content = {
             Column(
                 modifier = Modifier
@@ -37,7 +41,7 @@ fun DrinksScreen(goToDetailsDrinksScreen: (id: Long) -> Unit, viewModel: DrinksV
                 LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
                     items(items = listDrinksMock()) { drink ->
                         DrinkCard(drink) {
-                           goToDetailsDrinksScreen(drink.id?: 0L)
+                            goToDetailsDrinksScreen(drink.id ?: 0L)
                         }
                     }
                 }
