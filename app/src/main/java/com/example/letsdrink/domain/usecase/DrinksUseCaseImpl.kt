@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.flow
 
 class DrinksUseCaseImpl(private val repository: DrinksRepository) : DrinksUseCase {
 
-    override suspend fun allDrinks(): Flow<List<Drinks>> = repository.allDrinks()
+    override suspend fun drinksByCategory(categoryId: Long): Flow<List<Drinks>> = repository.drinksByCategory(categoryId)
 
     override suspend fun drinkDetail(id: Long): Flow<DrinkDetails> =
         repository.drinkDetails(id = id)

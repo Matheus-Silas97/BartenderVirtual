@@ -21,13 +21,13 @@ import com.example.letsdrink.domain.model.Ingredients
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IngredientsCard(model: Ingredients, onClick: () -> Unit) {
+fun IngredientsCard(model: Ingredients, selectIngredient: (id: Long) -> Unit) {
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        onClick = { onClick() }
+        onClick = { selectIngredient(model.id) }
     ) {
         Row(
             modifier = Modifier

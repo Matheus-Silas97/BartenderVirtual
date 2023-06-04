@@ -5,7 +5,7 @@ import com.example.letsdrink.domain.model.Drinks
 
 interface DrinksRemoteDataSource {
 
-    suspend fun allDrinks(): List<Drinks>
+    suspend fun drinksByCategory(categoryId: Long): List<Drinks>
 
     suspend fun drinkDetails(id: Long): DrinkDetails
 

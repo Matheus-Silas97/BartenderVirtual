@@ -16,8 +16,8 @@ import kotlinx.coroutines.withContext
 class DrinksRepositoryImpl(
     private val drinksRemoteDataSource: DrinksRemoteDataSource
 ) : DrinksRepository {
-    override suspend fun allDrinks(): Flow<List<Drinks>> = flow {
-        emit(drinksRemoteDataSource.allDrinks())
+    override suspend fun drinksByCategory(categoryId: Long): Flow<List<Drinks>> = flow {
+        emit(drinksRemoteDataSource.drinksByCategory(categoryId))
     }
 
     override suspend fun drinkDetails(id: Long): Flow<DrinkDetails> = flow {

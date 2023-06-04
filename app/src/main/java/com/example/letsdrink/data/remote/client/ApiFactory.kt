@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object Apifactory {
 
-    private const val URL_VIA_CEP = "https://viacep.com.br/ws/"
+    private const val URL_VIA_CEP = "https://rails-production-30cf.up.railway.app/"
 
     private fun retrofit(): Retrofit = Retrofit.Builder()
         .baseUrl(URL_VIA_CEP)

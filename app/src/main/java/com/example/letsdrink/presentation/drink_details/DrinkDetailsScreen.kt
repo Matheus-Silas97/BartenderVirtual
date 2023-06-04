@@ -26,6 +26,7 @@ import org.koin.androidx.compose.getViewModel
 fun DrinkDetailsScreen(
     drinkId: Long,
     backStack: () -> Unit,
+    goToIngredientsDetails: (ingredientId: Long) -> Unit,
     viewModel: DrinkDetailsViewModel = getViewModel()
 ) {
 
@@ -34,12 +35,6 @@ fun DrinkDetailsScreen(
     val lazyState = rememberLazyListState()
 
     viewModel.interact(interaction = DrinkDetailsInteraction.GetDrinkDetails(drinkId = drinkId))
-
-//    LaunchedEffect(Unit) {
-//        viewModel.screenEvent.collect { event ->
-//            viewModel.handleEvent(event)
-//        }
-//    }
 
     ScaffoldCustom(
         titlePage = state.name,
@@ -63,8 +58,8 @@ fun DrinkDetailsScreen(
 
             LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
                 items(items = state.ingredients) { ingredients ->
-                    IngredientsCard(ingredients) {
-                        //Todo
+                    IngredientsCard(ingredients) {id->
+                        goToIngredientsDetails(id)
                     }
                 }
             }

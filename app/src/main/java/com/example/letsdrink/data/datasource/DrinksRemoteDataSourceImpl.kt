@@ -13,9 +13,9 @@ class DrinksRemoteDataSourceImpl(
     private val service: DrinkService,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : DrinksRemoteDataSource {
-    override suspend fun allDrinks(): List<Drinks> =
+    override suspend fun drinksByCategory(categoryId: Long): List<Drinks> =
         withContext(defaultDispatcher) {
-            service.allDrinks().toDrinkListEntity()
+            service.drinksByCategory(categoryId).toDrinkListEntity()
         }
 
     override suspend fun drinkDetails(id: Long): DrinkDetails =

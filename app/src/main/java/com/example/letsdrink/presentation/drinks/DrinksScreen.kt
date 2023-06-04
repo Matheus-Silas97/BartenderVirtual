@@ -9,6 +9,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.letsdrink.common.commons_custom.TopBar
@@ -25,6 +27,9 @@ fun DrinksScreen(
     goToDetailsDrinksScreen: (id: Long) -> Unit,
     backPressed: () -> Unit
 ) {
+
+    val state by viewModel.state.collectAsState()
+
     Scaffold(
         topBar = {
             TopBar(
@@ -39,7 +44,7 @@ fun DrinksScreen(
             ) {
                 val lazyState = rememberLazyListState()
                 LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
-                    items(items = listDrinksMock()) { drink ->
+                    items(items = state.drinks) { drink ->
                         DrinkCard(drink) {
                             goToDetailsDrinksScreen(drink.id ?: 0L)
                         }

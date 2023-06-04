@@ -3,4 +3,7 @@
     <string name="drinks">Bebidas</string>
     <string name="favorites">Favoritos</string>
     <string name="home">Home</string>
+    <string name="an_unexpected_error_has_occurred">Um erro inesperado aconteceu</string>
+    <string name="error">Erro</string>
+    <string name="ok">OK</string>
 </resources>

@@ -21,6 +21,25 @@ class DrinksViewModel(private val drinkUseCase: DrinksUseCase) : ViewModel() {
         }
     }
 
+    private fun getDrinksByCategory(categoryId: Long) {
+        viewModelScope.launch {
+            drinkUseCase.drinksByCategory(categoryId).onStart {
+                _state.update { it.copy(isLoading = true, error = null) }
+            }.catch {
+                _state.update { it.copy(isLoading = false, error = it.error) }
+            }.collect { drink ->
+                _state.update {
+                    it.copy(
+                        drinks = drink,
+                        isLoading = false,
+                        error = null
+                    )
+                }
+            }
+        }
+    }
+
+
     private fun drinkDetails(id: Long) {
 //        viewModelScope.launch {
 //            drinkUseCase.allDrinks().onStart {
