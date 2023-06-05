@@ -3,10 +3,6 @@ package com.example.letsdrink.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.letsdrink.domain.usecase.CategoryUseCase
-import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction
-import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.GetDrinkDetails
-import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.NavigationClickBackPressed
-import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.SaveDrinkInFavorite
 import com.example.letsdrink.presentation.home.HomeInteraction.CloseErrorDialog
 import com.example.letsdrink.presentation.home.HomeInteraction.getCateories
 import kotlinx.coroutines.flow.MutableStateFlow

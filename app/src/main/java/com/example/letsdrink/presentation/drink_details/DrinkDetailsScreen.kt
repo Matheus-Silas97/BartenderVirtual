@@ -20,28 +20,54 @@ import com.example.letsdrink.common.commons_custom.TextNormal
 import com.example.letsdrink.common.commons_custom.TextSubTitle
 import com.example.letsdrink.common.commons_custom.TextTitle
 import com.example.letsdrink.common.components.IngredientsCard
+import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.CardClickInteraction
+import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.NavigationClickBackPressed
+import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.ScreenEvent.GoBack
+import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.ScreenEvent.NavigateNextScreen
 import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 
 
 @Composable
 fun DrinkDetailsScreen(
-    drinkId: Long,
     backStack: () -> Unit,
-    goToIngredientsDetails: (ingredientId: Long) -> Unit,
-    viewModel: DrinkDetailsViewModel = getViewModel()
+    navigateNextScreen: (Long) -> Unit,
+    viewModel: DrinkDetailsViewModel
 ) {
 
     val state by viewModel.state.collectAsState()
+    Content(uiState = state, interaction = viewModel::interact)
+    EventConsumer(
+        viewModel = viewModel,
+        backStack = backStack,
+        navigateNextScreen = navigateNextScreen
+    )
+}
 
+@Composable
+private fun EventConsumer(
+    viewModel: DrinkDetailsViewModel,
+    backStack: () -> Unit,
+    navigateNextScreen: (Long) -> Unit,
+) {
+    LaunchedEffect(key1 = Unit) {
+        viewModel.event.collect { event ->
+            when (event) {
+                GoBack -> backStack()
+                is NavigateNextScreen -> navigateNextScreen(event.drinkId)
+            }
+        }
+    }
+}
+
+@Composable
+private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsInteraction) -> Unit) {
     val lazyState = rememberLazyListState()
-
-    viewModel.interact(interaction = DrinkDetailsInteraction.GetDrinkDetails(drinkId = drinkId))
-
     ScaffoldCustom(
-        titlePage = state.name,
-        onBackPressedEvent = { backStack() },
+        titlePage = uiState.name,
+        onBackPressedEvent = { interaction(NavigationClickBackPressed) },
         showNavigationIcon = true,
-        isLoading = state.isLoading
+        isLoading = uiState.isLoading
     ) {
         Column(
             modifier = Modifier
@@ -49,24 +75,22 @@ fun DrinkDetailsScreen(
                 .padding(8.dp)
         ) {
             ImageUrl(
-                url = state.image, modifier = Modifier
+                url = uiState.image, modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp)
             )
-            TextTitle(text = state.name)
+            TextTitle(text = uiState.name)
 
             TextSubTitle(text = "Ingredientes")
             LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
-                items(items = state.ingredients) { ingredients ->
+                items(items = uiState.ingredients) { ingredients ->
                     IngredientsCard(ingredients) { id ->
-                        goToIngredientsDetails(id)
+                        interaction(CardClickInteraction(id))
                     }
                 }
             }
-
             TextSubTitle(text = "Modo de preparo")
-            TextNormal(text = state.prepareMode)
-
+            TextNormal(text = uiState.prepareMode)
         }
     }
 }

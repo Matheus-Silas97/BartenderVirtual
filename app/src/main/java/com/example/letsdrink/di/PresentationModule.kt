@@ -12,7 +12,14 @@ val presentationModule = module {
 
     viewModel { HomeViewModel(categoryUseCase = get()) }
 
-    viewModel { DrinkDetailsViewModel(drinkUseCase = get()) }
+    viewModel { params ->
+        DrinkDetailsViewModel(
+            drinkId = params[0],
+            drinkUseCase = get()
+        ).apply {
+            init()
+        }
+    }
 
     viewModel { DrinksViewModel(drinkUseCase = get()) }
 

@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.letsdrink.common.commons_custom.TopBar
 import com.example.letsdrink.common.components.DrinkCard
+import com.example.letsdrink.common.enums.CategoriesDrinks.NEW_ERA
 import com.example.letsdrink.domain.model.Drinks
 import org.koin.androidx.compose.getViewModel
 
@@ -45,7 +46,17 @@ fun DrinksScreen(
                     .fillMaxSize()
             ) {
                 LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
-                    items(items = state.drinks) { drink ->
+                    val drink = listOf(
+                        Drinks(
+                            id = 1,
+                            name = "Reginald Chan",
+                            image = "in",
+                            garnish = "inciderint",
+                            category = NEW_ERA,
+                            ingredients = listOf()
+                        )
+                    )
+                    items(items = drink) { drink ->
                         DrinkCard(drink) {
                             goToDetailsDrinksScreen(drink.id ?: 0L)
                         }

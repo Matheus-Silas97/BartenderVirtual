@@ -70,7 +70,8 @@ private fun GridCategories(
         columns = Fixed(count = 2),
         contentPadding = PaddingValues(16.dp),
     ) {
-        items(items = state.categories) { category ->
+        val cant = listOf(Category(id = 7620, name = "Marta Burris", description = "odio"))
+        items(items = cant) { category ->
             CategoryCard(category) { categoryId, categoryName ->
                 goToDrinkScreen(categoryId, categoryName)
             }

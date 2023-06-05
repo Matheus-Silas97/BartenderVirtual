@@ -1,31 +1,42 @@
 package com.example.letsdrink.presentation.drink_details
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.letsdrink.Event
+import com.example.letsdrink.EventImpl
 import com.example.letsdrink.domain.model.DrinkDetails
 import com.example.letsdrink.domain.usecase.DrinksUseCase
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.NavigationClickBackPressed
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.SaveDrinkInFavorite
-import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.GetDrinkDetails
-import kotlinx.coroutines.flow.Flow
+import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.CardClickInteraction
+import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.ScreenEvent
+import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.ScreenEvent.GoBack
+import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.ScreenEvent.NavigateNextScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class DrinkDetailsViewModel(private val drinkUseCase: DrinksUseCase) : ViewModel() {
-    private val _state = MutableStateFlow(DrinkDetailsState())
-    val state: StateFlow<DrinkDetailsState> = _state
+class DrinkDetailsViewModel(
+    private val drinkId: Long,
+    private val drinkUseCase: DrinksUseCase
+) : ViewModel(), Event<ScreenEvent> by EventImpl() {
 
+    private val _state = MutableStateFlow(DrinkDetailsState())
+    val state: StateFlow<DrinkDetailsState> = _state.asStateFlow()
+
+    fun init() {
+        drinkDetails(id = drinkId)
+    }
 
     fun interact(interaction: DrinkDetailsInteraction) {
         when (interaction) {
-            is NavigationClickBackPressed -> onBackPressed()
+            is NavigationClickBackPressed -> sendEvent(event = GoBack)
             is SaveDrinkInFavorite -> favoriteDrink(interaction.drink)
-            is GetDrinkDetails -> drinkDetails(interaction.drinkId)
+            is CardClickInteraction -> sendEvent(event = NavigateNextScreen(interaction.drinkId))
         }
     }
 
@@ -51,15 +62,11 @@ class DrinkDetailsViewModel(private val drinkUseCase: DrinksUseCase) : ViewModel
         }
     }
 
-
-    private fun favoriteDrink(postalCode: DrinkDetails) {
-        viewModelScope.launch {
-
-        }
+    private fun favoriteDrink(postalCode: DrinkDetails) = viewModelScope.launch {
     }
 
-    fun onBackPressed() {
-
+    sealed interface ScreenEvent {
+        object GoBack : ScreenEvent
+        data class NavigateNextScreen(val drinkId: Long) : ScreenEvent
     }
-
 }
