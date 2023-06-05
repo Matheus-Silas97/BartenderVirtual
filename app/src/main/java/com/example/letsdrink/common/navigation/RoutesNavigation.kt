@@ -1,7 +1,7 @@
 package com.example.letsdrink.common.navigation
 
-import com.example.letsdrink.Router
-import com.example.letsdrink.RouterImpl
+import com.example.letsdrink.common.utils.Router
+import com.example.letsdrink.common.utils.RouterImpl
 
 object RoutesNavigation {
     const val HOME_SCREEN = "HOME_SCREEN"

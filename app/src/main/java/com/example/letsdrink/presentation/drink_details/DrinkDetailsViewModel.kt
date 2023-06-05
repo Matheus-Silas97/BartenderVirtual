@@ -2,8 +2,8 @@ package com.example.letsdrink.presentation.drink_details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.letsdrink.Event
-import com.example.letsdrink.EventImpl
+import com.example.letsdrink.common.utils.Event
+import com.example.letsdrink.common.utils.EventImpl
 import com.example.letsdrink.domain.model.DrinkDetails
 import com.example.letsdrink.domain.usecase.DrinksUseCase
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.NavigationClickBackPressed

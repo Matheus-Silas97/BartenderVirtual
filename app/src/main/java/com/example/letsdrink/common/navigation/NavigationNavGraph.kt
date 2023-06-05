@@ -9,8 +9,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.letsdrink.common.navigation.RouterNavigation.CATEGORY_ID
-import com.example.letsdrink.common.navigation.RouterNavigation.CATEGORY_NAME
 import com.example.letsdrink.common.navigation.RouterNavigation.DrinkRouter
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsScreen
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel
@@ -18,7 +16,7 @@ import com.example.letsdrink.presentation.drinks.DrinksScreen
 import com.example.letsdrink.presentation.favorite.FavoriteDrinksScreen
 import com.example.letsdrink.presentation.home.HomeScreen
 import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsScreen
-import com.example.letsdrink.second
+import com.example.letsdrink.common.utils.second
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 

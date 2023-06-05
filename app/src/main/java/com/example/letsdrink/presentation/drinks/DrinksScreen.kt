@@ -9,17 +9,19 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.letsdrink.common.commons_custom.TopBar
 import com.example.letsdrink.common.components.DrinkCard
-import com.example.letsdrink.common.enums.CategoriesDrinks.NEW_ERA
-import com.example.letsdrink.domain.model.Drinks
+import com.example.letsdrink.common.utils.orZero
+import com.example.letsdrink.presentation.drinks.DrinksInteraction.GoBackScreen
+import com.example.letsdrink.presentation.drinks.DrinksViewModel.DrinksEvent
+import com.example.letsdrink.presentation.drinks.DrinksViewModel.DrinksEvent.NavigateDrinkDetailsScreen
 import org.koin.androidx.compose.getViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DrinksScreen(
     categoryId: Long,
@@ -30,7 +32,34 @@ fun DrinksScreen(
 ) {
 
     val state by viewModel.state.collectAsState()
+    Content(categoryName = categoryName, state = state, interaction = viewModel::interact)
+    EventConsumer(viewModel = viewModel, backPressed = backPressed, goToDetailsDrinksScreen = goToDetailsDrinksScreen)
+}
 
+@Composable
+private fun EventConsumer(
+    viewModel: DrinksViewModel,
+    backPressed: () -> Unit,
+    goToDetailsDrinksScreen: (Long) -> Unit,
+) {
+    LaunchedEffect(key1 = Unit) {
+        viewModel.event.collect { event ->
+            when (event) {
+                is DrinksEvent.GoBack -> {
+                    backPressed.invoke()
+                }
+
+                is NavigateDrinkDetailsScreen -> {
+                    goToDetailsDrinksScreen(event.drinkId)
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Content(categoryName: String, state: DrinksState, interaction: (DrinksInteraction) -> Unit) {
     val lazyState = rememberLazyListState()
 
     Scaffold(
@@ -38,7 +67,7 @@ fun DrinksScreen(
             TopBar(
                 title = categoryName,
                 showNavigationIcon = true,
-                onBackPressed = { backPressed.invoke() })
+                onBackPressed = { interaction(GoBackScreen) })
         }, content = {
             Column(
                 modifier = Modifier
@@ -46,19 +75,9 @@ fun DrinksScreen(
                     .fillMaxSize()
             ) {
                 LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
-                    val drink = listOf(
-                        Drinks(
-                            id = 1,
-                            name = "Reginald Chan",
-                            image = "in",
-                            garnish = "inciderint",
-                            category = NEW_ERA,
-                            ingredients = listOf()
-                        )
-                    )
-                    items(items = drink) { drink ->
+                    items(items = state.drinks) { drink ->
                         DrinkCard(drink) {
-                            goToDetailsDrinksScreen(drink.id ?: 0L)
+                            interaction(DrinksInteraction.SelectDrink(drinkId = drink.id.orZero()))
                         }
                     }
                 }

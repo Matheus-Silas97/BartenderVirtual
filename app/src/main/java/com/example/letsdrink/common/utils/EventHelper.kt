@@ -1,4 +1,4 @@
-package com.example.letsdrink
+package com.example.letsdrink.common.utils
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

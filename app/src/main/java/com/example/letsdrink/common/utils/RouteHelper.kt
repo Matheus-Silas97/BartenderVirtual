@@ -1,4 +1,4 @@
-package com.example.letsdrink
+package com.example.letsdrink.common.utils
 
 interface Router {
     val id: String
