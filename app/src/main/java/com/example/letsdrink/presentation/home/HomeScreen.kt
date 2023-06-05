@@ -24,7 +24,7 @@ import com.example.letsdrink.common.components.CategoryCard
 import com.example.letsdrink.common.components.ErrorDialog
 import com.example.letsdrink.common.components.LoadingComponent
 import com.example.letsdrink.domain.model.Category
-import com.example.letsdrink.presentation.home.HomeInteraction.CloseErrorDialog
+import com.example.letsdrink.presentation.home.HomeInteraction.*
 import org.koin.androidx.compose.getViewModel
 
 
@@ -37,27 +37,26 @@ fun HomeScreen(
 
     val state by viewModel.state.collectAsState()
 
+    viewModel.interact(getCateories)
+
     Scaffold(
         topBar = {
             TopBar(
-                title = stringResource(id = R.string.app_name),
-                showNavigationIcon = false,
-                onBackPressed = { })
+                title = stringResource(id = R.string.app_name)
+            )
         }, content = { paddingValues ->
             GridCategories(paddingValues, state, goToDrinkScreen)
 
+            if (state.isLoading) {
+                LoadingComponent()
+            }
+
+            if (!state.error.isNullOrEmpty()) {
+                ErrorDialog(state.error) {
+                    viewModel.interact(CloseErrorDialog)
+                }
+            }
         })
-
-    if (state.isLoading) {
-        LoadingComponent()
-    }
-
-    if (!state.error.isNullOrEmpty()) {
-        ErrorDialog(state.error) {
-            viewModel.interact(CloseErrorDialog)
-        }
-    }
-
 }
 
 @Composable

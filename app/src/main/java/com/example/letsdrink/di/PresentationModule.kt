@@ -16,7 +16,7 @@ val presentationModule = module {
 
     viewModel { DrinksViewModel(drinkUseCase = get()) }
 
-    viewModel { FavoriteViewModel() }
+    viewModel { FavoriteViewModel(favoriteUseCase = get()) }
 
     viewModel { IngredientsDetailsViewModel() }
 

@@ -14,9 +14,9 @@ interface FavoriteDao {
     fun loadDrink(id: Int): FavoriteEntity
 
     @Insert
-    fun insert(address: FavoriteEntity)
+    fun insert(drink: FavoriteEntity): Int
 
     @Delete
-    fun deleteTraining(address: FavoriteEntity)
+    fun deleteTraining(drink: FavoriteEntity): Int
 
 }

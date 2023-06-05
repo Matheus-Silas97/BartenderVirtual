@@ -6,13 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-import androidx.navigation.NavType.Companion
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsScreen
 import com.example.letsdrink.presentation.drinks.DrinksScreen
-import com.example.letsdrink.presentation.favorite.FavoriteDrinks
+import com.example.letsdrink.presentation.favorite.FavoriteDrinksScreen
 import com.example.letsdrink.presentation.home.HomeScreen
 import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsScreen
 
@@ -30,7 +29,7 @@ fun NavigationNavGraph(navController: NavHostController, innerPadding: PaddingVa
         }
 
         composable(route = BottomNavigationScreens.FavoriteScreen.route) {
-            FavoriteDrinks(
+            FavoriteDrinksScreen(
                 goToDetailsDrinkScreen = { id ->
                     navController.navigate(route = "${RoutesNavigation.DETAILS_DRINKS_SCREEN}/${id}")
                 }

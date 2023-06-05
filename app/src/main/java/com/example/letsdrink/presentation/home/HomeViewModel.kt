@@ -8,6 +8,7 @@ import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.NavigationClickBackPressed
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.SaveDrinkInFavorite
 import com.example.letsdrink.presentation.home.HomeInteraction.CloseErrorDialog
+import com.example.letsdrink.presentation.home.HomeInteraction.getCateories
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -23,6 +24,7 @@ class HomeViewModel(private val categoryUseCase: CategoryUseCase) : ViewModel() 
     fun interact(interaction: HomeInteraction) {
         when (interaction) {
             CloseErrorDialog -> closeErrorDialog()
+            getCateories -> categories()
         }
     }
 

@@ -4,4 +4,6 @@ sealed class HomeInteraction {
 
     object CloseErrorDialog : HomeInteraction()
 
+    object getCateories : HomeInteraction()
+
 }

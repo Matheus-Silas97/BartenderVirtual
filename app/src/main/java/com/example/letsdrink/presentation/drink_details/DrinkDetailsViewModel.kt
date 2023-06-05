@@ -20,7 +20,6 @@ class DrinkDetailsViewModel(private val drinkUseCase: DrinksUseCase) : ViewModel
     private val _state = MutableStateFlow(DrinkDetailsState())
     val state: StateFlow<DrinkDetailsState> = _state
 
-//    val screenEvent = MutableStateFlow(DrinkDetailsScreenEvent())
 
     fun interact(interaction: DrinkDetailsInteraction) {
         when (interaction) {

@@ -21,11 +21,12 @@ import androidx.compose.ui.unit.dp
 import com.example.letsdrink.R
 import com.example.letsdrink.common.commons_custom.ImageUrl
 import com.example.letsdrink.common.commons_custom.TextNormal
+import com.example.letsdrink.domain.model.DrinkFavorite
 import com.example.letsdrink.domain.model.Favorite
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FavoriteCard(model: Favorite, onClick: () -> Unit, remove: (id: Long) -> Unit) {
+fun FavoriteCard(model: DrinkFavorite, onClick: () -> Unit, remove: (id: DrinkFavorite) -> Unit) {
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
@@ -61,7 +62,7 @@ fun FavoriteCard(model: Favorite, onClick: () -> Unit, remove: (id: Long) -> Uni
                 painter = painterResource(id = R.drawable.ic_favorite),
                 contentDescription = "favorite icon",
                 modifier = Modifier
-                    .clickable { remove(model.id) }
+                    .clickable { remove(model) }
 //                    .align(alignment = Alignment.CenterEnd)
             )
         }

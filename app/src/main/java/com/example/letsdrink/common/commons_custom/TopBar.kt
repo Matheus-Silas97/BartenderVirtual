@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(title: String = "", showNavigationIcon: Boolean = true, onBackPressed: () -> Unit) {
+fun TopBar(title: String = "", showNavigationIcon: Boolean = false, onBackPressed: () -> Unit = {}) {
     TopAppBar(
         title = {
             Text(text = title)
