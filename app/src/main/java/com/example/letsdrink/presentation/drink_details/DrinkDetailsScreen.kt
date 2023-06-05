@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.letsdrink.common.commons_custom.ImageUrl
 import com.example.letsdrink.common.commons_custom.ScaffoldCustom
+import com.example.letsdrink.common.commons_custom.TextNormal
 import com.example.letsdrink.common.commons_custom.TextSubTitle
 import com.example.letsdrink.common.commons_custom.TextTitle
 import com.example.letsdrink.common.components.IngredientsCard
@@ -55,22 +56,16 @@ fun DrinkDetailsScreen(
             TextTitle(text = state.name)
 
             TextSubTitle(text = "Ingredientes")
-
             LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
                 items(items = state.ingredients) { ingredients ->
-                    IngredientsCard(ingredients) {id->
+                    IngredientsCard(ingredients) { id ->
                         goToIngredientsDetails(id)
                     }
                 }
             }
 
             TextSubTitle(text = "Modo de preparo")
-            LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
-                items(items = state.ingredients) { step ->
-//                    IngredientsCard(step)
-                }
-            }
-
+            TextNormal(text = state.prepareMode)
 
         }
     }

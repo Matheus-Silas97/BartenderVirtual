@@ -59,7 +59,10 @@ fun NavigationNavGraph(navController: NavHostController, innerPadding: PaddingVa
         ) { backStackEntry ->
             DrinkDetailsScreen(
                 drinkId = backStackEntry.arguments?.getLong("drink_id") ?: 0L,
-                backStack = { navController.popBackStack() }
+                backStack = { navController.popBackStack() },
+                goToIngredientsDetails = {id->
+                    navController.navigate(route = "${RoutesNavigation.INGREDIENTS_DETAILS_SCREEN}/$id")
+                }
             )
         }
         composable(route = "${RoutesNavigation.INGREDIENTS_DETAILS_SCREEN}/{ingredient_id}",

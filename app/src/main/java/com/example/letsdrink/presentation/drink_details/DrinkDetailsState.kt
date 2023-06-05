@@ -8,6 +8,7 @@ data class DrinkDetailsState(
     val description: String = "",
     val image: String = "",
     val ingredients: List<Ingredients> = listOf(),
+    val prepareMode: String = "",
     val isLoading: Boolean = false,
     val error: String? = null
 )

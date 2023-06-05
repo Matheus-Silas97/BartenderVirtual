@@ -30,6 +30,8 @@ fun DrinksScreen(
 
     val state by viewModel.state.collectAsState()
 
+    val lazyState = rememberLazyListState()
+
     Scaffold(
         topBar = {
             TopBar(
@@ -42,7 +44,6 @@ fun DrinksScreen(
                     .padding(it)
                     .fillMaxSize()
             ) {
-                val lazyState = rememberLazyListState()
                 LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
                     items(items = state.drinks) { drink ->
                         DrinkCard(drink) {
@@ -54,15 +55,4 @@ fun DrinksScreen(
         })
 }
 
-private fun listDrinksMock(): List<Drinks> {
-    val link =
-        "https://w7.pngwing.com/pngs/388/999/png-transparent-caipirinha-caipiroska-cocktail-cachaca-brazilian-cuisine-cocktail-cocktail-non-alcoholic-beverage-lime-juice-thumbnail.png"
-    return listOf(
-        Drinks(1, "Caipirinha", image = link),
-        Drinks(1, "Caipirinha", image = link),
-        Drinks(1, "Caipirinha", image = link),
-        Drinks(1, "Caipirinha", image = link),
-        Drinks(1, "Caipirinha", image = link)
-    )
-}
 
