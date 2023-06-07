@@ -1,23 +1,31 @@
 package com.example.letsdrink.data.remote.response
 
-import com.example.letsdrink.domain.model.Ingredients
 import com.google.gson.annotations.SerializedName
 
 data class DrinkDetailsResponse(
 
-    @SerializedName("")
+    @SerializedName("id")
     val id: Long? = 0,
 
-    @SerializedName("")
+    @SerializedName("name")
     val name: String? = "",
 
-    @SerializedName("")
+    @SerializedName("description")
+    val description: String? = "",
+
+    @SerializedName("garnish")
+    val garnish: String? = "",
+
+    @SerializedName("image")
     val image: String? = "",
 
-    @SerializedName("")
-    val ingredients: List<Ingredients>? = listOf(),
+    @SerializedName("ingredients")
+    val ingredients: List<IngredientsDrinkDetailsResponse>? = listOf(),
 
-    @SerializedName("")
-    val modePrepare: List<String>? = listOf()
+    @SerializedName("prepare_mode")
+    val prepareMode: String? = "",
+
+    @SerializedName("category_id")
+    val categoryId: Int? = 0
 
 )

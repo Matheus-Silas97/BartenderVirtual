@@ -8,6 +8,6 @@ sealed class DrinkDetailsInteraction {
 
     data class SaveDrinkInFavorite(val drink: DrinkDetails): DrinkDetailsInteraction()
 
-    data class CardClickInteraction(val drinkId: Long): DrinkDetailsInteraction()
+    data class CardClickInteraction(val drinkName: String): DrinkDetailsInteraction()
 
 }

@@ -4,19 +4,27 @@ import com.example.letsdrink.common.utils.Router
 import com.example.letsdrink.common.utils.RouterImpl
 
 object RoutesNavigation {
-    const val HOME_SCREEN = "HOME_SCREEN"
-    const val DRINKS_SCREEN = "DRINKS_SCREEN"
-    const val FAVORITE_SCREEN = "FAVORITE_SCREEN"
-    const val INGREDIENTS_DETAILS_SCREEN = "INGREDIENTS_DETAILS_SCREEN"
-    const val DETAILS_DRINKS_SCREEN = "DETAILS_DRINKS_SCREEN"
+    const val HOME_SCREEN = "home_screen"
+    const val DRINKS_SCREEN = "drinks_screen"
+    const val FAVORITE_SCREEN = "favorite_screen"
+    const val INGREDIENTS_DETAILS_SCREEN = "ingredients_details_screen"
+    const val DETAILS_DRINKS_SCREEN = "drinks_details_screen"
 }
 
-object RouterNavigation {
+object RoutesArguments {
+    const val INGREDIENT_NAME = "ingredient_name"
+    const val DRINK_ID = "drink_id"
+    const val DRINK_NAME = "drink_name"
     const val CATEGORY_ID = "category_id"
     const val CATEGORY_NAME = "category_name"
-    object DrinkRouter: Router by RouterImpl(
-        id = "DRINKS_SCREEN",
-        popBackStack = false,
-        arguments = listOf(CATEGORY_ID, CATEGORY_NAME)
-    )
 }
+
+//object RouterNavigation {
+//    const val CATEGORY_ID = "category_id"
+//    const val CATEGORY_NAME = "category_name"
+//    object DrinkRouter: Router by RouterImpl(
+//        id = "DRINKS_SCREEN",
+//        popBackStack = false,
+//        arguments = listOf(CATEGORY_ID, CATEGORY_NAME)
+//    )
+//}

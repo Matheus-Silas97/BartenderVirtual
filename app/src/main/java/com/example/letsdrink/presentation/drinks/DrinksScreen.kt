@@ -14,9 +14,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.letsdrink.common.commons_custom.TopBar
+import com.example.letsdrink.common.components.TopBar
 import com.example.letsdrink.common.components.DrinkCard
-import com.example.letsdrink.common.utils.orZero
+import com.example.letsdrink.common.utils.extensions.orZero
 import com.example.letsdrink.presentation.drinks.DrinksInteraction.GoBackScreen
 import com.example.letsdrink.presentation.drinks.DrinksViewModel.DrinksEvent
 import com.example.letsdrink.presentation.drinks.DrinksViewModel.DrinksEvent.NavigateDrinkDetailsScreen
@@ -32,8 +32,10 @@ fun DrinksScreen(
 ) {
 
     val state by viewModel.state.collectAsState()
-    Content(categoryName = categoryName, state = state, interaction = viewModel::interact)
+    Content(categoryName = categoryName, UiState = state, interaction = viewModel::interact)
     EventConsumer(viewModel = viewModel, backPressed = backPressed, goToDetailsDrinksScreen = goToDetailsDrinksScreen)
+
+    viewModel.getDrinksByCategory(categoryId)
 }
 
 @Composable
@@ -59,7 +61,7 @@ private fun EventConsumer(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Content(categoryName: String, state: DrinksState, interaction: (DrinksInteraction) -> Unit) {
+fun Content(categoryName: String, UiState: DrinksState, interaction: (DrinksInteraction) -> Unit) {
     val lazyState = rememberLazyListState()
 
     Scaffold(
@@ -75,7 +77,7 @@ fun Content(categoryName: String, state: DrinksState, interaction: (DrinksIntera
                     .fillMaxSize()
             ) {
                 LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
-                    items(items = state.drinks) { drink ->
+                    items(items = UiState.drinks) { drink ->
                         DrinkCard(drink) {
                             interaction(DrinksInteraction.SelectDrink(drinkId = drink.id.orZero()))
                         }

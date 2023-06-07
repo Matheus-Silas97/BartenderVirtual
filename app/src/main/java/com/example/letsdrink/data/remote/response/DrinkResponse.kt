@@ -4,16 +4,22 @@ import com.google.gson.annotations.SerializedName
 
 data class DrinkResponse(
 
-    @SerializedName("")
+    @SerializedName("id")
     val id: Long? = 0,
 
-    @SerializedName("")
+    @SerializedName("name")
     val name: String? = "",
 
-    @SerializedName("")
+    @SerializedName("image")
     val image: String? = "",
 
-    @SerializedName("")
-    val ingredients: List<IngredientsResponse>? = listOf()
+    @SerializedName("description")
+    val description: String? = "",
+
+    @SerializedName("garnish")
+    val garnish: String? = "",
+
+    @SerializedName("category_id")
+    val categoryId: Int? = 0
 
 )

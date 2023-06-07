@@ -6,29 +6,27 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells.Fixed
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.Modifier.Companion
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieConstants
-import com.example.letsdrink.R
-import com.example.letsdrink.common.commons_custom.TopBar
+import com.example.letsdrink.R.string
+import com.example.letsdrink.common.components.TopBar
 import com.example.letsdrink.common.components.CategoryCard
 import com.example.letsdrink.common.components.ErrorDialog
 import com.example.letsdrink.common.components.LoadingComponent
-import com.example.letsdrink.domain.model.Category
 import com.example.letsdrink.presentation.home.HomeInteraction.*
+import com.example.letsdrink.presentation.home.HomeViewModel.HomeScreenEvent
 import org.koin.androidx.compose.getViewModel
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = getViewModel(),
@@ -36,24 +34,52 @@ fun HomeScreen(
 ) {
 
     val state by viewModel.state.collectAsState()
+    Content(state = state, interaction = viewModel::interact)
+    EventConsumer(viewModel = viewModel, goToDrinkScreen = goToDrinkScreen)
+}
 
-    viewModel.interact(getCateories)
+@Composable
+private fun EventConsumer(
+    viewModel: HomeViewModel,
+    goToDrinkScreen: (id: Long, categoryName: String) -> Unit
+) {
+    LaunchedEffect(key1 = Unit) {
+        viewModel.event.collect { event ->
+            when (event) {
+                is HomeScreenEvent.NavigateNextScreen -> goToDrinkScreen(
+                    event.categoryId,
+                    event.categoryName
+                )
 
+                HomeScreenEvent.CloseErrorDialog -> viewModel.interact(interaction = CloseErrorDialog)
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Content(state: HomeState, interaction: (HomeInteraction) -> Unit) {
     Scaffold(
         topBar = {
             TopBar(
-                title = stringResource(id = R.string.app_name)
+                title = stringResource(id = string.app_name)
             )
         }, content = { paddingValues ->
-            GridCategories(paddingValues, state, goToDrinkScreen)
+            GridCategories(paddingValues, state, interaction)
 
             if (state.isLoading) {
                 LoadingComponent()
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .scale(0.8f)
+                )
             }
 
             if (!state.error.isNullOrEmpty()) {
                 ErrorDialog(state.error) {
-                    viewModel.interact(CloseErrorDialog)
+                    interaction(CloseErrorDialog)
                 }
             }
         })
@@ -62,18 +88,22 @@ fun HomeScreen(
 @Composable
 private fun GridCategories(
     paddingValues: PaddingValues,
-    state: HomeState,
-    goToDrinkScreen: (categoryId: Long, categoryName: String) -> Unit
+    uiState: HomeState,
+    interaction: (HomeInteraction) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = Modifier.padding(paddingValues),
         columns = Fixed(count = 2),
-        contentPadding = PaddingValues(16.dp),
+        contentPadding = PaddingValues(all = 16.dp),
     ) {
-        val cant = listOf(Category(id = 7620, name = "Marta Burris", description = "odio"))
-        items(items = cant) { category ->
+        items(items = uiState.categories) { category ->
             CategoryCard(category) { categoryId, categoryName ->
-                goToDrinkScreen(categoryId, categoryName)
+                interaction(
+                    NavigateNextScreen(
+                        categoryId = categoryId,
+                        categoryName = categoryName
+                    )
+                )
             }
         }
     }

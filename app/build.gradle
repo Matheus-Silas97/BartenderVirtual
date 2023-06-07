@@ -96,4 +96,7 @@ dependencies {
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.20.0"
     implementation "com.google.accompanist:accompanist-pager:0.20.0"
     implementation "com.google.accompanist:accompanist-pager-indicators:0.20.0"
+
+    // okHttp3
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 }

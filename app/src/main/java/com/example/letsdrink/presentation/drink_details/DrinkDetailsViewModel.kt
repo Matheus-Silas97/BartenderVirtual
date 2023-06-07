@@ -28,7 +28,7 @@ class DrinkDetailsViewModel(
     private val _state = MutableStateFlow(DrinkDetailsState())
     val state: StateFlow<DrinkDetailsState> = _state.asStateFlow()
 
-    fun init() {
+    init {
         drinkDetails(id = drinkId)
     }
 
@@ -36,7 +36,7 @@ class DrinkDetailsViewModel(
         when (interaction) {
             is NavigationClickBackPressed -> sendEvent(event = GoBack)
             is SaveDrinkInFavorite -> favoriteDrink(interaction.drink)
-            is CardClickInteraction -> sendEvent(event = NavigateNextScreen(interaction.drinkId))
+            is CardClickInteraction -> sendEvent(event = NavigateNextScreen(interaction.drinkName))
         }
     }
 
@@ -52,7 +52,9 @@ class DrinkDetailsViewModel(
                         id = drink.id,
                         name = drink.name,
                         image = drink.image,
+                        prepareMode = drink.modePrepare,
                         description = drink.description,
+                        garnish = drink.garnish,
                         ingredients = drink.ingredients,
                         isLoading = false,
                         error = null
@@ -67,6 +69,6 @@ class DrinkDetailsViewModel(
 
     sealed interface ScreenEvent {
         object GoBack : ScreenEvent
-        data class NavigateNextScreen(val drinkId: Long) : ScreenEvent
+        data class NavigateNextScreen(val drinkName: String) : ScreenEvent
     }
 }

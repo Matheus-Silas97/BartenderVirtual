@@ -1,4 +1,4 @@
-package com.example.letsdrink.common.commons_custom
+package com.example.letsdrink.common.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -22,10 +22,6 @@ fun TopBar(title: String = "", showNavigationIcon: Boolean = false, onBackPresse
                     Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "back button")
                 }
             }
-        },
-
-//        backgroundColor = MaterialTheme.colorScheme.primary,
-//        contentColor = Color.White,
-//        elevation = 10.dp
+        }
     )
 }

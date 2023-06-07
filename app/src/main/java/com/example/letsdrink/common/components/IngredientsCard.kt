@@ -15,19 +15,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.letsdrink.common.commons_custom.ImageUrl
-import com.example.letsdrink.common.commons_custom.TextNormal
-import com.example.letsdrink.domain.model.Ingredients
+import com.example.letsdrink.domain.model.IngredientDrinkDetails
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IngredientsCard(model: Ingredients, selectIngredient: (id: Long) -> Unit) {
+fun IngredientsCard(model: IngredientDrinkDetails, selectIngredient: (drinkName: String) -> Unit) {
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
-        onClick = { selectIngredient(model.id) }
+            .padding(horizontal = 8.dp),
+        onClick = { selectIngredient(model.name) }
     ) {
         Row(
             modifier = Modifier

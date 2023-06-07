@@ -32,12 +32,12 @@ class DrinksViewModel(private val drinkUseCase: DrinksUseCase) : ViewModel(),
         }
     }
 
-    private fun getDrinksByCategory(categoryId: Long) {
+     fun getDrinksByCategory(categoryId: Long) {
         viewModelScope.launch {
             drinkUseCase.drinksByCategory(categoryId).onStart {
                 _state.update { it.copy(isLoading = true, error = null) }
-            }.catch {
-                _state.update { it.copy(isLoading = false, error = it.error) }
+            }.catch { error->
+                _state.update { it.copy(isLoading = false, error = error.message) }
             }.collect { drink ->
                 _state.update {
                     it.copy(
@@ -48,6 +48,10 @@ class DrinksViewModel(private val drinkUseCase: DrinksUseCase) : ViewModel(),
                 }
             }
         }
+    }
+
+    private fun closeErrorDialog() {
+        _state.update { it.copy(error = null) }
     }
 
     sealed interface DrinksEvent {

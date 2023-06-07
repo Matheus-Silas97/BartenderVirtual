@@ -1,7 +1,7 @@
 package com.example.letsdrink.data.datasource
 
-import com.example.letsdrink.data.mapper.toDrinkDetailsEntity
-import com.example.letsdrink.data.mapper.toDrinkListEntity
+import com.example.letsdrink.data.mapper.convertDrinkDetailsEntity
+import com.example.letsdrink.data.mapper.convertDrinkListEntity
 import com.example.letsdrink.data.remote.service.DrinkService
 import com.example.letsdrink.domain.model.DrinkDetails
 import com.example.letsdrink.domain.model.Drinks
@@ -15,11 +15,11 @@ class DrinksRemoteDataSourceImpl(
 ) : DrinksRemoteDataSource {
     override suspend fun drinksByCategory(categoryId: Long): List<Drinks> =
         withContext(defaultDispatcher) {
-            service.drinksByCategory(categoryId).toDrinkListEntity()
+            service.drinksByCategory(categoryId).convertDrinkListEntity()
         }
 
     override suspend fun drinkDetails(id: Long): DrinkDetails =
         withContext(defaultDispatcher) {
-            service.getOneDrink(id = id).toDrinkDetailsEntity()
+            service.drinkDetails(id = id).convertDrinkDetailsEntity()
         }
 }

@@ -2,8 +2,9 @@ package com.example.letsdrink.presentation.home
 
 sealed class HomeInteraction {
 
-    object CloseErrorDialog : HomeInteraction()
+    data class NavigateNextScreen(val categoryId: Long, val categoryName: String) :
+        HomeInteraction()
 
-    object getCateories : HomeInteraction()
+    object CloseErrorDialog : HomeInteraction()
 
 }

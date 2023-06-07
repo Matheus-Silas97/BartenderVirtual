@@ -10,6 +10,7 @@ import kotlinx.coroutines.withContext
 class FavoritesDrinksLocalDataSourceImpl(
     private val appDatabase: AppDatabase
 ) : FavoritesDrinksLocalDataSource {
+
     override suspend fun allDrinks(): List<DrinkFavorite> = withContext(Dispatchers.IO) {
         return@withContext appDatabase.favorites().getAll().convertFavorite()
     }
@@ -22,4 +23,5 @@ class FavoritesDrinksLocalDataSourceImpl(
         return@withContext appDatabase.favorites()
             .deleteTraining(drink.convertToDrinkFavoriteEntity())
     }
+
 }

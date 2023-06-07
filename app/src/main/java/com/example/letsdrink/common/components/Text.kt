@@ -1,4 +1,4 @@
-package com.example.letsdrink.common.commons_custom
+package com.example.letsdrink.common.components
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +26,7 @@ fun TextSubTitle(text: String, modifier: Modifier = Modifier, textAlign: TextAli
         text = text,
         modifier = modifier,
         style = Typography.titleMedium,
+        fontWeight = FontWeight(600),
         textAlign = textAlign
     )
 }
@@ -36,7 +37,6 @@ fun TextNormal(text: String, modifier: Modifier = Modifier, textAlign: TextAlign
         text = text,
         modifier = modifier,
         style = Typography.bodyLarge,
-        color = Color.Black,
         textAlign = textAlign
     )
 }

@@ -4,8 +4,8 @@ sealed class IngredientsDetailsInteraction {
 
     object NavigationClickBackPressed : IngredientsDetailsInteraction()
 
-    data class SelectDrink(val drinkId: Long) : IngredientsDetailsInteraction()
+    object CloseErrorDialog : IngredientsDetailsInteraction()
 
-    object FavoriteDrink : IngredientsDetailsInteraction()
+    data class SelectDrink(val drinkId: Long) : IngredientsDetailsInteraction()
 
 }

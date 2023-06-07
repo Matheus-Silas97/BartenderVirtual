@@ -1,6 +1,7 @@
 package com.example.letsdrink.presentation.drink_details
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,33 +15,31 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.letsdrink.common.commons_custom.ImageUrl
-import com.example.letsdrink.common.commons_custom.ScaffoldCustom
-import com.example.letsdrink.common.commons_custom.TextNormal
-import com.example.letsdrink.common.commons_custom.TextSubTitle
-import com.example.letsdrink.common.commons_custom.TextTitle
+import com.example.letsdrink.common.components.ImageUrl
+import com.example.letsdrink.common.components.ScaffoldCustom
+import com.example.letsdrink.common.components.TextNormal
+import com.example.letsdrink.common.components.TextSubTitle
+import com.example.letsdrink.common.components.TextTitle
 import com.example.letsdrink.common.components.IngredientsCard
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.CardClickInteraction
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.NavigationClickBackPressed
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.ScreenEvent.GoBack
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.ScreenEvent.NavigateNextScreen
-import org.koin.androidx.compose.getViewModel
-import org.koin.core.parameter.parametersOf
 
 
 @Composable
 fun DrinkDetailsScreen(
     backStack: () -> Unit,
-    navigateNextScreen: (Long) -> Unit,
+    navigateIngredientDetailsScreen: (String) -> Unit,
     viewModel: DrinkDetailsViewModel
 ) {
-
     val state by viewModel.state.collectAsState()
+
     Content(uiState = state, interaction = viewModel::interact)
     EventConsumer(
         viewModel = viewModel,
         backStack = backStack,
-        navigateNextScreen = navigateNextScreen
+        navigateNextScreen = navigateIngredientDetailsScreen
     )
 }
 
@@ -48,13 +47,13 @@ fun DrinkDetailsScreen(
 private fun EventConsumer(
     viewModel: DrinkDetailsViewModel,
     backStack: () -> Unit,
-    navigateNextScreen: (Long) -> Unit,
+    navigateNextScreen: (String) -> Unit,
 ) {
     LaunchedEffect(key1 = Unit) {
         viewModel.event.collect { event ->
             when (event) {
                 GoBack -> backStack()
-                is NavigateNextScreen -> navigateNextScreen(event.drinkId)
+                is NavigateNextScreen -> navigateNextScreen(event.drinkName)
             }
         }
     }
@@ -63,6 +62,7 @@ private fun EventConsumer(
 @Composable
 private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsInteraction) -> Unit) {
     val lazyState = rememberLazyListState()
+
     ScaffoldCustom(
         titlePage = uiState.name,
         onBackPressedEvent = { interaction(NavigationClickBackPressed) },
@@ -72,25 +72,46 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp)
+                .padding(all = 12.dp)
         ) {
             ImageUrl(
                 url = uiState.image, modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp)
+                    .height(350.dp)
             )
             TextTitle(text = uiState.name)
 
+            Spacer(modifier = Modifier.height(height = 12.dp))
+
             TextSubTitle(text = "Ingredientes")
-            LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
+            LazyColumn(state = lazyState) {
                 items(items = uiState.ingredients) { ingredients ->
-                    IngredientsCard(ingredients) { id ->
-                        interaction(CardClickInteraction(id))
+                    IngredientsCard(ingredients) { name ->
+                        interaction(CardClickInteraction(name))
                     }
                 }
             }
-            TextSubTitle(text = "Modo de preparo")
-            TextNormal(text = uiState.prepareMode)
+
+            if (uiState.prepareMode.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(height = 12.dp))
+
+                TextSubTitle(text = "Modo de preparo")
+                TextNormal(text = uiState.prepareMode)
+            }
+
+            if (uiState.garnish.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(height = 12.dp))
+
+                TextSubTitle(text = "Guarnição")
+                TextNormal(text = uiState.garnish)
+            }
+
+            if (uiState.description.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(height = 12.dp))
+
+                TextSubTitle(text = "Descrição")
+                TextNormal(text = uiState.description)
+            }
         }
     }
 }

@@ -9,14 +9,19 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.letsdrink.common.navigation.RouterNavigation.DrinkRouter
+import com.example.letsdrink.common.navigation.BottomNavigationScreens.*
+import com.example.letsdrink.common.navigation.RoutesArguments.CATEGORY_ID
+import com.example.letsdrink.common.navigation.RoutesArguments.CATEGORY_NAME
+import com.example.letsdrink.common.navigation.RoutesNavigation.DETAILS_DRINKS_SCREEN
+import com.example.letsdrink.common.navigation.RoutesNavigation.DRINKS_SCREEN
+import com.example.letsdrink.common.navigation.RoutesNavigation.INGREDIENTS_DETAILS_SCREEN
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsScreen
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel
 import com.example.letsdrink.presentation.drinks.DrinksScreen
 import com.example.letsdrink.presentation.favorite.FavoriteDrinksScreen
 import com.example.letsdrink.presentation.home.HomeScreen
 import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsScreen
-import com.example.letsdrink.common.utils.second
+import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsViewModel
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -24,36 +29,42 @@ import org.koin.core.parameter.parametersOf
 fun NavigationNavGraph(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = BottomNavigationScreens.HomeScreen.route,
+        startDestination = HomeScreen.route,
         modifier = Modifier.padding(innerPadding)
     ) {
-        composable(route = BottomNavigationScreens.HomeScreen.route) {
+        composable(route = HomeScreen.route) {
             HomeScreen(goToDrinkScreen = { id, categoryName ->
                 navController.navigate(
-                    route = DrinkRouter.address(listOf(id.toString(), categoryName))
+                    route = "$DRINKS_SCREEN/$id/$categoryName"
                 )
             })
         }
 
-        composable(route = BottomNavigationScreens.FavoriteScreen.route) {
+        composable(route = FavoriteScreen.route) {
             FavoriteDrinksScreen(
                 goToDetailsDrinkScreen = { id ->
-                    navController.navigate(route = "${RoutesNavigation.DETAILS_DRINKS_SCREEN}/${id}")
+                    navController.navigate(route = "$DETAILS_DRINKS_SCREEN/$id")
                 }
             )
         }
 
         composable(
-            route = DrinkRouter.router,
+            route = "$DRINKS_SCREEN/{$CATEGORY_ID}/{$CATEGORY_NAME}",
             arguments = listOf(
-                navArgument(DrinkRouter.arguments!!.first()) { type = NavType.LongType },
-                navArgument(DrinkRouter.arguments!!.second()) { type = NavType.StringType })
+                navArgument(name = CATEGORY_ID) {
+                    type = NavType.LongType
+                    defaultValue = 0L
+                },
+                navArgument(name = CATEGORY_NAME) {
+                    type = NavType.StringType
+                    defaultValue = ""
+                })
         ) { backStackEntry ->
             DrinksScreen(
-                categoryId = backStackEntry.arguments?.getLong(DrinkRouter.arguments.first()) ?: 0L,
-                categoryName = backStackEntry.arguments?.getString(DrinkRouter.arguments.second()).orEmpty(),
+                categoryId = requireNotNull(backStackEntry.arguments?.getLong(CATEGORY_ID)),
+                categoryName = requireNotNull(backStackEntry.arguments?.getString(CATEGORY_NAME)),
                 goToDetailsDrinksScreen = { id ->
-                    navController.navigate(route = "${RoutesNavigation.DETAILS_DRINKS_SCREEN}/${id}")
+                    navController.navigate(route = "$DETAILS_DRINKS_SCREEN/${id}")
                 },
                 backPressed = {
                     navController.popBackStack()
@@ -61,35 +72,45 @@ fun NavigationNavGraph(navController: NavHostController, innerPadding: PaddingVa
         }
 
         composable(
-            route = "${RoutesNavigation.DETAILS_DRINKS_SCREEN}/{drink_id}",
+            route = "$DETAILS_DRINKS_SCREEN/{${RoutesArguments.DRINK_ID}}",
             arguments = listOf(
-                navArgument("drink_id") {
+                navArgument(name = RoutesArguments.DRINK_ID) {
                     type = NavType.LongType
                     defaultValue = 0L
                 }
             )
         ) { backStackEntry ->
-            val drinkId = requireNotNull(backStackEntry.arguments?.getLong("drink_id"))
+            val drinkId =
+                requireNotNull(backStackEntry.arguments?.getLong(RoutesArguments.DRINK_ID))
             val viewModel = getViewModel<DrinkDetailsViewModel>(
                 parameters = { parametersOf(drinkId) }
             )
             DrinkDetailsScreen(
-                backStack = { navController.popBackStack() },
-                navigateNextScreen = { id ->
-                    navController.navigate(route = "${RoutesNavigation.INGREDIENTS_DETAILS_SCREEN}/$id")
-                },
                 viewModel = viewModel,
+                backStack = { navController.popBackStack() },
+                navigateIngredientDetailsScreen = { name ->
+                    navController.navigate(route = "$INGREDIENTS_DETAILS_SCREEN/$name")
+                }
             )
         }
-        composable(route = "${RoutesNavigation.INGREDIENTS_DETAILS_SCREEN}/{ingredient_id}",
+
+        composable(route = "$INGREDIENTS_DETAILS_SCREEN/{${RoutesArguments.INGREDIENT_NAME}}",
             arguments = listOf(
-                navArgument("ingredient_id") { type = NavType.LongType }
+                navArgument(name = RoutesArguments.INGREDIENT_NAME) {
+                    type = NavType.StringType
+                    defaultValue = ""
+                }
             )) { backStackEntry ->
+            val drinkName =
+                requireNotNull(backStackEntry.arguments?.getString(RoutesArguments.INGREDIENT_NAME))
+            val viewModel = getViewModel<IngredientsDetailsViewModel>(
+                parameters = { parametersOf(drinkName) }
+            )
             IngredientsDetailsScreen(
-                ingredientId = backStackEntry.arguments?.getLong("ingredient_id") ?: 0L,
+                viewModel = viewModel,
                 backStack = { navController.popBackStack() },
                 goToDetailsDrinkScreen = { id ->
-                    navController.navigate(route = "${RoutesNavigation.DETAILS_DRINKS_SCREEN}/${id}")
+                    navController.navigate(route = "$DETAILS_DRINKS_SCREEN/${id}")
                 }
             )
         }

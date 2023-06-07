@@ -10,10 +10,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.letsdrink.common.commons_custom.ScaffoldCustom
+import com.example.letsdrink.common.components.ScaffoldCustom
 import com.example.letsdrink.common.components.FavoriteCard
-import com.example.letsdrink.common.utils.orZero
-import com.example.letsdrink.presentation.favorite.FavoriteViewModel.FavoriteScreenEvent
+import com.example.letsdrink.common.utils.extensions.orZero
+import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.RemoveFavorite
+import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.SelectDrink
 import com.example.letsdrink.presentation.favorite.FavoriteViewModel.FavoriteScreenEvent.*
 import org.koin.androidx.compose.getViewModel
 
@@ -59,9 +60,9 @@ private fun Content(state: FavoritesDrinksState, interaction: (FavoriteDrinksInt
             items(state.favorites) { favorite ->
                 FavoriteCard(
                     model = favorite,
-                    onClick = { interaction(FavoriteDrinksInteraction.SelectDrink(favorite.id.orZero())) },
+                    onClick = { interaction(SelectDrink(favorite.id.orZero())) },
                     remove = {
-                        interaction(FavoriteDrinksInteraction.RemoveFavorite(drink = favorite))
+                        interaction(RemoveFavorite(drink = favorite))
                     })
             }
         }
