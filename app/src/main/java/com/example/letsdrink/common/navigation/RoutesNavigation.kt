@@ -1,8 +1,5 @@
 package com.example.letsdrink.common.navigation
 
-import com.example.letsdrink.common.utils.Router
-import com.example.letsdrink.common.utils.RouterImpl
-
 object RoutesNavigation {
     const val HOME_SCREEN = "home_screen"
     const val DRINKS_SCREEN = "drinks_screen"
@@ -12,7 +9,7 @@ object RoutesNavigation {
 }
 
 object RoutesArguments {
-    const val INGREDIENT_NAME = "ingredient_name"
+    const val INGREDIENT_ID = "ingredient_id"
     const val DRINK_ID = "drink_id"
     const val DRINK_NAME = "drink_name"
     const val CATEGORY_ID = "category_id"

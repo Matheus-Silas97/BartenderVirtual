@@ -30,7 +30,7 @@ import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.Sc
 @Composable
 fun DrinkDetailsScreen(
     backStack: () -> Unit,
-    navigateIngredientDetailsScreen: (String) -> Unit,
+    navigateIngredientDetailsScreen: (Long) -> Unit,
     viewModel: DrinkDetailsViewModel
 ) {
     val state by viewModel.state.collectAsState()
@@ -47,7 +47,7 @@ fun DrinkDetailsScreen(
 private fun EventConsumer(
     viewModel: DrinkDetailsViewModel,
     backStack: () -> Unit,
-    navigateNextScreen: (String) -> Unit,
+    navigateNextScreen: (Long) -> Unit,
 ) {
     LaunchedEffect(key1 = Unit) {
         viewModel.event.collect { event ->
@@ -86,8 +86,8 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
             TextSubTitle(text = "Ingredientes")
             LazyColumn(state = lazyState) {
                 items(items = uiState.ingredients) { ingredients ->
-                    IngredientsCard(ingredients) { name ->
-                        interaction(CardClickInteraction(name))
+                    IngredientsCard(ingredients) { id ->
+                        interaction(CardClickInteraction(id))
                     }
                 }
             }

@@ -18,7 +18,7 @@ val presentationModule = module {
 
     viewModel { params ->
         IngredientsDetailsViewModel(
-            ingredientName = params[0],
+            ingredientId = params[0],
             ingredientsUseCase = get()
         )
     }

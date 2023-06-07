@@ -88,23 +88,23 @@ fun NavigationNavGraph(navController: NavHostController, innerPadding: PaddingVa
             DrinkDetailsScreen(
                 viewModel = viewModel,
                 backStack = { navController.popBackStack() },
-                navigateIngredientDetailsScreen = { name ->
-                    navController.navigate(route = "$INGREDIENTS_DETAILS_SCREEN/$name")
+                navigateIngredientDetailsScreen = { id ->
+                    navController.navigate(route = "$INGREDIENTS_DETAILS_SCREEN/$id")
                 }
             )
         }
 
-        composable(route = "$INGREDIENTS_DETAILS_SCREEN/{${RoutesArguments.INGREDIENT_NAME}}",
+        composable(route = "$INGREDIENTS_DETAILS_SCREEN/{${RoutesArguments.INGREDIENT_ID}}",
             arguments = listOf(
-                navArgument(name = RoutesArguments.INGREDIENT_NAME) {
-                    type = NavType.StringType
-                    defaultValue = ""
+                navArgument(name = RoutesArguments.INGREDIENT_ID) {
+                    type = NavType.LongType
+                    defaultValue = 0L
                 }
             )) { backStackEntry ->
-            val drinkName =
-                requireNotNull(backStackEntry.arguments?.getString(RoutesArguments.INGREDIENT_NAME))
+            val drinkId =
+                requireNotNull(backStackEntry.arguments?.getLong(RoutesArguments.INGREDIENT_ID))
             val viewModel = getViewModel<IngredientsDetailsViewModel>(
-                parameters = { parametersOf(drinkName) }
+                parameters = { parametersOf(drinkId) }
             )
             IngredientsDetailsScreen(
                 viewModel = viewModel,

@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class IngredientsDetailsViewModel(
-    private val ingredientName: String,
+    private val ingredientId: Long,
     private val ingredientsUseCase: IngredientsUseCase
 ) : ViewModel(), Event<IngredientsDetailsScreenEvent> by EventImpl() {
 
@@ -23,7 +23,7 @@ class IngredientsDetailsViewModel(
     val state: StateFlow<IngredientsDetailsState> = _state
 
     init {
-        ingredientsDetails(ingredientName = ingredientName)
+        ingredientsDetails(ingredientId = ingredientId)
     }
 
     fun interact(interaction: IngredientsDetailsInteraction) {
@@ -38,16 +38,20 @@ class IngredientsDetailsViewModel(
         }
     }
 
-    private fun ingredientsDetails(ingredientName: String) {
+    private fun ingredientsDetails(ingredientId: Long) {
         viewModelScope.launch {
-            ingredientsUseCase.ingredientsDetails(ingredientName = ingredientName).onStart {
+            ingredientsUseCase.ingredientsDetails(ingredientId = ingredientId).onStart {
                 _state.update { it.copy(isLoading = true, error = null) }
             }.catch {
                 _state.update { it.copy(isLoading = false, error = it.error) }
-            }.collect { ingredients ->
+            }.collect { ingredient ->
                 _state.update {
                     it.copy(
-                        drinks = ingredients,
+                        id = ingredient.id,
+                        name = ingredient.name,
+                        description = ingredient.description,
+                        image = ingredient.image,
+                        drinks = ingredient.relatedDrinks,
                         isLoading = false,
                         error = null
                     )

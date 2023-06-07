@@ -3,6 +3,7 @@ package com.example.letsdrink.data.remote.service
 import com.example.letsdrink.data.remote.response.CategoryResponse
 import com.example.letsdrink.data.remote.response.DrinkDetailsResponse
 import com.example.letsdrink.data.remote.response.DrinkResponse
+import com.example.letsdrink.data.remote.response.IngredientsDetailsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -18,8 +19,8 @@ interface DrinkService {
     @GET("/drinks/{drink_id}.json")
     suspend fun drinkDetails(@Path("drink_id") id: Long): DrinkDetailsResponse
 
-    @GET("drinks.json?")
-    suspend fun drinksByIngredient(@Query("ingredient_names") ingredientName: String): List<DrinkResponse>
+    @GET("ingredients/{ingredient_id}.json")
+    suspend fun ingredientDetails(@Path("ingredient_id") ingredientId: Long): IngredientsDetailsResponse
 
 
 }

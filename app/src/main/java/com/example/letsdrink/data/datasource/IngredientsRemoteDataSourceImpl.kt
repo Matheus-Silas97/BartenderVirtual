@@ -1,8 +1,10 @@
 package com.example.letsdrink.data.datasource
 
 import com.example.letsdrink.data.mapper.convertDrinkListEntity
+import com.example.letsdrink.data.mapper.convertIngredientsDetails
 import com.example.letsdrink.data.remote.service.DrinkService
 import com.example.letsdrink.domain.model.Drinks
+import com.example.letsdrink.domain.model.Ingredients
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -12,9 +14,9 @@ class IngredientsRemoteDataSourceImpl(
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : IngredientsRemoteDataSource {
 
-    override suspend fun ingredientsDetails(ingredientName: String): List<Drinks> =
+    override suspend fun ingredientsDetails(ingredientId: Long): Ingredients =
         withContext(defaultDispatcher) {
-            service.drinksByIngredient(ingredientName = ingredientName).convertDrinkListEntity()
+            service.ingredientDetails(ingredientId = ingredientId).convertIngredientsDetails()
         }
 
 }

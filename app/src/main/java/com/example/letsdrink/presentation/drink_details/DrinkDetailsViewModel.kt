@@ -36,7 +36,7 @@ class DrinkDetailsViewModel(
         when (interaction) {
             is NavigationClickBackPressed -> sendEvent(event = GoBack)
             is SaveDrinkInFavorite -> favoriteDrink(interaction.drink)
-            is CardClickInteraction -> sendEvent(event = NavigateNextScreen(interaction.drinkName))
+            is CardClickInteraction -> sendEvent(event = NavigateNextScreen(interaction.drinkId))
         }
     }
 
@@ -69,6 +69,6 @@ class DrinkDetailsViewModel(
 
     sealed interface ScreenEvent {
         object GoBack : ScreenEvent
-        data class NavigateNextScreen(val drinkName: String) : ScreenEvent
+        data class NavigateNextScreen(val drinkName: Long) : ScreenEvent
     }
 }
