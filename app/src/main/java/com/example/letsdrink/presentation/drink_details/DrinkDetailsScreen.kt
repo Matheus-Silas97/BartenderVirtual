@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -61,7 +63,7 @@ private fun EventConsumer(
 
 @Composable
 private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsInteraction) -> Unit) {
-    val lazyState = rememberLazyListState()
+    val verticalScrollState = rememberScrollState()
 
     ScaffoldCustom(
         titlePage = uiState.name,
@@ -73,6 +75,7 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
             modifier = Modifier
                 .fillMaxSize()
                 .padding(all = 12.dp)
+                .verticalScroll(state =verticalScrollState)
         ) {
             ImageUrl(
                 url = uiState.image, modifier = Modifier
@@ -84,13 +87,13 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
             Spacer(modifier = Modifier.height(height = 12.dp))
 
             TextSubTitle(text = "Ingredientes")
-            LazyColumn(state = lazyState) {
-                items(items = uiState.ingredients) { ingredients ->
-                    IngredientsCard(ingredients) { id ->
-                        interaction(CardClickInteraction(id))
-                    }
+
+            for (ingredient in uiState.ingredients) {
+                IngredientsCard(ingredient) { id ->
+                    interaction(CardClickInteraction(id))
                 }
             }
+
 
             if (uiState.prepareMode.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(height = 12.dp))

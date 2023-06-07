@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -61,7 +63,7 @@ fun Content(
     uiState: IngredientsDetailsState,
     interaction: (IngredientsDetailsInteraction) -> Unit
 ) {
-    val lazyState = rememberLazyListState()
+    val verticalScrollState = rememberScrollState()
 
     ScaffoldCustom(
         titlePage = uiState.name,
@@ -72,6 +74,7 @@ fun Content(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(all = 12.dp)
+                .verticalScroll(state = verticalScrollState)
         ) {
             ImageUrl(
                 url = uiState.image, modifier = Modifier
@@ -91,15 +94,13 @@ fun Content(
             Spacer(modifier = Modifier.height(height = 12.dp))
 
             TextSubTitle(text = "Drinks que utilizam esses ingredientes")
-            LazyColumn(state = lazyState) {
-                items(items = uiState.drinks) { drink ->
-                    DrinkCard(model = drink) {
-                        interaction(SelectDrink(drinkId = drink.id.orZero()))
 
-                    }
+            for (drink in uiState.drinks) {
+                DrinkCard(model = drink) {
+                    interaction(SelectDrink(drinkId = drink.id.orZero()))
+
                 }
             }
-
         }
     }
 }
