@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.letsdrink.common.utils.Event
 import com.example.letsdrink.common.utils.EventImpl
+import com.example.letsdrink.domain.model.DrinkDetails
 import com.example.letsdrink.domain.model.DrinkFavorite
 import com.example.letsdrink.domain.usecase.FavoriteUseCase
 import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.RemoveFavorite
@@ -23,11 +24,13 @@ class FavoriteViewModel(private val favoriteUseCase: FavoriteUseCase) : ViewMode
     private val _state = MutableStateFlow(FavoritesDrinksState())
     val state: StateFlow<FavoritesDrinksState> = _state
 
-    //TODO iniciar função
+    init {
+        allFavorites()
+    }
 
     fun interact(interaction: FavoriteDrinksInteraction) {
         when (interaction) {
-            is RemoveFavorite -> deleteFavorite(drink = interaction.drink)
+            is RemoveFavorite -> removeFavoriteDrink(drinkId = interaction.drinkId)
             is SelectDrink -> sendEvent(event = NavigateNextScreen(drinkId = interaction.drinkId))
         }
     }
@@ -50,20 +53,20 @@ class FavoriteViewModel(private val favoriteUseCase: FavoriteUseCase) : ViewMode
         }
     }
 
-    private fun deleteFavorite(drink: DrinkFavorite) {
+    private fun removeFavoriteDrink(drinkId: Long) {
         viewModelScope.launch {
-            favoriteUseCase.deleteDrink(drinkFavorite = drink).onStart {
+            favoriteUseCase.deleteDrink(drinkId = drinkId).onStart {
                 _state.update { it.copy(isLoading = true, error = null) }
             }.catch {
                 _state.update { it.copy(isLoading = false, error = it.error) }
-            }.collect { favorites ->
+            }.collect { isFavorite ->
                 _state.update {
                     it.copy(
-//                        favorites = favorites,
                         isLoading = false,
                         error = null
                     )
                 }
+                allFavorites()
             }
         }
     }
@@ -71,6 +74,6 @@ class FavoriteViewModel(private val favoriteUseCase: FavoriteUseCase) : ViewMode
 
     sealed interface FavoriteScreenEvent {
         data class NavigateNextScreen(val drinkId: Long) : FavoriteScreenEvent
-        data class RemoveDrinkFromFavorite(val drink: DrinkFavorite) : FavoriteScreenEvent
+        data class RemoveDrinkFromFavorite(val drinkId: Long) : FavoriteScreenEvent
     }
 }

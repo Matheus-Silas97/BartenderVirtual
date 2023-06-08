@@ -26,11 +26,13 @@ import org.koin.dsl.module
 
 val dataModule = module {
 
-    factory { Room.databaseBuilder(get(), AppDatabase::class.java, "lets_drink_database").build() }
+    factory { Room.databaseBuilder(get(), AppDatabase::class.java, "lets_drink_db").build() }
 
     single { Apifactory.create(serviceClass = DrinkService::class.java) }
 
     single { Dispatchers.IO }
+
+
 
     factory<DrinksRemoteDataSource> { DrinksRemoteDataSourceImpl(service = get(), defaultDispatcher = get()) }
 
@@ -39,7 +41,6 @@ val dataModule = module {
     factory<IngredientsRemoteDataSource> { IngredientsRemoteDataSourceImpl(service = get()) }
 
     factory<FavoritesDrinksLocalDataSource> { FavoritesDrinksLocalDataSourceImpl(appDatabase = get()) }
-
 
 
 

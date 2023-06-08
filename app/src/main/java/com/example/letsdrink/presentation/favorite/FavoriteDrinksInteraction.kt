@@ -7,6 +7,6 @@ sealed class FavoriteDrinksInteraction {
 
     data class SelectDrink(val drinkId: Long) : FavoriteDrinksInteraction()
 
-    data class RemoveFavorite(val drink: DrinkFavorite) : FavoriteDrinksInteraction()
+    data class RemoveFavorite(val drinkId: Long) : FavoriteDrinksInteraction()
 
 }

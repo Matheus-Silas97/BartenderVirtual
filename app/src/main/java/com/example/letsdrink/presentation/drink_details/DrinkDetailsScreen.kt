@@ -1,6 +1,9 @@
 package com.example.letsdrink.presentation.drink_details
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,8 +18,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.letsdrink.R
 import com.example.letsdrink.common.components.ImageUrl
 import com.example.letsdrink.common.components.ScaffoldCustom
 import com.example.letsdrink.common.components.TextNormal
@@ -75,14 +81,33 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
             modifier = Modifier
                 .fillMaxSize()
                 .padding(all = 12.dp)
-                .verticalScroll(state =verticalScrollState)
+                .verticalScroll(state = verticalScrollState)
         ) {
             ImageUrl(
                 url = uiState.image, modifier = Modifier
                     .fillMaxWidth()
                     .height(350.dp)
             )
-            TextTitle(text = uiState.name)
+
+            Row {
+                TextTitle(text = uiState.name, modifier = Modifier.weight(1F))
+
+                var favoriteIcon = painterResource(id = R.drawable.ic_favorite_unselect)
+                if (uiState.isFavorite) {
+                    favoriteIcon = painterResource(id = R.drawable.ic_favorite_select)
+                }
+                Image(
+                    painter = favoriteIcon,
+                    contentDescription = "favorite icon",
+                    modifier = Modifier
+                        .align(alignment = Alignment.CenterVertically)
+                        .clickable {
+                            interaction(DrinkDetailsInteraction.FavoriteDrink(uiState.id))
+                        })
+
+            }
+
+
 
             Spacer(modifier = Modifier.height(height = 12.dp))
 
@@ -93,7 +118,6 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
                     interaction(CardClickInteraction(id))
                 }
             }
-
 
             if (uiState.prepareMode.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(height = 12.dp))

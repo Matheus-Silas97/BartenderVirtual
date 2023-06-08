@@ -10,6 +10,7 @@ data class DrinkDetailsState(
     val garnish: String = "",
     val ingredients: List<IngredientDrinkDetails> = listOf(),
     val prepareMode: String = "",
+    val isFavorite: Boolean = false,
     val isLoading: Boolean = false,
     val error: String? = null
 )

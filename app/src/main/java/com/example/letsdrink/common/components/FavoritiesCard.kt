@@ -38,7 +38,7 @@ fun FavoriteCard(model: DrinkFavorite, onClick: () -> Unit, remove: (id: DrinkFa
                     color = Color.White,
                     shape = RoundedCornerShape(8.dp)
                 )
-                .padding(all = 4.dp)
+                .padding(all = 8.dp)
 
         ) {
             ImageUrl(
@@ -52,15 +52,17 @@ fun FavoriteCard(model: DrinkFavorite, onClick: () -> Unit, remove: (id: DrinkFa
             TextNormal(
                 text = model.name, textAlign = TextAlign.Center, modifier = Modifier
                     .padding(start = 8.dp)
+                    .weight(1f)
                     .align(Alignment.CenterVertically)
             )
 
             Icon(
-                painter = painterResource(id = R.drawable.ic_favorite),
+                painter = painterResource(id = R.drawable.ic_favorite_select),
                 contentDescription = "favorite icon",
+                tint = Color.Red,
                 modifier = Modifier
+                    .align(Alignment.CenterVertically)
                     .clickable { remove(model) }
-//                    .align(alignment = Alignment.CenterEnd)
             )
         }
     }

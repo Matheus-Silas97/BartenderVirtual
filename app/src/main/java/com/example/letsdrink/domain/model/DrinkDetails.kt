@@ -6,6 +6,6 @@ data class DrinkDetails(
     val image: String = "",
     val description: String = "",
     val garnish: String = "",
-    val modePrepare: String = "",
+    val prepareMode: String = "",
     val ingredients: List<IngredientDrinkDetails> = listOf()
 )
