@@ -54,8 +54,6 @@ private fun EventConsumer(
                     event.categoryId,
                     event.categoryName
                 )
-
-                HomeScreenEvent.CloseErrorDialog -> viewModel.interact(interaction = CloseErrorDialog)
             }
         }
     }

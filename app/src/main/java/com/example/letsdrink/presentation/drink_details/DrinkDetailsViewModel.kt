@@ -8,6 +8,7 @@ import com.example.letsdrink.domain.model.DrinkDetails
 import com.example.letsdrink.domain.usecase.DrinksUseCase
 import com.example.letsdrink.domain.usecase.FavoriteUseCase
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.CardClickInteraction
+import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.CloseErrorDialog
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.FavoriteDrink
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.NavigationClickBackPressed
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.ScreenEvent
@@ -40,6 +41,7 @@ class DrinkDetailsViewModel(
             is NavigationClickBackPressed -> sendEvent(event = GoBack)
             is FavoriteDrink -> checkFavoriteEvent(interaction.drinkId)
             is CardClickInteraction -> sendEvent(event = NavigateNextScreen(interaction.drinkId))
+            CloseErrorDialog -> closeErrorDialog()
         }
     }
 
@@ -137,6 +139,10 @@ class DrinkDetailsViewModel(
                 checkIfDrinkIsFavorite(drinkId = drinkId)
             }
         }
+    }
+
+    private fun closeErrorDialog(){
+        _state.update { it.copy(isLoading = false, error = null) }
     }
 
     sealed interface ScreenEvent {

@@ -18,14 +18,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.example.letsdrink.common.components.ImageUrl
 import com.example.letsdrink.common.components.ScaffoldCustom
 import com.example.letsdrink.common.components.TextSubTitle
 import com.example.letsdrink.common.components.TextTitle
 import com.example.letsdrink.common.components.DrinkCard
 import com.example.letsdrink.common.components.EmptyListComponent
+import com.example.letsdrink.common.components.ErrorDialog
 import com.example.letsdrink.common.theme.Typography
 import com.example.letsdrink.common.utils.extensions.orZero
+import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsInteraction.CloseErrorDialog
 import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsInteraction.NavigationClickBackPressed
 import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsInteraction.SelectDrink
 import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsViewModel.IngredientsDetailsScreenEvent
@@ -72,6 +75,12 @@ fun Content(
         showNavigationIcon = true,
         isLoading = uiState.isLoading
     ) {
+        if (!uiState.error.isNullOrEmpty()) {
+            ErrorDialog(uiState.error, modifier = Modifier.zIndex(1f)) {
+                interaction(CloseErrorDialog)
+            }
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()

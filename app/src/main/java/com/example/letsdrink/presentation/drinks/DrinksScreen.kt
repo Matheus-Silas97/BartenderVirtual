@@ -14,10 +14,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.example.letsdrink.common.components.TopBar
 import com.example.letsdrink.common.components.DrinkCard
 import com.example.letsdrink.common.components.EmptyListComponent
+import com.example.letsdrink.common.components.ErrorDialog
+import com.example.letsdrink.common.components.LoadingComponent
 import com.example.letsdrink.common.utils.extensions.orZero
+import com.example.letsdrink.presentation.drinks.DrinksInteraction.CloseErrorDialog
 import com.example.letsdrink.presentation.drinks.DrinksInteraction.GoBackScreen
 import com.example.letsdrink.presentation.drinks.DrinksViewModel.DrinksEvent
 import com.example.letsdrink.presentation.drinks.DrinksViewModel.DrinksEvent.NavigateDrinkDetailsScreen
@@ -33,7 +37,7 @@ fun DrinksScreen(
 ) {
 
     val state by viewModel.state.collectAsState()
-    Content(categoryName = categoryName, UiState = state, interaction = viewModel::interact)
+    Content(categoryName = categoryName, uiState = state, interaction = viewModel::interact)
     EventConsumer(
         viewModel = viewModel,
         backPressed = backPressed,
@@ -66,7 +70,7 @@ private fun EventConsumer(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Content(categoryName: String, UiState: DrinksState, interaction: (DrinksInteraction) -> Unit) {
+fun Content(categoryName: String, uiState: DrinksState, interaction: (DrinksInteraction) -> Unit) {
     val lazyState = rememberLazyListState()
 
     Scaffold(
@@ -81,17 +85,31 @@ fun Content(categoryName: String, UiState: DrinksState, interaction: (DrinksInte
                     .padding(it)
                     .fillMaxSize()
             ) {
+//                if (uiState.isLoading) {
+//                    LoadingComponent(
+//                        modifier = Modifier
+//                            .zIndex(1f)
+//                    )
+//                }
+//
+//
+                if (!uiState.error.isNullOrEmpty()) {
+                    ErrorDialog(uiState.error, modifier = Modifier.zIndex(1f)) {
+                        interaction(CloseErrorDialog)
+                    }
+                }
+
                 LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
-                    if (UiState.drinks.isNotEmpty()) {
-                        items(items = UiState.drinks) { drink ->
+                    if (uiState.drinks.isNotEmpty()) {
+                        items(items = uiState.drinks) { drink ->
                             DrinkCard(drink) {
                                 interaction(DrinksInteraction.SelectDrink(drinkId = drink.id.orZero()))
                             }
                         }
-                    }else{
-                       item {
-                           EmptyListComponent("Nenhum drink encontrado")
-                       }
+                    } else {
+                        item {
+                            EmptyListComponent("Nenhum drink encontrado")
+                        }
                     }
                 }
             }

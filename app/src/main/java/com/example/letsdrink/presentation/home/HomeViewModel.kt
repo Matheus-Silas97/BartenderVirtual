@@ -61,9 +61,6 @@ class HomeViewModel(private val categoryUseCase: CategoryUseCase) : ViewModel(),
     sealed interface HomeScreenEvent {
         data class NavigateNextScreen(val categoryId: Long, val categoryName: String) :
             HomeScreenEvent
-
-        object CloseErrorDialog : HomeScreenEvent
-
     }
 
 }

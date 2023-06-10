@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.letsdrink.common.utils.Event
 import com.example.letsdrink.common.utils.EventImpl
 import com.example.letsdrink.domain.usecase.DrinksUseCase
+import com.example.letsdrink.presentation.drinks.DrinksInteraction.CloseErrorDialog
 import com.example.letsdrink.presentation.drinks.DrinksInteraction.GoBackScreen
 import com.example.letsdrink.presentation.drinks.DrinksInteraction.SelectDrink
 import com.example.letsdrink.presentation.drinks.DrinksViewModel.DrinksEvent
@@ -29,6 +30,7 @@ class DrinksViewModel(private val drinkUseCase: DrinksUseCase) : ViewModel(),
         when (interaction) {
             is SelectDrink -> sendEvent(event = NavigateDrinkDetailsScreen(interaction.drinkId))
             is GoBackScreen -> sendEvent(event = GoBack)
+            CloseErrorDialog -> closeErrorDialog()
         }
     }
 

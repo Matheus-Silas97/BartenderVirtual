@@ -7,6 +7,7 @@ import com.example.letsdrink.common.utils.EventImpl
 import com.example.letsdrink.domain.model.DrinkDetails
 import com.example.letsdrink.domain.model.DrinkFavorite
 import com.example.letsdrink.domain.usecase.FavoriteUseCase
+import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.CloseErrorDialog
 import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.RemoveFavorite
 import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.SelectDrink
 import com.example.letsdrink.presentation.favorite.FavoriteViewModel.FavoriteScreenEvent
@@ -32,6 +33,7 @@ class FavoriteViewModel(private val favoriteUseCase: FavoriteUseCase) : ViewMode
         when (interaction) {
             is RemoveFavorite -> removeFavoriteDrink(drinkId = interaction.drinkId)
             is SelectDrink -> sendEvent(event = NavigateNextScreen(drinkId = interaction.drinkId))
+            CloseErrorDialog -> closeErrorDialog()
         }
     }
 
@@ -69,6 +71,10 @@ class FavoriteViewModel(private val favoriteUseCase: FavoriteUseCase) : ViewMode
                 allFavorites()
             }
         }
+    }
+
+    private fun closeErrorDialog(){
+        _state.update { it.copy(error = null) }
     }
 
 

@@ -9,9 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -27,17 +24,17 @@ import com.example.letsdrink.R
 import com.example.letsdrink.common.components.EmptyListComponent
 import com.example.letsdrink.common.components.ErrorDialog
 import com.example.letsdrink.common.components.ImageUrl
+import com.example.letsdrink.common.components.IngredientsCard
 import com.example.letsdrink.common.components.ScaffoldCustom
 import com.example.letsdrink.common.components.TextNormal
 import com.example.letsdrink.common.components.TextSubTitle
 import com.example.letsdrink.common.components.TextTitle
-import com.example.letsdrink.common.components.IngredientsCard
-import com.example.letsdrink.common.components.LoadingComponent
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.CardClickInteraction
+import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.CloseErrorDialog
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.NavigationClickBackPressed
+import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.ScreenEvent
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.ScreenEvent.GoBack
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.ScreenEvent.NavigateNextScreen
-import com.example.letsdrink.presentation.home.HomeInteraction.CloseErrorDialog
 
 
 @Composable
@@ -82,6 +79,13 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
         showNavigationIcon = true,
         isLoading = uiState.isLoading
     ) {
+
+        if (!uiState.error.isNullOrEmpty()) {
+            ErrorDialog(uiState.error, modifier = Modifier.zIndex(1f)) {
+                interaction(CloseErrorDialog)
+            }
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -146,7 +150,6 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
                 TextSubTitle(text = "Descrição")
                 TextNormal(text = uiState.description)
             }
-
 
 
         }
