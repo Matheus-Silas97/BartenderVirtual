@@ -5,13 +5,15 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.example.letsdrink.R
 
 @Composable
-fun ErrorDialog(errorMsg: String?, onDismiss: () -> Unit) {
+fun ErrorDialog(errorMsg: String?, modifier: Modifier = Modifier, onDismiss: () -> Unit) {
     AlertDialog(
+        modifier = modifier,
         onDismissRequest = { },
         title = { Text(text = stringResource(R.string.error)) },
         text = {

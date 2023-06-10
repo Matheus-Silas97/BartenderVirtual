@@ -1,6 +1,8 @@
 package com.example.letsdrink.presentation.home
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells.Fixed
@@ -17,9 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.example.letsdrink.R.string
 import com.example.letsdrink.common.components.TopBar
 import com.example.letsdrink.common.components.CategoryCard
+import com.example.letsdrink.common.components.EmptyListComponent
 import com.example.letsdrink.common.components.ErrorDialog
 import com.example.letsdrink.common.components.LoadingComponent
 import com.example.letsdrink.presentation.home.HomeInteraction.*
@@ -69,16 +73,16 @@ fun Content(state: HomeState, interaction: (HomeInteraction) -> Unit) {
             GridCategories(paddingValues, state, interaction)
 
             if (state.isLoading) {
-                LoadingComponent()
-                CircularProgressIndicator(
+                LoadingComponent(
                     modifier = Modifier
-                        .size(40.dp)
-                        .scale(0.8f)
+                        .zIndex(1f)
+                        .padding(paddingValues = paddingValues)
                 )
             }
 
+
             if (!state.error.isNullOrEmpty()) {
-                ErrorDialog(state.error) {
+                ErrorDialog(state.error, modifier = Modifier.zIndex(1f)) {
                     interaction(CloseErrorDialog)
                 }
             }
@@ -91,19 +95,30 @@ private fun GridCategories(
     uiState: HomeState,
     interaction: (HomeInteraction) -> Unit
 ) {
-    LazyVerticalGrid(
-        modifier = Modifier.padding(paddingValues),
-        columns = Fixed(count = 2),
-        contentPadding = PaddingValues(all = 16.dp),
-    ) {
-        items(items = uiState.categories) { category ->
-            CategoryCard(category) { categoryId, categoryName ->
-                interaction(
-                    NavigateNextScreen(
-                        categoryId = categoryId,
-                        categoryName = categoryName
+    if (uiState.categories.isEmpty()) {
+        EmptyListComponent(
+            msg = "Sem Categorias",
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues = paddingValues)
+        )
+    } else {
+        LazyVerticalGrid(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize(),
+            columns = Fixed(count = 2),
+            contentPadding = PaddingValues(all = 16.dp),
+        ) {
+            items(items = uiState.categories) { category ->
+                CategoryCard(category) { categoryId, categoryName ->
+                    interaction(
+                        NavigateNextScreen(
+                            categoryId = categoryId,
+                            categoryName = categoryName
+                        )
                     )
-                )
+                }
             }
         }
     }

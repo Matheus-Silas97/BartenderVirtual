@@ -23,8 +23,7 @@ fun IngredientsCard(model: IngredientDrinkDetails, selectIngredient: (drinkId: L
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp),
+            .fillMaxWidth(),
         onClick = { selectIngredient(model.id) }
     ) {
         Row(
@@ -48,7 +47,8 @@ fun IngredientsCard(model: IngredientDrinkDetails, selectIngredient: (drinkId: L
             TextNormal(
                 text = model.name, textAlign = TextAlign.Center, modifier = Modifier
                     .padding(start = 8.dp)
-                    .align(Alignment.CenterVertically)
+                    .align(Alignment.CenterVertically),
+                maxLines = 1
             )
         }
     }

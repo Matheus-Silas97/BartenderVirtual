@@ -22,17 +22,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.example.letsdrink.R
+import com.example.letsdrink.common.components.EmptyListComponent
+import com.example.letsdrink.common.components.ErrorDialog
 import com.example.letsdrink.common.components.ImageUrl
 import com.example.letsdrink.common.components.ScaffoldCustom
 import com.example.letsdrink.common.components.TextNormal
 import com.example.letsdrink.common.components.TextSubTitle
 import com.example.letsdrink.common.components.TextTitle
 import com.example.letsdrink.common.components.IngredientsCard
+import com.example.letsdrink.common.components.LoadingComponent
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.CardClickInteraction
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.NavigationClickBackPressed
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.ScreenEvent.GoBack
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.ScreenEvent.NavigateNextScreen
+import com.example.letsdrink.presentation.home.HomeInteraction.CloseErrorDialog
 
 
 @Composable
@@ -104,20 +109,22 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
                         .clickable {
                             interaction(DrinkDetailsInteraction.FavoriteDrink(uiState.id))
                         })
-
             }
-
-
 
             Spacer(modifier = Modifier.height(height = 12.dp))
 
             TextSubTitle(text = "Ingredientes")
 
-            for (ingredient in uiState.ingredients) {
-                IngredientsCard(ingredient) { id ->
-                    interaction(CardClickInteraction(id))
+            if (uiState.ingredients.isNotEmpty()) {
+                for (ingredient in uiState.ingredients) {
+                    IngredientsCard(ingredient) { id ->
+                        interaction(CardClickInteraction(id))
+                    }
                 }
+            } else {
+                EmptyListComponent(msg = "Sem ingredientes")
             }
+
 
             if (uiState.prepareMode.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(height = 12.dp))
@@ -139,6 +146,9 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
                 TextSubTitle(text = "Descrição")
                 TextNormal(text = uiState.description)
             }
+
+
+
         }
     }
 }

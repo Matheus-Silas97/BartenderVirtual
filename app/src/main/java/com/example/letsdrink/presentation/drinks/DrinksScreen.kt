@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.letsdrink.common.components.TopBar
 import com.example.letsdrink.common.components.DrinkCard
+import com.example.letsdrink.common.components.EmptyListComponent
 import com.example.letsdrink.common.utils.extensions.orZero
 import com.example.letsdrink.presentation.drinks.DrinksInteraction.GoBackScreen
 import com.example.letsdrink.presentation.drinks.DrinksViewModel.DrinksEvent
@@ -33,7 +34,11 @@ fun DrinksScreen(
 
     val state by viewModel.state.collectAsState()
     Content(categoryName = categoryName, UiState = state, interaction = viewModel::interact)
-    EventConsumer(viewModel = viewModel, backPressed = backPressed, goToDetailsDrinksScreen = goToDetailsDrinksScreen)
+    EventConsumer(
+        viewModel = viewModel,
+        backPressed = backPressed,
+        goToDetailsDrinksScreen = goToDetailsDrinksScreen
+    )
 
     viewModel.getDrinksByCategory(categoryId)
 }
@@ -77,10 +82,16 @@ fun Content(categoryName: String, UiState: DrinksState, interaction: (DrinksInte
                     .fillMaxSize()
             ) {
                 LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
-                    items(items = UiState.drinks) { drink ->
-                        DrinkCard(drink) {
-                            interaction(DrinksInteraction.SelectDrink(drinkId = drink.id.orZero()))
+                    if (UiState.drinks.isNotEmpty()) {
+                        items(items = UiState.drinks) { drink ->
+                            DrinkCard(drink) {
+                                interaction(DrinksInteraction.SelectDrink(drinkId = drink.id.orZero()))
+                            }
                         }
+                    }else{
+                       item {
+                           EmptyListComponent("Nenhum drink encontrado")
+                       }
                     }
                 }
             }

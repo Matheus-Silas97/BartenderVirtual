@@ -23,8 +23,6 @@ fun BottomBarComponent(navController: NavHostController) {
         BottomNavigationScreens.HomeScreen,
         BottomNavigationScreens.FavoriteScreen
     )
-    var selectedItem by remember { mutableStateOf(0) }
-
     NavigationBar {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination

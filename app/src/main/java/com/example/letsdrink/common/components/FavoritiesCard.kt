@@ -27,8 +27,7 @@ fun FavoriteCard(model: DrinkFavorite, onClick: () -> Unit, remove: (id: DrinkFa
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
+            .fillMaxWidth(),
         onClick = { onClick() }
     ) {
         Row(
@@ -53,7 +52,8 @@ fun FavoriteCard(model: DrinkFavorite, onClick: () -> Unit, remove: (id: DrinkFa
                 text = model.name, textAlign = TextAlign.Center, modifier = Modifier
                     .padding(start = 8.dp)
                     .weight(1f)
-                    .align(Alignment.CenterVertically)
+                    .align(Alignment.CenterVertically),
+                maxLines = 1
             )
 
             Icon(

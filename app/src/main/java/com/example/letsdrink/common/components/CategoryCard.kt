@@ -47,10 +47,9 @@ fun CategoryCard(
                     shape = RoundedCornerShape(8.dp)
                 )
         ) {
-            Text(
+            TextSubTitle(
                 text = category.name,
-                color = Color.Black,
-                style = MaterialTheme.typography.titleMedium,
+                maxLines = 2,
                 modifier = Modifier
                     .align(Alignment.Center)
                     .padding(6.dp)

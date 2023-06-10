@@ -21,22 +21,29 @@ fun TextTitle(text: String, modifier: Modifier = Modifier, textAlign: TextAlign?
 }
 
 @Composable
-fun TextSubTitle(text: String, modifier: Modifier = Modifier, textAlign: TextAlign? = null) {
+fun TextSubTitle(text: String, modifier: Modifier = Modifier, textAlign: TextAlign? = null, maxLines: Int = 5) {
     Text(
         text = text,
         modifier = modifier,
         style = Typography.titleMedium,
         fontWeight = FontWeight(600),
-        textAlign = textAlign
+        textAlign = textAlign,
+        maxLines = maxLines
     )
 }
 
 @Composable
-fun TextNormal(text: String, modifier: Modifier = Modifier, textAlign: TextAlign? = null) {
+fun TextNormal(
+    text: String,
+    modifier: Modifier = Modifier,
+    textAlign: TextAlign? = null,
+    maxLines: Int = 15
+) {
     Text(
         text = text,
         modifier = modifier,
         style = Typography.bodyLarge,
-        textAlign = textAlign
+        textAlign = textAlign,
+        maxLines = maxLines
     )
 }

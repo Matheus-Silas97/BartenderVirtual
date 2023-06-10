@@ -5,6 +5,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.zIndex
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,12 +24,16 @@ fun ScaffoldCustom(
     }, content = {
 
         if (isLoading) {
-            LoadingComponent()
+            LoadingComponent(
+                modifier = Modifier
+                    .zIndex(1f)
+                    .padding(paddingValues = it),
+            )
         }
 
         contentComponent(
             modifier = Modifier
-                .padding(it)
+                .padding(paddingValues = it)
         )
     })
 }

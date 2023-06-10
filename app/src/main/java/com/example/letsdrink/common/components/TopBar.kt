@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 fun TopBar(title: String = "", showNavigationIcon: Boolean = false, onBackPressed: () -> Unit = {}) {
     TopAppBar(
         title = {
-            Text(text = title)
+            Text(text = title, maxLines = 1)
         },
         navigationIcon = {
             if (showNavigationIcon) {

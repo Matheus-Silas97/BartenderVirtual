@@ -23,6 +23,7 @@ import com.example.letsdrink.common.components.ScaffoldCustom
 import com.example.letsdrink.common.components.TextSubTitle
 import com.example.letsdrink.common.components.TextTitle
 import com.example.letsdrink.common.components.DrinkCard
+import com.example.letsdrink.common.components.EmptyListComponent
 import com.example.letsdrink.common.theme.Typography
 import com.example.letsdrink.common.utils.extensions.orZero
 import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsInteraction.NavigationClickBackPressed
@@ -68,7 +69,8 @@ fun Content(
     ScaffoldCustom(
         titlePage = uiState.name,
         onBackPressedEvent = { interaction(NavigationClickBackPressed) },
-        showNavigationIcon = true
+        showNavigationIcon = true,
+        isLoading = uiState.isLoading
     ) {
         Column(
             modifier = Modifier
@@ -95,12 +97,17 @@ fun Content(
 
             TextSubTitle(text = "Drinks que utilizam esses ingredientes")
 
-            for (drink in uiState.drinks) {
-                DrinkCard(model = drink) {
-                    interaction(SelectDrink(drinkId = drink.id.orZero()))
+            if (uiState.drinks.isNotEmpty()) {
+                for (drink in uiState.drinks) {
+                    DrinkCard(model = drink) {
+                        interaction(SelectDrink(drinkId = drink.id.orZero()))
 
+                    }
                 }
+            } else {
+                EmptyListComponent(msg = "Nenhuma bebida relacionada")
             }
+
         }
     }
 }

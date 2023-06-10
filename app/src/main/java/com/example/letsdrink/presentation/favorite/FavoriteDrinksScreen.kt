@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.letsdrink.R.string
+import com.example.letsdrink.common.components.EmptyListComponent
 import com.example.letsdrink.common.components.FavoriteCard
 import com.example.letsdrink.common.components.TopBar
 import com.example.letsdrink.common.utils.extensions.orZero
@@ -64,13 +65,19 @@ private fun Content(state: FavoritesDrinksState, interaction: (FavoriteDrinksInt
                     .fillMaxSize()
                     .padding(paddingValues = paddingValues)
             ) {
-                items(state.favorites) { favorite ->
-                    FavoriteCard(
-                        model = favorite,
-                        onClick = { interaction(SelectDrink(favorite.id.orZero())) },
-                        remove = {
-                            interaction(RemoveFavorite(drinkId = favorite.id))
-                        })
+                if (state.favorites.isNotEmpty()) {
+                    items(state.favorites) { favorite ->
+                        FavoriteCard(
+                            model = favorite,
+                            onClick = { interaction(SelectDrink(favorite.id.orZero())) },
+                            remove = {
+                                interaction(RemoveFavorite(drinkId = favorite.id))
+                            })
+                    }
+                } else {
+                    item {
+                        EmptyListComponent(msg = "Você não possui bebidas favoritadas")
+                    }
                 }
             }
         })

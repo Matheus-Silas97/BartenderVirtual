@@ -25,13 +25,7 @@ fun DrinkCard(model: Drinks, onClick: () -> Unit) {
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-            .border(
-                width = 0.5.dp,
-                color = Color.Black,
-                shape = RoundedCornerShape(8.dp)
-            ),
+            .fillMaxWidth(),
         onClick = { onClick() }
     ) {
         Row(
@@ -55,7 +49,8 @@ fun DrinkCard(model: Drinks, onClick: () -> Unit) {
             TextNormal(
                 text = model.name, textAlign = TextAlign.Center, modifier = Modifier
                     .padding(start = 8.dp)
-                    .align(Alignment.CenterVertically)
+                    .align(Alignment.CenterVertically),
+                maxLines = 2
             )
         }
     }
