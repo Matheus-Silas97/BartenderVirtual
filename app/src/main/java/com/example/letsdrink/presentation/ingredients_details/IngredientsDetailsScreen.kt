@@ -73,7 +73,8 @@ fun Content(
         titlePage = uiState.name,
         onBackPressedEvent = { interaction(NavigationClickBackPressed) },
         showNavigationIcon = true,
-        isLoading = uiState.isLoading
+        isLoading = uiState.isLoading,
+        messageLoading = "Carregando detalhes do ingrediente..."
     ) {
         if (!uiState.error.isNullOrEmpty()) {
             ErrorDialog(uiState.error, modifier = Modifier.zIndex(1f)) {
@@ -87,36 +88,47 @@ fun Content(
                 .padding(all = 12.dp)
                 .verticalScroll(state = verticalScrollState)
         ) {
-            ImageUrl(
-                url = uiState.image, modifier = Modifier
-                    .fillMaxWidth()
-                    .height(350.dp)
-            )
-
-            TextTitle(text = uiState.name)
-
-            if (uiState.description.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(height = 12.dp))
-
-                TextSubTitle(text = "Descrição")
-                Text(text = uiState.description, style = Typography.bodyMedium)
-            }
-
-            Spacer(modifier = Modifier.height(height = 12.dp))
-
-            TextSubTitle(text = "Drinks que utilizam esses ingredientes")
-
-            if (uiState.drinks.isNotEmpty()) {
-                for (drink in uiState.drinks) {
-                    DrinkCard(model = drink) {
-                        interaction(SelectDrink(drinkId = drink.id.orZero()))
-
-                    }
-                }
-            } else {
-                EmptyListComponent(msg = "Nenhuma bebida relacionada")
-            }
-
+            IngredientsInfo(uiState)
+            DrinksRelatedList(uiState, interaction)
         }
+    }
+}
+
+@Composable
+private fun IngredientsInfo(uiState: IngredientsDetailsState) {
+    ImageUrl(
+        url = uiState.image, modifier = Modifier
+            .fillMaxWidth()
+            .height(350.dp)
+    )
+
+    TextTitle(text = uiState.name)
+
+    if (uiState.description.isNotEmpty()) {
+        Spacer(modifier = Modifier.height(height = 12.dp))
+
+        TextSubTitle(text = "Descrição")
+        Text(text = uiState.description, style = Typography.bodyMedium)
+    }
+
+    Spacer(modifier = Modifier.height(height = 12.dp))
+
+    TextSubTitle(text = "Drinks que utilizam esses ingredientes")
+}
+
+@Composable
+private fun DrinksRelatedList(
+    uiState: IngredientsDetailsState,
+    interaction: (IngredientsDetailsInteraction) -> Unit
+) {
+    if (uiState.drinks.isNotEmpty()) {
+        for (drink in uiState.drinks) {
+            DrinkCard(model = drink) {
+                interaction(SelectDrink(drinkId = drink.id.orZero()))
+
+            }
+        }
+    } else {
+        EmptyListComponent(msg = "Nenhuma bebida relacionada")
     }
 }

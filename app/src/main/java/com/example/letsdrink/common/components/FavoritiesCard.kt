@@ -2,6 +2,7 @@ package com.example.letsdrink.common.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -31,6 +32,7 @@ fun FavoriteCard(model: DrinkFavorite, onClick: () -> Unit, remove: (id: DrinkFa
         onClick = { onClick() }
     ) {
         Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
@@ -40,30 +42,38 @@ fun FavoriteCard(model: DrinkFavorite, onClick: () -> Unit, remove: (id: DrinkFa
                 .padding(all = 8.dp)
 
         ) {
-            ImageUrl(
-                url = model.image,
-                modifier = Modifier
-                    .height(50.dp)
-                    .width(50.dp)
-                    .align(Alignment.CenterVertically)
-            )
+            Row(
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                ImageUrl(
+                    url = model.image,
+                    modifier = Modifier
+                        .height(50.dp)
+                        .width(50.dp)
+                )
 
-            TextNormal(
-                text = model.name, textAlign = TextAlign.Center, modifier = Modifier
-                    .padding(start = 8.dp)
-                    .weight(1f)
-                    .align(Alignment.CenterVertically),
-                maxLines = 1
-            )
+                TextNormal(
+                    text = model.name, textAlign = TextAlign.Center, modifier = Modifier
+                        .padding(start = 8.dp),
+                    maxLines = 1
+                )
+            }
 
-            Icon(
-                painter = painterResource(id = R.drawable.ic_favorite_select),
-                contentDescription = "favorite icon",
-                tint = Color.Red,
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .clickable { remove(model) }
-            )
+            Row(
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_favorite_select),
+                    contentDescription = "favorite icon",
+                    tint = Color.Red,
+                    modifier = Modifier
+                        .clickable { remove(model) }
+                )
+            }
+
         }
     }
 }

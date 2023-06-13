@@ -1,11 +1,11 @@
 package com.example.letsdrink.common.components
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.zIndex
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -14,7 +14,8 @@ fun ScaffoldCustom(
     showNavigationIcon: Boolean = false,
     onBackPressedEvent: () -> Unit = {},
     isLoading: Boolean = false,
-    contentComponent: @Composable (modifier: Modifier) -> Unit
+    messageLoading: String = "",
+    contentComponent: @Composable () -> Unit
 ) {
     Scaffold(topBar = {
         TopBar(
@@ -22,18 +23,12 @@ fun ScaffoldCustom(
             showNavigationIcon = showNavigationIcon,
             onBackPressed = { onBackPressedEvent() })
     }, content = {
-
-        if (isLoading) {
-            LoadingComponent(
-                modifier = Modifier
-                    .zIndex(1f)
-                    .padding(paddingValues = it),
-            )
+        Box(modifier = Modifier.padding(paddingValues = it)) {
+            if (isLoading) {
+                LoadingComponent(text = messageLoading)
+            } else {
+                contentComponent()
+            }
         }
-
-        contentComponent(
-            modifier = Modifier
-                .padding(paddingValues = it)
-        )
     })
 }

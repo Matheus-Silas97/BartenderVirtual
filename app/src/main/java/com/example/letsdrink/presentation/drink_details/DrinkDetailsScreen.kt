@@ -77,7 +77,8 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
         titlePage = uiState.name,
         onBackPressedEvent = { interaction(NavigationClickBackPressed) },
         showNavigationIcon = true,
-        isLoading = uiState.isLoading
+        isLoading = uiState.isLoading,
+        messageLoading = "Carregando detalhes..."
     ) {
 
         if (!uiState.error.isNullOrEmpty()) {
@@ -115,6 +116,12 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
                         })
             }
 
+            if (uiState.description.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(height = 12.dp))
+
+                TextNormal(text = uiState.description)
+            }
+
             Spacer(modifier = Modifier.height(height = 12.dp))
 
             TextSubTitle(text = "Ingredientes")
@@ -143,15 +150,6 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
                 TextSubTitle(text = "Guarnição")
                 TextNormal(text = uiState.garnish)
             }
-
-            if (uiState.description.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(height = 12.dp))
-
-                TextSubTitle(text = "Descrição")
-                TextNormal(text = uiState.description)
-            }
-
-
         }
     }
 }

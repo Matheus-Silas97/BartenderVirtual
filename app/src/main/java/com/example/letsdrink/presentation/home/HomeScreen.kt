@@ -2,13 +2,10 @@ package com.example.letsdrink.presentation.home
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells.Fixed
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -16,7 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -26,6 +22,7 @@ import com.example.letsdrink.common.components.CategoryCard
 import com.example.letsdrink.common.components.EmptyListComponent
 import com.example.letsdrink.common.components.ErrorDialog
 import com.example.letsdrink.common.components.LoadingComponent
+import com.example.letsdrink.common.components.ScaffoldCustom
 import com.example.letsdrink.presentation.home.HomeInteraction.*
 import com.example.letsdrink.presentation.home.HomeViewModel.HomeScreenEvent
 import org.koin.androidx.compose.getViewModel
@@ -36,9 +33,8 @@ fun HomeScreen(
     viewModel: HomeViewModel = getViewModel(),
     goToDrinkScreen: (categoryId: Long, categoryName: String) -> Unit
 ) {
-
     val state by viewModel.state.collectAsState()
-    Content(state = state, interaction = viewModel::interact)
+    Content(uiState = state, interaction = viewModel::interact)
     EventConsumer(viewModel = viewModel, goToDrinkScreen = goToDrinkScreen)
 }
 
@@ -59,37 +55,26 @@ private fun EventConsumer(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Content(state: HomeState, interaction: (HomeInteraction) -> Unit) {
-    Scaffold(
-        topBar = {
-            TopBar(
-                title = stringResource(id = string.app_name)
-            )
-        }, content = { paddingValues ->
-            GridCategories(paddingValues, state, interaction)
+fun Content(uiState: HomeState, interaction: (HomeInteraction) -> Unit) {
 
-            if (state.isLoading) {
-                LoadingComponent(
-                    modifier = Modifier
-                        .zIndex(1f)
-                        .padding(paddingValues = paddingValues)
-                )
+    ScaffoldCustom(
+        titlePage = stringResource(id = string.app_name),
+        isLoading = uiState.isLoading,
+        messageLoading = "Carregando categorias"
+    ) {
+        GridCategories(uiState, interaction)
+
+        if (!uiState.error.isNullOrEmpty()) {
+            ErrorDialog(uiState.error, modifier = Modifier.zIndex(1f)) {
+                interaction(CloseErrorDialog)
             }
-
-
-            if (!state.error.isNullOrEmpty()) {
-                ErrorDialog(state.error, modifier = Modifier.zIndex(1f)) {
-                    interaction(CloseErrorDialog)
-                }
-            }
-        })
+        }
+    }
 }
 
 @Composable
 private fun GridCategories(
-    paddingValues: PaddingValues,
     uiState: HomeState,
     interaction: (HomeInteraction) -> Unit
 ) {
@@ -98,12 +83,10 @@ private fun GridCategories(
             msg = "Sem Categorias",
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues = paddingValues)
         )
     } else {
         LazyVerticalGrid(
             modifier = Modifier
-                .padding(paddingValues)
                 .fillMaxSize(),
             columns = Fixed(count = 2),
             contentPadding = PaddingValues(all = 16.dp),
