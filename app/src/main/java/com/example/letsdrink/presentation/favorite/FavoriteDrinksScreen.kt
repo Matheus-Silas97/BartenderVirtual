@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -18,9 +17,7 @@ import com.example.letsdrink.R.string
 import com.example.letsdrink.common.components.EmptyListComponent
 import com.example.letsdrink.common.components.ErrorDialog
 import com.example.letsdrink.common.components.FavoriteCard
-import com.example.letsdrink.common.components.LoadingComponent
 import com.example.letsdrink.common.components.ScaffoldCustom
-import com.example.letsdrink.common.components.TopBar
 import com.example.letsdrink.common.utils.extensions.orZero
 import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.CloseErrorDialog
 import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.RemoveFavorite

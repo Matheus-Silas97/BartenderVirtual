@@ -9,7 +9,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.letsdrink.common.navigation.BottomNavigationScreens.*
+import com.example.letsdrink.common.navigation.BottomNavigationScreens.FavoriteScreen
+import com.example.letsdrink.common.navigation.BottomNavigationScreens.HomeScreen
 import com.example.letsdrink.common.navigation.RoutesArguments.CATEGORY_ID
 import com.example.letsdrink.common.navigation.RoutesArguments.CATEGORY_NAME
 import com.example.letsdrink.common.navigation.RoutesNavigation.DETAILS_DRINKS_SCREEN

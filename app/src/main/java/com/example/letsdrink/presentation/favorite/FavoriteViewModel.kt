@@ -4,8 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.letsdrink.common.utils.Event
 import com.example.letsdrink.common.utils.EventImpl
-import com.example.letsdrink.domain.model.DrinkDetails
-import com.example.letsdrink.domain.model.DrinkFavorite
 import com.example.letsdrink.domain.usecase.FavoriteUseCase
 import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.CloseErrorDialog
 import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.RemoveFavorite

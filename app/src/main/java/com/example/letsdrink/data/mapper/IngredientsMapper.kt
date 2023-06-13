@@ -1,7 +1,6 @@
 package com.example.letsdrink.data.mapper
 
 import com.example.letsdrink.common.utils.extensions.orZero
-import com.example.letsdrink.data.remote.response.DrinkResponse
 import com.example.letsdrink.data.remote.response.IngredientsDetailsResponse
 import com.example.letsdrink.domain.model.Drinks
 import com.example.letsdrink.domain.model.Ingredients

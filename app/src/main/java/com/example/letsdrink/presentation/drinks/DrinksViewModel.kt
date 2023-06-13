@@ -11,7 +11,6 @@ import com.example.letsdrink.presentation.drinks.DrinksInteraction.SelectDrink
 import com.example.letsdrink.presentation.drinks.DrinksViewModel.DrinksEvent
 import com.example.letsdrink.presentation.drinks.DrinksViewModel.DrinksEvent.GoBack
 import com.example.letsdrink.presentation.drinks.DrinksViewModel.DrinksEvent.NavigateDrinkDetailsScreen
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch

@@ -1,8 +1,5 @@
 package com.example.letsdrink.presentation.drink_details
 
-import com.example.letsdrink.domain.model.DrinkDetails
-import com.example.letsdrink.domain.model.DrinkFavorite
-
 sealed class DrinkDetailsInteraction {
 
     object NavigationClickBackPressed : DrinkDetailsInteraction()

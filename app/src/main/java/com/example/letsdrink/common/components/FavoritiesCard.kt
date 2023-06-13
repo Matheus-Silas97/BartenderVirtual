@@ -40,7 +40,6 @@ fun FavoriteCard(model: DrinkFavorite, onClick: () -> Unit, remove: (id: DrinkFa
                     shape = RoundedCornerShape(8.dp)
                 )
                 .padding(all = 8.dp)
-
         ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceAround,

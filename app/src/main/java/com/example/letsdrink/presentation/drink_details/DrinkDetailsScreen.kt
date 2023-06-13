@@ -32,7 +32,6 @@ import com.example.letsdrink.common.components.TextTitle
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.CardClickInteraction
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.CloseErrorDialog
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsInteraction.NavigationClickBackPressed
-import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.ScreenEvent
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.ScreenEvent.GoBack
 import com.example.letsdrink.presentation.drink_details.DrinkDetailsViewModel.ScreenEvent.NavigateNextScreen
 

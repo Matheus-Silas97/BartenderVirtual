@@ -1,7 +1,7 @@
 package com.example.letsdrink.di
 
-import com.example.letsdrink.domain.usecase.CategoryUseCaseImpl
 import com.example.letsdrink.domain.usecase.CategoryUseCase
+import com.example.letsdrink.domain.usecase.CategoryUseCaseImpl
 import com.example.letsdrink.domain.usecase.DrinksUseCase
 import com.example.letsdrink.domain.usecase.DrinksUseCaseImpl
 import com.example.letsdrink.domain.usecase.FavoriteUseCase

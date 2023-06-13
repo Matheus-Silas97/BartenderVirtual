@@ -6,9 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -19,13 +16,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import com.example.letsdrink.common.components.DrinkCard
+import com.example.letsdrink.common.components.EmptyListComponent
+import com.example.letsdrink.common.components.ErrorDialog
 import com.example.letsdrink.common.components.ImageUrl
 import com.example.letsdrink.common.components.ScaffoldCustom
 import com.example.letsdrink.common.components.TextSubTitle
 import com.example.letsdrink.common.components.TextTitle
-import com.example.letsdrink.common.components.DrinkCard
-import com.example.letsdrink.common.components.EmptyListComponent
-import com.example.letsdrink.common.components.ErrorDialog
 import com.example.letsdrink.common.theme.Typography
 import com.example.letsdrink.common.utils.extensions.orZero
 import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsInteraction.CloseErrorDialog

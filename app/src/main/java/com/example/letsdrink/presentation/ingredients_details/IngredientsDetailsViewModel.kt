@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.letsdrink.common.utils.Event
 import com.example.letsdrink.common.utils.EventImpl
 import com.example.letsdrink.domain.usecase.IngredientsUseCase
-import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsInteraction.*
+import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsInteraction.CloseErrorDialog
+import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsInteraction.NavigationClickBackPressed
+import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsInteraction.SelectDrink
 import com.example.letsdrink.presentation.ingredients_details.IngredientsDetailsViewModel.IngredientsDetailsScreenEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

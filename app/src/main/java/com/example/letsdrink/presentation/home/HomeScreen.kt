@@ -2,12 +2,9 @@ package com.example.letsdrink.presentation.home
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells.Fixed
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -17,13 +14,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.example.letsdrink.R.string
-import com.example.letsdrink.common.components.TopBar
 import com.example.letsdrink.common.components.CategoryCard
 import com.example.letsdrink.common.components.EmptyListComponent
 import com.example.letsdrink.common.components.ErrorDialog
-import com.example.letsdrink.common.components.LoadingComponent
 import com.example.letsdrink.common.components.ScaffoldCustom
-import com.example.letsdrink.presentation.home.HomeInteraction.*
+import com.example.letsdrink.presentation.home.HomeInteraction.CloseErrorDialog
+import com.example.letsdrink.presentation.home.HomeInteraction.NavigateNextScreen
 import com.example.letsdrink.presentation.home.HomeViewModel.HomeScreenEvent
 import org.koin.androidx.compose.getViewModel
 
