@@ -1,5 +1,6 @@
 package com.example.letsdrink.presentation.favorite
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,6 +11,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -22,6 +24,7 @@ import com.example.letsdrink.common.components.EmptyListComponent
 import com.example.letsdrink.common.components.ErrorDialog
 import com.example.letsdrink.common.components.FavoriteCard
 import com.example.letsdrink.common.components.ScaffoldCustom
+import com.example.letsdrink.common.utils.NetworkingHelper
 import com.example.letsdrink.common.utils.extensions.orZero
 import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.*
 import com.example.letsdrink.presentation.favorite.FavoriteViewModel.FavoriteScreenEvent.NavigateNextScreen
@@ -97,6 +100,8 @@ private fun FavoritesList(
     uiState: FavoritesDrinksState,
     interaction: (FavoriteDrinksInteraction) -> Unit
 ) {
+    val context = LocalContext.current
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -106,7 +111,17 @@ private fun FavoritesList(
             items(uiState.favorites) { favorite ->
                 FavoriteCard(
                     model = favorite,
-                    onClick = { interaction(SelectDrink(favorite.id.orZero())) },
+                    onClick = {
+                        if (NetworkingHelper().isInternetConnected(context)) {
+                            interaction(SelectDrink(favorite.id.orZero()))
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "Sem conexão com a internet",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    },
                     remove = {
                         interaction(RemoveFavorite(drinkId = favorite.id))
                     })
