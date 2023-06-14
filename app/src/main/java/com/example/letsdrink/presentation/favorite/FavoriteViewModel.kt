@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.letsdrink.common.utils.Event
 import com.example.letsdrink.common.utils.EventImpl
 import com.example.letsdrink.domain.usecase.FavoriteUseCase
+import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.AllFavoritesDrinks
 import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.CloseErrorDialog
 import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.RemoveFavorite
 import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.SelectDrink
@@ -32,6 +33,7 @@ class FavoriteViewModel(private val favoriteUseCase: FavoriteUseCase) : ViewMode
             is RemoveFavorite -> removeFavoriteDrink(drinkId = interaction.drinkId)
             is SelectDrink -> sendEvent(event = NavigateNextScreen(drinkId = interaction.drinkId))
             CloseErrorDialog -> closeErrorDialog()
+            is AllFavoritesDrinks -> allFavorites()
         }
     }
 
@@ -71,7 +73,7 @@ class FavoriteViewModel(private val favoriteUseCase: FavoriteUseCase) : ViewMode
         }
     }
 
-    private fun closeErrorDialog(){
+    private fun closeErrorDialog() {
         _state.update { it.copy(error = null) }
     }
 

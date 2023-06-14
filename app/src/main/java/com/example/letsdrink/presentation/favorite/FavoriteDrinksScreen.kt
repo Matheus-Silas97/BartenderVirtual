@@ -4,29 +4,33 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import com.example.letsdrink.R.string
 import com.example.letsdrink.common.components.EmptyListComponent
 import com.example.letsdrink.common.components.ErrorDialog
 import com.example.letsdrink.common.components.FavoriteCard
 import com.example.letsdrink.common.components.ScaffoldCustom
 import com.example.letsdrink.common.utils.extensions.orZero
-import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.CloseErrorDialog
-import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.RemoveFavorite
-import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.SelectDrink
-import com.example.letsdrink.presentation.favorite.FavoriteViewModel.FavoriteScreenEvent.*
+import com.example.letsdrink.presentation.favorite.FavoriteDrinksInteraction.*
+import com.example.letsdrink.presentation.favorite.FavoriteViewModel.FavoriteScreenEvent.NavigateNextScreen
+import com.example.letsdrink.presentation.favorite.FavoriteViewModel.FavoriteScreenEvent.RemoveDrinkFromFavorite
 import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun FavoriteDrinksScreen(
+    lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
     goToDetailsDrinkScreen: (id: Long) -> Unit,
     viewModel: FavoriteViewModel = getViewModel()
 ) {
@@ -34,6 +38,20 @@ fun FavoriteDrinksScreen(
     val state by viewModel.state.collectAsState()
     Content(uiState = state, interaction = viewModel::interact)
     EventConsumer(viewModel = viewModel, goToDetailsDrinkScreen = goToDetailsDrinkScreen)
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                viewModel.interact(AllFavoritesDrinks)
+            }
+        }
+
+        lifecycleOwner.lifecycle.addObserver(observer)
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
 
 }
 
@@ -54,7 +72,6 @@ private fun EventConsumer(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Content(
     uiState: FavoritesDrinksState,
