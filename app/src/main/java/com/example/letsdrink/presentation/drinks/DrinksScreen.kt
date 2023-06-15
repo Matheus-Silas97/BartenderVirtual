@@ -43,8 +43,8 @@ fun DrinksScreen(
         goToDetailsDrinksScreen = goToDetailsDrinksScreen
     )
 
-    LaunchedEffect(key1 = Unit){
-        viewModel.getDrinksByCategory(categoryId)
+    LaunchedEffect(key1 = Unit) {
+        viewModel.interact(DrinksInteraction.Categories(categoryId = categoryId))
     }
 }
 

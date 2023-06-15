@@ -85,13 +85,13 @@ private fun Content(
         isLoading = uiState.isLoading,
         messageLoading = "carregando drinks favoritos..."
     ) {
+        FavoritesList(uiState, interaction)
+
         if (!uiState.error.isNullOrEmpty()) {
             ErrorDialog(uiState.error, modifier = Modifier.zIndex(1f)) {
                 interaction(CloseErrorDialog)
             }
         }
-
-        FavoritesList(uiState, interaction)
     }
 }
 

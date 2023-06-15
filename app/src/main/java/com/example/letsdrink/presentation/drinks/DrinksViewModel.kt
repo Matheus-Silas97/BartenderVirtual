@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.letsdrink.common.utils.Event
 import com.example.letsdrink.common.utils.EventImpl
 import com.example.letsdrink.domain.usecase.DrinksUseCase
+import com.example.letsdrink.presentation.drinks.DrinksInteraction.Categories
 import com.example.letsdrink.presentation.drinks.DrinksInteraction.CloseErrorDialog
 import com.example.letsdrink.presentation.drinks.DrinksInteraction.GoBackScreen
 import com.example.letsdrink.presentation.drinks.DrinksInteraction.SelectDrink
@@ -29,14 +30,15 @@ class DrinksViewModel(private val drinkUseCase: DrinksUseCase) : ViewModel(),
             is SelectDrink -> sendEvent(event = NavigateDrinkDetailsScreen(interaction.drinkId))
             is GoBackScreen -> sendEvent(event = GoBack)
             CloseErrorDialog -> closeErrorDialog()
+            is Categories -> getDrinksByCategory(interaction.categoryId)
         }
     }
 
-     fun getDrinksByCategory(categoryId: Long) {
+    private fun getDrinksByCategory(categoryId: Long) {
         viewModelScope.launch {
             drinkUseCase.drinksByCategory(categoryId).onStart {
                 _state.update { it.copy(isLoading = true, error = null) }
-            }.catch { error->
+            }.catch { error ->
                 _state.update { it.copy(isLoading = false, error = error.message) }
             }.collect { drink ->
                 _state.update {
