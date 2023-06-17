@@ -7,5 +7,5 @@ data class DrinkDetails(
     val description: String = "",
     val garnish: String = "",
     val prepareMode: String = "",
-    val ingredients: List<IngredientDrinkDetails> = listOf()
+    val ingredients: List<IngredientsListDrinkDetails> = listOf()
 )

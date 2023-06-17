@@ -7,6 +7,8 @@ import com.example.letsdrink.data.remote.response.DrinkResponse
 import com.example.letsdrink.domain.model.DrinkDetails
 import com.example.letsdrink.domain.model.Drinks
 import com.example.letsdrink.domain.model.IngredientDrinkDetails
+import com.example.letsdrink.domain.model.IngredientsListDrinkDetails
+import com.example.letsdrink.domain.model.MeasureDrinkDetails
 
 fun List<DrinkResponse>?.convertDrinkListEntity(): List<Drinks> = this?.map {
     Drinks(
@@ -26,12 +28,19 @@ fun DrinkDetailsResponse?.convertDrinkDetailsEntity(): DrinkDetails = DrinkDetai
     image = this?.image.orEmpty(),
     description = this?.description.orEmpty(),
     prepareMode = this?.prepareMode.orEmpty(),
-    ingredients = this?.ingredients?.map { ingredientsItem ->
-        IngredientDrinkDetails(
-            id = ingredientsItem.id.orZero(),
-            name = ingredientsItem.name.orEmpty(),
-            image = ingredientsItem.image.orEmpty(),
-            description = ingredientsItem.description.orEmpty()
+    ingredients = this?.ingredients?.map { ingredient ->
+        IngredientsListDrinkDetails(
+            ingredient = IngredientDrinkDetails(
+                id = ingredient.ingredient?.id.orZero(),
+                name = ingredient.ingredient?.name.orEmpty(),
+                description = ingredient.ingredient?.description.orEmpty(),
+                image = ingredient.ingredient?.image.orEmpty()
+            ),
+            measure = MeasureDrinkDetails(
+                id = ingredient.measure?.id.orZero(),
+                name = ingredient.measure?.name.orEmpty()
+            ),
+            amount = ingredient.amount.orZero()
         )
     } ?: listOf()
 )

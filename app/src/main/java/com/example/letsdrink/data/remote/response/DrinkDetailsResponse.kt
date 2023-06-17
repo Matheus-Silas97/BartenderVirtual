@@ -20,7 +20,7 @@ data class DrinkDetailsResponse(
     val image: String? = "",
 
     @SerializedName("ingredients")
-    val ingredients: List<IngredientsDrinkDetailsResponse>? = listOf(),
+    val ingredients: List<IngredientsListDrinkDetailsResponse>? = listOf(),
 
     @SerializedName("prepare_mode")
     val prepareMode: String? = "",

@@ -17,6 +17,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -117,8 +119,7 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
 
             if (uiState.description.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(height = 12.dp))
-
-                TextNormal(text = uiState.description)
+                TextNormal(text = uiState.description, color = Color.Gray)
             }
 
             Spacer(modifier = Modifier.height(height = 12.dp))

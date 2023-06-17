@@ -104,7 +104,6 @@ private fun IngredientsInfo(uiState: IngredientsDetailsState) {
     if (uiState.description.isNotEmpty()) {
         Spacer(modifier = Modifier.height(height = 12.dp))
 
-        TextSubTitle(text = "Descrição")
         Text(text = uiState.description, style = Typography.bodyMedium)
     }
 
