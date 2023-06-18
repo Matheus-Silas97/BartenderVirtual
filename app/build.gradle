@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.letsdrink'
+    namespace 'com.bartender.bartendervirtual'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.letsdrink"
+        applicationId "com.bartender.bartendervirtual"
         minSdk 26
         targetSdk 33
         versionCode 1
