@@ -19,7 +19,11 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        buildConfigField "String", "BASE_URL", "\"https://rails-production-72ec.up.railway.app/\""
+        buildConfigField "String", "PASSWORD", "\"dHJ5c29tZXdoZXJlYWZ0ZXJoaWxsdXBibGFua2V0dG9wdHdvdGlnaHRseWtlcHR3b24=c2xpcGdyYWluc2Vjb25kYXRlc29tZXRoaW5nYWNjb3VudGRvY3RvcmxpYnJhcnltYWQ=\""
     }
+
 
     buildTypes {
         release {
@@ -36,6 +40,7 @@ android {
     }
     buildFeatures {
         compose true
+        buildConfig true
     }
     composeOptions {
         kotlinCompilerExtensionVersion '1.3.2'
