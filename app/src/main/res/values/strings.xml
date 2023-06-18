@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LetsDrink</string>
+    <string name="app_name">Bartender Virtual</string>
     <string name="drinks">Bebidas</string>
     <string name="favorites">Favoritos</string>
     <string name="home">Home</string>
