@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +28,7 @@ fun CategoryCard(
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.background)
             .clickable {
                 selectCategory(category.id, category.name)
             }

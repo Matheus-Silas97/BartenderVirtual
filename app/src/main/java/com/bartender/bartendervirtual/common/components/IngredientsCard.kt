@@ -14,12 +14,16 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.ContentScale.Companion
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.bartender.bartendervirtual.common.utils.extensions.toIntegerOrFloat
 import com.bartender.bartendervirtual.domain.model.IngredientsListDrinkDetails
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,7 +32,8 @@ fun IngredientsCard(model: IngredientsListDrinkDetails, selectIngredient: (drink
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .background(color = MaterialTheme.colorScheme.background),
         onClick = { selectIngredient(model.ingredient.id) }
     ) {
         Row(
@@ -51,28 +56,24 @@ fun IngredientsCard(model: IngredientsListDrinkDetails, selectIngredient: (drink
                     modifier = Modifier
                         .height(50.dp)
                         .width(50.dp)
-                        .align(Alignment.CenterVertically)
+                        .align(Alignment.CenterVertically),
+                    contentScale = ContentScale.Fit
                 )
 
                 Column {
-
-
                     TextNormal(
                         text = model.ingredient.name,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(start = 8.dp),
-//                            .align(Alignment.CenterVertically),
                         maxLines = 1
                     )
                     TextNormalSmall(
-                        text = "${model.amount} ${model.measure.name}",
+                        text = "${model.amount.toIntegerOrFloat()} ${model.measure.name}",
                         textAlign = TextAlign.Center,
                         color = Color.Gray,
                         modifier = Modifier
-                            .padding(start = 8.dp)
-//                            .align(Alignment.CenterVertically)
-                        ,
+                            .padding(start = 8.dp),
                         maxLines = 1
                     )
 
