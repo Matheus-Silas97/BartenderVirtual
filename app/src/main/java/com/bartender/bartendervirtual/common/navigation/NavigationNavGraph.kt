@@ -9,6 +9,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.bartender.bartendervirtual.common.navigation.BottomBarState.GONE
+import com.bartender.bartendervirtual.common.navigation.BottomBarState.VISIBLE
 import com.bartender.bartendervirtual.common.navigation.BottomNavigationScreens.FavoriteScreen
 import com.bartender.bartendervirtual.common.navigation.BottomNavigationScreens.HomeScreen
 import com.bartender.bartendervirtual.common.navigation.RoutesArguments.CATEGORY_ID
@@ -16,6 +18,7 @@ import com.bartender.bartendervirtual.common.navigation.RoutesArguments.CATEGORY
 import com.bartender.bartendervirtual.common.navigation.RoutesNavigation.DETAILS_DRINKS_SCREEN
 import com.bartender.bartendervirtual.common.navigation.RoutesNavigation.DRINKS_SCREEN
 import com.bartender.bartendervirtual.common.navigation.RoutesNavigation.INGREDIENTS_DETAILS_SCREEN
+import com.bartender.bartendervirtual.common.navigation.RoutesNavigation.SPLASH_SCREEN
 import com.bartender.bartendervirtual.presentation.drink_details.DrinkDetailsScreen
 import com.bartender.bartendervirtual.presentation.drink_details.DrinkDetailsViewModel
 import com.bartender.bartendervirtual.presentation.drinks.DrinksScreen
@@ -23,6 +26,7 @@ import com.bartender.bartendervirtual.presentation.favorite.FavoriteDrinksScreen
 import com.bartender.bartendervirtual.presentation.home.HomeScreen
 import com.bartender.bartendervirtual.presentation.ingredients_details.IngredientsDetailsScreen
 import com.bartender.bartendervirtual.presentation.ingredients_details.IngredientsDetailsViewModel
+import com.bartender.bartendervirtual.presentation.splash_screen.SplashScreen
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -30,10 +34,21 @@ import org.koin.core.parameter.parametersOf
 fun NavigationNavGraph(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = HomeScreen.route,
+        startDestination = SPLASH_SCREEN,
         modifier = Modifier.padding(innerPadding)
     ) {
+        composable(route = SPLASH_SCREEN) {
+            LocalBottomBarState.current.value = GONE
+            SplashScreen(goToHomeScreen = {
+                navController.navigate(route = HomeScreen.route) {
+                    popUpTo(route = SPLASH_SCREEN) { inclusive = true }
+                }
+            })
+        }
+
+
         composable(route = HomeScreen.route) {
+            LocalBottomBarState.current.value = VISIBLE
             HomeScreen(goToDrinkScreen = { id, categoryName ->
                 navController.navigate(
                     route = "$DRINKS_SCREEN/$id/$categoryName"

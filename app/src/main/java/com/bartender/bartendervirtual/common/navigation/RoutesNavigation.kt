@@ -1,6 +1,7 @@
 package com.bartender.bartendervirtual.common.navigation
 
 object RoutesNavigation {
+    const val SPLASH_SCREEN = "splash_screen"
     const val HOME_SCREEN = "home_screen"
     const val DRINKS_SCREEN = "drinks_screen"
     const val FAVORITE_SCREEN = "favorite_screen"
