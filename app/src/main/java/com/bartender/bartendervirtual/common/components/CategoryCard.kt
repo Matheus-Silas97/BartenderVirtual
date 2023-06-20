@@ -16,6 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextAlign.Companion
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.bartender.bartendervirtual.domain.model.Category
@@ -54,7 +56,8 @@ fun CategoryCard(
                 modifier = Modifier
                     .align(Alignment.Center)
                     .padding(6.dp)
-                    .zIndex(1f)
+                    .zIndex(1f),
+                textAlign = TextAlign.Center
             )
         }
     }

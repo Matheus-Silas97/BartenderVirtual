@@ -1,6 +1,8 @@
 package com.bartender.bartendervirtual.presentation.drink_details
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +20,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.ContentScale.Companion
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -87,67 +91,72 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
             }
         }
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(all = 12.dp)
-                .verticalScroll(state = verticalScrollState)
-        ) {
+        Column(modifier = Modifier.verticalScroll(state = verticalScrollState)) {
             ImageUrl(
                 url = uiState.image, modifier = Modifier
                     .fillMaxWidth()
-                    .height(350.dp)
+                    .height(300.dp),
+                contentScale = ContentScale.FillBounds
             )
 
-            Row {
-                TextTitle(text = uiState.name, modifier = Modifier.weight(1F))
 
-                var favoriteIcon = painterResource(id = R.drawable.ic_favorite_unselect)
-                if (uiState.isFavorite) {
-                    favoriteIcon = painterResource(id = R.drawable.ic_favorite_select)
-                }
-                Image(
-                    painter = favoriteIcon,
-                    contentDescription = "favorite icon",
-                    modifier = Modifier
-                        .align(alignment = Alignment.CenterVertically)
-                        .clickable {
-                            interaction(DrinkDetailsInteraction.FavoriteDrink(uiState.id))
-                        })
-            }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(all = 12.dp)
+            ) {
 
-            if (uiState.description.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(height = 12.dp))
-                TextNormal(text = uiState.description, color = Color.Gray)
-            }
 
-            Spacer(modifier = Modifier.height(height = 12.dp))
+                Row {
+                    TextTitle(text = uiState.name, modifier = Modifier.weight(1F))
 
-            TextSubTitle(text = "Ingredientes")
-
-            if (uiState.ingredients.isNotEmpty()) {
-                for (ingredient in uiState.ingredients) {
-                    IngredientsCard(ingredient) { id ->
-                        interaction(CardClickInteraction(id))
+                    var favoriteIcon = painterResource(id = R.drawable.ic_favorite_unselect)
+                    if (uiState.isFavorite) {
+                        favoriteIcon = painterResource(id = R.drawable.ic_favorite_select)
                     }
+                    Image(
+                        painter = favoriteIcon,
+                        contentDescription = "favorite icon",
+                        modifier = Modifier
+                            .align(alignment = Alignment.CenterVertically)
+                            .clickable {
+                                interaction(DrinkDetailsInteraction.FavoriteDrink(uiState.id))
+                            })
                 }
-            } else {
-                EmptyListComponent(msg = "Sem ingredientes")
-            }
 
+                if (uiState.description.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(height = 12.dp))
+                    TextNormal(text = uiState.description, color = Color.Gray)
+                }
 
-            if (uiState.prepareMode.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(height = 12.dp))
 
-                TextSubTitle(text = "Modo de preparo")
-                TextNormal(text = uiState.prepareMode)
-            }
+                TextSubTitle(text = "Ingredientes")
 
-            if (uiState.garnish.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(height = 12.dp))
+                if (uiState.ingredients.isNotEmpty()) {
+                    for (ingredient in uiState.ingredients) {
+                        IngredientsCard(ingredient) { id ->
+                            interaction(CardClickInteraction(id))
+                        }
+                    }
+                } else {
+                    EmptyListComponent(msg = "Sem ingredientes")
+                }
 
-                TextSubTitle(text = "Guarnição")
-                TextNormal(text = uiState.garnish)
+
+                if (uiState.prepareMode.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(height = 12.dp))
+
+                    TextSubTitle(text = "Modo de preparo")
+                    TextNormal(text = uiState.prepareMode)
+                }
+
+                if (uiState.garnish.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(height = 12.dp))
+
+                    TextSubTitle(text = "Guarnição")
+                    TextNormal(text = uiState.garnish)
+                }
             }
         }
     }

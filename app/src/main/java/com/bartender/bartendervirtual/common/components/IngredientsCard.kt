@@ -57,7 +57,7 @@ fun IngredientsCard(model: IngredientsListDrinkDetails, selectIngredient: (drink
                         .height(50.dp)
                         .width(50.dp)
                         .align(Alignment.CenterVertically),
-                    contentScale = ContentScale.Fit
+                    contentScale = ContentScale.Inside
                 )
 
                 Column {

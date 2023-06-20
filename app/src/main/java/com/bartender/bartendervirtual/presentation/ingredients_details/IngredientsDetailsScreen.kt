@@ -14,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.bartender.bartendervirtual.common.components.DrinkCard
@@ -79,26 +80,29 @@ fun Content(
             }
         }
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(all = 12.dp)
-                .verticalScroll(state = verticalScrollState)
-        ) {
-            IngredientsInfo(uiState)
-            DrinksRelatedList(uiState, interaction)
+        Column(modifier = Modifier.verticalScroll(state = verticalScrollState)) {
+            ImageUrl(
+                url = uiState.image, modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp),
+                contentScale = ContentScale.FillBounds
+            )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(all = 12.dp)
+
+            ) {
+                IngredientsInfo(uiState)
+
+                DrinksRelatedList(uiState, interaction)
+            }
         }
     }
 }
 
 @Composable
 private fun IngredientsInfo(uiState: IngredientsDetailsState) {
-    ImageUrl(
-        url = uiState.image, modifier = Modifier
-            .fillMaxWidth()
-            .height(350.dp)
-    )
-
     TextTitle(text = uiState.name)
 
     if (uiState.description.isNotEmpty()) {
@@ -111,6 +115,7 @@ private fun IngredientsInfo(uiState: IngredientsDetailsState) {
 
     TextSubTitle(text = "Drinks que utilizam esses ingredientes")
 }
+
 
 @Composable
 private fun DrinksRelatedList(
