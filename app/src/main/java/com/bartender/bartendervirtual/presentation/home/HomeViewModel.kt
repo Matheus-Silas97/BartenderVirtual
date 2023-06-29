@@ -6,6 +6,7 @@ import com.bartender.bartendervirtual.common.utils.Event
 import com.bartender.bartendervirtual.common.utils.EventImpl
 import com.bartender.bartendervirtual.domain.usecase.CategoryUseCase
 import com.bartender.bartendervirtual.presentation.home.HomeInteraction.CloseErrorDialog
+import com.bartender.bartendervirtual.presentation.home.HomeInteraction.GoToDetailsDrink
 import com.bartender.bartendervirtual.presentation.home.HomeInteraction.NavigateNextScreen
 import com.bartender.bartendervirtual.presentation.home.HomeViewModel.HomeScreenEvent
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,6 +34,8 @@ class HomeViewModel(private val categoryUseCase: CategoryUseCase) : ViewModel(),
                     interaction.categoryId, interaction.categoryName
                 )
             )
+
+            is GoToDetailsDrink -> GoToDetailsDrink(interaction.drinkId)
         }
     }
 
@@ -61,6 +64,8 @@ class HomeViewModel(private val categoryUseCase: CategoryUseCase) : ViewModel(),
     sealed interface HomeScreenEvent {
         data class NavigateNextScreen(val categoryId: Long, val categoryName: String) :
             HomeScreenEvent
+
+        data class GoToDetailsDrink(val drinkId: Long) : HomeScreenEvent
     }
 
 }
