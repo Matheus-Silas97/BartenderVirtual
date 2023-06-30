@@ -68,7 +68,7 @@ fun Content(
     val verticalScrollState = rememberScrollState()
 
     ScaffoldCustom(
-        titlePage = uiState.name,
+        titlePage = "Detalhes do ingrediente",
         onBackPressedEvent = { interaction(NavigationClickBackPressed) },
         showNavigationIcon = true,
         isLoading = uiState.isLoading,
@@ -113,7 +113,7 @@ private fun IngredientsInfo(uiState: IngredientsDetailsState) {
 
     Spacer(modifier = Modifier.height(height = 12.dp))
 
-    TextSubTitle(text = "Drinks que utilizam esses ingredientes")
+    TextSubTitle(text = "Drinks que utilizam esse ingrediente")
 }
 
 

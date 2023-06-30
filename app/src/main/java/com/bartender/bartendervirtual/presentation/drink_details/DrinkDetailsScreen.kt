@@ -78,7 +78,7 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
     val verticalScrollState = rememberScrollState()
 
     ScaffoldCustom(
-        titlePage = uiState.name,
+        titlePage = "Detalhes do drink",
         onBackPressedEvent = { interaction(NavigationClickBackPressed) },
         showNavigationIcon = true,
         isLoading = uiState.isLoading,

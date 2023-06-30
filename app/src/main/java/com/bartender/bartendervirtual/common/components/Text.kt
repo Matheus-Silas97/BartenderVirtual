@@ -67,7 +67,7 @@ fun TextNormalSmall(
         text = text,
         modifier = modifier,
         color = color,
-        style = Typography.labelSmall,
+        style = Typography.labelMedium,
         textAlign = textAlign,
         maxLines = maxLines
     )
