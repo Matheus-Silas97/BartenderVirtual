@@ -10,6 +10,6 @@ class CategoryRepositoryImpl(private val categoryRemoteDataSource : CategoryRemo
 
     override suspend fun categories(): Flow<List<Category>> = flow {
         emit(categoryRemoteDataSource.categories())
-
     }
+
 }

@@ -1,7 +1,6 @@
 package com.bartender.bartendervirtual.presentation.ingredients_details
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,6 +21,7 @@ import com.bartender.bartendervirtual.common.components.EmptyListComponent
 import com.bartender.bartendervirtual.common.components.ErrorDialog
 import com.bartender.bartendervirtual.common.components.ImageUrl
 import com.bartender.bartendervirtual.common.components.ScaffoldCustom
+import com.bartender.bartendervirtual.common.components.SpacerVertical
 import com.bartender.bartendervirtual.common.components.TextSubTitle
 import com.bartender.bartendervirtual.common.components.TextTitle
 import com.bartender.bartendervirtual.common.theme.Typography
@@ -68,7 +68,7 @@ fun Content(
     val verticalScrollState = rememberScrollState()
 
     ScaffoldCustom(
-        titlePage = uiState.name,
+        titlePage = "Detalhes do ingrediente",
         onBackPressedEvent = { interaction(NavigationClickBackPressed) },
         showNavigationIcon = true,
         isLoading = uiState.isLoading,
@@ -87,10 +87,11 @@ fun Content(
                     .height(300.dp),
                 contentScale = ContentScale.FillBounds
             )
+            SpacerVertical(value = 16)
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(all = 12.dp)
+                    .padding(horizontal = 16.dp)
 
             ) {
                 IngredientsInfo(uiState)
@@ -106,14 +107,11 @@ private fun IngredientsInfo(uiState: IngredientsDetailsState) {
     TextTitle(text = uiState.name)
 
     if (uiState.description.isNotEmpty()) {
-        Spacer(modifier = Modifier.height(height = 12.dp))
-
+        SpacerVertical()
         Text(text = uiState.description, style = Typography.bodyMedium)
     }
 
-    Spacer(modifier = Modifier.height(height = 12.dp))
-
-    TextSubTitle(text = "Drinks que utilizam esses ingredientes")
+    SpacerVertical(value = 16)
 }
 
 
@@ -123,12 +121,14 @@ private fun DrinksRelatedList(
     interaction: (IngredientsDetailsInteraction) -> Unit
 ) {
     if (uiState.drinks.isNotEmpty()) {
-        for (drink in uiState.drinks) {
+        TextSubTitle(text = "Drinks que utilizam esse ingrediente")
+        SpacerVertical()
+        uiState.drinks.forEach { drink ->
             DrinkCard(model = drink) {
                 interaction(SelectDrink(drinkId = drink.id.orZero()))
-
             }
         }
+
     } else {
         EmptyListComponent(msg = "Nenhuma bebida relacionada")
     }

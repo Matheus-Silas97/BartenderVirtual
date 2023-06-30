@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -71,8 +70,6 @@ private fun EventConsumer(
 
 @Composable
 fun Content(categoryName: String, uiState: DrinksState, interaction: (DrinksInteraction) -> Unit) {
-    val lazyState = rememberLazyListState()
-
     ScaffoldCustom(
         titlePage = categoryName,
         showNavigationIcon = true,
@@ -82,7 +79,7 @@ fun Content(categoryName: String, uiState: DrinksState, interaction: (DrinksInte
     ) {
         Column(
             modifier = Modifier
-                .padding(all = 12.dp)
+                .padding(horizontal = 24.dp, vertical = 8.dp)
                 .fillMaxSize()
         ) {
             if (!uiState.error.isNullOrEmpty()) {
@@ -91,18 +88,19 @@ fun Content(categoryName: String, uiState: DrinksState, interaction: (DrinksInte
                 }
             }
 
-            DrinksList(lazyState, uiState, interaction)
+            DrinksList(uiState, interaction)
         }
     }
 }
 
 @Composable
 private fun DrinksList(
-    lazyState: LazyListState,
     uiState: DrinksState,
     interaction: (DrinksInteraction) -> Unit
 ) {
-    LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
+    val lazyState = rememberLazyListState()
+
+    LazyColumn(state = lazyState) {
         if (uiState.drinks.isNotEmpty()) {
             items(items = uiState.drinks) { drink ->
                 DrinkCard(drink) {

@@ -1,12 +1,9 @@
 package com.bartender.bartendervirtual.presentation.drink_details
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.ContentScale.Companion
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -31,6 +27,7 @@ import com.bartender.bartendervirtual.common.components.ErrorDialog
 import com.bartender.bartendervirtual.common.components.ImageUrl
 import com.bartender.bartendervirtual.common.components.IngredientsCard
 import com.bartender.bartendervirtual.common.components.ScaffoldCustom
+import com.bartender.bartendervirtual.common.components.SpacerVertical
 import com.bartender.bartendervirtual.common.components.TextNormal
 import com.bartender.bartendervirtual.common.components.TextSubTitle
 import com.bartender.bartendervirtual.common.components.TextTitle
@@ -78,7 +75,7 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
     val verticalScrollState = rememberScrollState()
 
     ScaffoldCustom(
-        titlePage = uiState.name,
+        titlePage = "Detalhes do drink",
         onBackPressedEvent = { interaction(NavigationClickBackPressed) },
         showNavigationIcon = true,
         isLoading = uiState.isLoading,
@@ -98,15 +95,12 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
                     .height(300.dp),
                 contentScale = ContentScale.FillBounds
             )
-
-
+            SpacerVertical(value = 16)
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(all = 12.dp)
+                    .padding(horizontal = 16.dp)
             ) {
-
-
                 Row {
                     TextTitle(text = uiState.name, modifier = Modifier.weight(1F))
 
@@ -125,16 +119,16 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
                 }
 
                 if (uiState.description.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(height = 12.dp))
+                    SpacerVertical()
                     TextNormal(text = uiState.description, color = Color.Gray)
                 }
 
-                Spacer(modifier = Modifier.height(height = 12.dp))
-
-                TextSubTitle(text = "Ingredientes")
+                SpacerVertical(value = 16)
 
                 if (uiState.ingredients.isNotEmpty()) {
-                    for (ingredient in uiState.ingredients) {
+                    TextSubTitle(text = "Ingredientes")
+                    SpacerVertical()
+                    uiState.ingredients.forEach { ingredient ->
                         IngredientsCard(ingredient) { id ->
                             interaction(CardClickInteraction(id))
                         }
@@ -143,19 +137,19 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
                     EmptyListComponent(msg = "Sem ingredientes")
                 }
 
-
                 if (uiState.prepareMode.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(height = 12.dp))
-
+                    SpacerVertical(value = 16)
                     TextSubTitle(text = "Modo de preparo")
+                    SpacerVertical()
                     TextNormal(text = uiState.prepareMode)
+                    SpacerVertical(value = 16)
                 }
 
                 if (uiState.garnish.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(height = 12.dp))
-
                     TextSubTitle(text = "Guarnição")
+                    SpacerVertical()
                     TextNormal(text = uiState.garnish)
+                    SpacerVertical(value = 16)
                 }
             }
         }

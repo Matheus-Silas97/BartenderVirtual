@@ -7,6 +7,8 @@ import com.bartender.bartendervirtual.data.datasource.DrinksRemoteDataSource
 import com.bartender.bartendervirtual.data.datasource.DrinksRemoteDataSourceImpl
 import com.bartender.bartendervirtual.data.datasource.FavoritesDrinksLocalDataSource
 import com.bartender.bartendervirtual.data.datasource.FavoritesDrinksLocalDataSourceImpl
+import com.bartender.bartendervirtual.data.datasource.HomeInformationRemoteDataSource
+import com.bartender.bartendervirtual.data.datasource.HomeInformationRemoteDataSourceImpl
 import com.bartender.bartendervirtual.data.datasource.IngredientsRemoteDataSource
 import com.bartender.bartendervirtual.data.datasource.IngredientsRemoteDataSourceImpl
 import com.bartender.bartendervirtual.data.local.AppDatabase
@@ -15,10 +17,12 @@ import com.bartender.bartendervirtual.data.remote.service.DrinkService
 import com.bartender.bartendervirtual.data.repository.CategoryRepositoryImpl
 import com.bartender.bartendervirtual.data.repository.DrinksRepositoryImpl
 import com.bartender.bartendervirtual.data.repository.FavoritesDrinksRepositoryImpl
+import com.bartender.bartendervirtual.data.repository.HomeInformationRepositoryImpl
 import com.bartender.bartendervirtual.data.repository.IngredientsRepositoryImpl
 import com.bartender.bartendervirtual.domain.repository.CategoryRepository
 import com.bartender.bartendervirtual.domain.repository.DrinksRepository
 import com.bartender.bartendervirtual.domain.repository.FavoritesDrinksRepository
+import com.bartender.bartendervirtual.domain.repository.HomeInformationRepository
 import com.bartender.bartendervirtual.domain.repository.IngredientsRepository
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
@@ -52,6 +56,8 @@ val dataModule = module {
 
     factory<FavoritesDrinksLocalDataSource> { FavoritesDrinksLocalDataSourceImpl(appDatabase = get()) }
 
+    factory<HomeInformationRemoteDataSource> { HomeInformationRemoteDataSourceImpl(service = get()) }
+
 
 
     factory<DrinksRepository> { DrinksRepositoryImpl(drinksRemoteDataSource = get()) }
@@ -60,11 +66,9 @@ val dataModule = module {
 
     factory<IngredientsRepository> { IngredientsRepositoryImpl(ingredientsRemoteDataSource = get()) }
 
-    factory<FavoritesDrinksRepository> {
-        FavoritesDrinksRepositoryImpl(
-            favoritesDrinksLocalDataSource = get()
-        )
-    }
+    factory<FavoritesDrinksRepository> { FavoritesDrinksRepositoryImpl(favoritesDrinksLocalDataSource = get()) }
+
+    factory<HomeInformationRepository> { HomeInformationRepositoryImpl(homeInformationDataSource = get()) }
 
 
 }
