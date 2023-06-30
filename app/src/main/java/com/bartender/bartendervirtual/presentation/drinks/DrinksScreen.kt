@@ -71,8 +71,6 @@ private fun EventConsumer(
 
 @Composable
 fun Content(categoryName: String, uiState: DrinksState, interaction: (DrinksInteraction) -> Unit) {
-    val lazyState = rememberLazyListState()
-
     ScaffoldCustom(
         titlePage = categoryName,
         showNavigationIcon = true,
@@ -91,17 +89,18 @@ fun Content(categoryName: String, uiState: DrinksState, interaction: (DrinksInte
                 }
             }
 
-            DrinksList(lazyState, uiState, interaction)
+            DrinksList(uiState, interaction)
         }
     }
 }
 
 @Composable
 private fun DrinksList(
-    lazyState: LazyListState,
     uiState: DrinksState,
     interaction: (DrinksInteraction) -> Unit
 ) {
+    val lazyState = rememberLazyListState()
+
     LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
         if (uiState.drinks.isNotEmpty()) {
             items(items = uiState.drinks) { drink ->

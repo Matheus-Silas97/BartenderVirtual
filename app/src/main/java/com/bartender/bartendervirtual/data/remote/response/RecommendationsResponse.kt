@@ -4,13 +4,16 @@ import com.google.gson.annotations.SerializedName
 
 data class RecommendationsResponse(
 
-    @SerializedName("")
-    val id: Long,
+    @SerializedName("id")
+    val id: Long?,
 
-    @SerializedName("")
-    val name: String,
+    @SerializedName("name")
+    val name: String?,
 
-    @SerializedName("")
-    val image: String
+    @SerializedName("description")
+    val image: String?,
+
+    @SerializedName("category_id")
+    val categoryId: Long?
 
 )

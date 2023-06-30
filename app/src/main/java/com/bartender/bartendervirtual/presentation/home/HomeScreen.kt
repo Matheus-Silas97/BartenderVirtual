@@ -1,17 +1,20 @@
 package com.bartender.bartendervirtual.presentation.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.grid.GridCells.Fixed
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -21,6 +24,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -93,15 +98,16 @@ fun Content(uiState: HomeState, interaction: (HomeInteraction) -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(horizontal = 8.dp)
                 .verticalScroll(state = scrollState)
         ) {
-
             if (uiState.recommendations.isNotEmpty()) {
                 SliderImage(uiState = uiState, interaction = interaction)
             }
 
-            TextTitle(text = "Categorias")
-            GridCategories(uiState = uiState, interaction = interaction)
+            Spacer(modifier = Modifier.height(8.dp))
+
+            CategoriesList(uiState = uiState, interaction = interaction)
 
             ErrorDialog(uiState, interaction)
         }
@@ -126,7 +132,6 @@ private fun SliderImage(uiState: HomeState, interaction: (HomeInteraction) -> Un
     val pagerState = rememberPagerState()
     var currentPage by remember { mutableStateOf(0) }
 
-
     LaunchedEffect(Unit) {
         while (true) {
             delay(5000)
@@ -135,7 +140,12 @@ private fun SliderImage(uiState: HomeState, interaction: (HomeInteraction) -> Un
         }
     }
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(300.dp)
+    ) {
+        TextTitle(text = uiState.titleRecommendation)
         HorizontalPager(
             count = uiState.recommendations.size,
             state = pagerState,
@@ -145,11 +155,12 @@ private fun SliderImage(uiState: HomeState, interaction: (HomeInteraction) -> Un
                 interaction(HomeInteraction.GoToDetailsDrink(id))
             })
         }
+        Spacer(modifier = Modifier.height(8.dp))
         HorizontalPagerIndicator(
             pagerState = pagerState,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally),
-            activeColor = Color.White,
+            activeColor = MaterialTheme.colorScheme.primary,
             inactiveColor = Color.LightGray,
             indicatorHeight = 5.dp,
             indicatorWidth = 5.dp,
@@ -160,6 +171,10 @@ private fun SliderImage(uiState: HomeState, interaction: (HomeInteraction) -> Un
 
 @Composable
 fun SliderCard(drink: DrinkHome, select: (id: Long) -> Unit) {
+    val gradient = Brush.horizontalGradient(
+        colors = listOf(Color.Black.copy(alpha = 0.3f), Color.White.copy(alpha = 0.2f))
+    )
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -168,12 +183,11 @@ fun SliderCard(drink: DrinkHome, select: (id: Long) -> Unit) {
     ) {
         ImageUrl(
             url = drink.image, modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp)
+                .fillMaxSize()
         )
 
-        Box() {
-            TextTitle(text = drink.name)
+        Box(modifier = Modifier.background(brush = gradient)) {
+            TextTitle(text = drink.name, modifier = Modifier.padding(start = 4.dp))
         }
     }
 
@@ -182,7 +196,7 @@ fun SliderCard(drink: DrinkHome, select: (id: Long) -> Unit) {
 
 
 @Composable
-private fun GridCategories(
+private fun CategoriesList(
     uiState: HomeState,
     interaction: (HomeInteraction) -> Unit
 ) {
@@ -193,21 +207,15 @@ private fun GridCategories(
                 .fillMaxSize()
         )
     } else {
-        LazyVerticalGrid(
-            modifier = Modifier
-                .fillMaxSize(),
-            columns = Fixed(count = 2),
-            contentPadding = PaddingValues(all = 16.dp),
-        ) {
-            items(items = uiState.categories) { category ->
-                CategoryCard(category) { categoryId, categoryName ->
-                    interaction(
-                        NavigateNextScreen(
-                            categoryId = categoryId,
-                            categoryName = categoryName
-                        )
+        TextTitle(text = "Categorias")
+        uiState.categories.forEach { category ->
+            CategoryCard(category) { categoryId, categoryName ->
+                interaction(
+                    NavigateNextScreen(
+                        categoryId = categoryId,
+                        categoryName = categoryName
                     )
-                }
+                )
             }
         }
     }

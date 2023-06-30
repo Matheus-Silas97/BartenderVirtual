@@ -10,7 +10,7 @@ import org.koin.dsl.module
 
 val presentationModule = module {
 
-    viewModel { HomeViewModel(categoryUseCase = get()) }
+    viewModel { HomeViewModel(homeInformationUseCase = get()) }
 
     viewModel { DrinksViewModel(drinkUseCase = get()) }
 
