@@ -6,6 +6,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -18,6 +20,8 @@ fun ScaffoldCustom(
     messageLoading: String = "",
     contentComponent: @Composable () -> Unit
 ) {
+    val loadingComponentState = remember{ mutableStateOf(false) }
+
     Scaffold(containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopBar(
@@ -26,8 +30,8 @@ fun ScaffoldCustom(
                 onBackPressed = { onBackPressedEvent() })
         }, content = {
             Box(modifier = Modifier.padding(paddingValues = it)) {
-                if (isLoading) {
-                    LoadingComponent(text = messageLoading)
+                if (!loadingComponentState.value) {
+                    LoadingComponent(text = messageLoading, isLoading) { loadingComponentState.value = true }
                 } else {
                     contentComponent()
                 }

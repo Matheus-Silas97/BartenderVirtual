@@ -137,8 +137,10 @@ private fun SliderImage(uiState: HomeState, interaction: (HomeInteraction) -> Un
         withContext(Dispatchers.IO) {
             while (true) {
                 delay(5000)
-                currentPage = (currentPage + 1) % uiState.recommendations.size
-                pagerState.animateScrollToPage(currentPage)
+                withContext(Dispatchers.Main) {
+                    currentPage = (currentPage + 1) % uiState.recommendations.size
+                    pagerState.animateScrollToPage(currentPage)
+                }
             }
         }
     }

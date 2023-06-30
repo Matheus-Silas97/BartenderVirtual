@@ -25,7 +25,9 @@ import com.bartender.bartendervirtual.R.raw
 
 @Composable
 fun LoadingComponent(
-    text: String = ""
+    text: String = "",
+    isLoading: Boolean,
+    finishListener: @Composable () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -39,42 +41,38 @@ fun LoadingComponent(
         }
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            val composition by rememberLottieComposition(RawRes(raw.ic_loading))
-            LottieAnimation(
-                composition,
-                modifier = Modifier.size(400.dp),
-                contentScale = ContentScale.FillHeight,
-                iterations = LottieConstants.IterateForever
-            )
+            LoadingLottieView(isLoading = isLoading, finishListener = finishListener)
         }
-
     }
 }
 
 @Composable
-fun LoadingLottieView(isLoading: Boolean) {
+fun LoadingLottieView(isLoading: Boolean, finishListener: @Composable () -> Unit) {
     val composition by rememberLottieComposition(RawRes(raw.ic_loading))
     val progress by animateLottieCompositionAsState(
         composition,
-        clipSpec = Progress(0.2f, 0.35f),
-        iterations = LottieConstants.IterateForever
+        clipSpec = Progress(0.0f, 1.0f)
     )
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         if (isLoading) {
             LottieAnimation(
                 composition = composition,
-                progress = progress,
                 modifier = Modifier.size(400.dp),
                 contentScale = ContentScale.FillHeight,
+                iterations = LottieConstants.IterateForever,
+                clipSpec = Progress(0.1f, 0.6f)
             )
         } else {
             LottieAnimation(
+                progress = progress,
                 composition = composition,
                 modifier = Modifier.size(400.dp),
-                contentScale = ContentScale.FillHeight,
-                iterations = LottieConstants.IterateForever
+                contentScale = ContentScale.FillHeight
             )
+            if (progress == 1.0f) {
+                finishListener.invoke()
+            }
         }
     }
 }
