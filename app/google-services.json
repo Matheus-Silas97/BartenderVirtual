@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "736686379735",
+    "project_id": "bartendervirtual-16583",
+    "storage_bucket": "bartendervirtual-16583.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736686379735:android:7b39a8389d94c255cd9692",
+        "android_client_info": {
+          "package_name": "com.bartender.bartendervirtual"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "736686379735-gkmhuuqfo93rcvemgtjq78elldrvvlt9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmU6OM7CUo8u1gxLK6cm4R1N8FMxSzkJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "736686379735-gkmhuuqfo93rcvemgtjq78elldrvvlt9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

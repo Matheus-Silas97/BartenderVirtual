@@ -1,13 +1,9 @@
 package com.bartender.bartendervirtual.presentation.home
 
-import android.util.Log
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -40,9 +35,7 @@ import com.bartender.bartendervirtual.common.components.ErrorDialog
 import com.bartender.bartendervirtual.common.components.ImageUrl
 import com.bartender.bartendervirtual.common.components.ScaffoldCustom
 import com.bartender.bartendervirtual.common.components.SpacerVertical
-import com.bartender.bartendervirtual.common.components.TextNormal
 import com.bartender.bartendervirtual.common.components.TextSubTitle
-import com.bartender.bartendervirtual.common.components.TextTitle
 import com.bartender.bartendervirtual.domain.model.DrinkHome
 import com.bartender.bartendervirtual.presentation.home.HomeInteraction.CloseErrorDialog
 import com.bartender.bartendervirtual.presentation.home.HomeInteraction.NavigateNextScreen
@@ -166,7 +159,7 @@ private fun SliderImage(uiState: HomeState, interaction: (HomeInteraction) -> Un
                 interaction(HomeInteraction.GoToDetailsDrink(id))
             })
         }
-        Spacer(modifier = Modifier.height(8.dp))
+        SpacerVertical()
         HorizontalPagerIndicator(
             pagerState = pagerState,
             modifier = Modifier
@@ -197,7 +190,7 @@ fun SliderCard(drink: DrinkHome, select: (id: Long) -> Unit) {
             contentScale = ContentScale.FillBounds
         )
 
-        Column() {
+        Column {
             Card(
                 shape = RoundedCornerShape(
                     bottomEnd = 4.dp,
@@ -217,7 +210,7 @@ fun SliderCard(drink: DrinkHome, select: (id: Long) -> Unit) {
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            SpacerVertical()
         }
 
     }
