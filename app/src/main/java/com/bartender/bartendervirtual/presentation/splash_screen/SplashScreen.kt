@@ -32,7 +32,7 @@ fun SplashScreen(goToHomeScreen: () -> Unit) {
                 OvershootInterpolator(2f).getInterpolation(it)
             })
         )
-        delay(timeMillis = 3000L)
+        delay(timeMillis = 1000L)
         goToHomeScreen()
     }
 

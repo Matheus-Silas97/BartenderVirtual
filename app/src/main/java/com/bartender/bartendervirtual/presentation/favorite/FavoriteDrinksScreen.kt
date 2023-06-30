@@ -26,7 +26,10 @@ import com.bartender.bartendervirtual.common.components.FavoriteCard
 import com.bartender.bartendervirtual.common.components.ScaffoldCustom
 import com.bartender.bartendervirtual.common.utils.NetworkingHelper
 import com.bartender.bartendervirtual.common.utils.extensions.orZero
-import com.bartender.bartendervirtual.presentation.favorite.FavoriteDrinksInteraction.*
+import com.bartender.bartendervirtual.presentation.favorite.FavoriteDrinksInteraction.AllFavoritesDrinks
+import com.bartender.bartendervirtual.presentation.favorite.FavoriteDrinksInteraction.CloseErrorDialog
+import com.bartender.bartendervirtual.presentation.favorite.FavoriteDrinksInteraction.RemoveFavorite
+import com.bartender.bartendervirtual.presentation.favorite.FavoriteDrinksInteraction.SelectDrink
 import com.bartender.bartendervirtual.presentation.favorite.FavoriteViewModel.FavoriteScreenEvent.NavigateNextScreen
 import com.bartender.bartendervirtual.presentation.favorite.FavoriteViewModel.FavoriteScreenEvent.RemoveDrinkFromFavorite
 import org.koin.androidx.compose.getViewModel
@@ -105,7 +108,7 @@ private fun FavoritesList(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(all = 8.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
         if (uiState.favorites.isNotEmpty()) {
             items(uiState.favorites) { favorite ->

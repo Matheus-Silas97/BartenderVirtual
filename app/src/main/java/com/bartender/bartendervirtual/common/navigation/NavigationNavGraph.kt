@@ -53,6 +53,8 @@ fun NavigationNavGraph(navController: NavHostController, innerPadding: PaddingVa
                 navController.navigate(
                     route = "$DRINKS_SCREEN/$id/$categoryName"
                 )
+            }, goToDrinkDetails = { id ->
+                navController.navigate(route = "$DETAILS_DRINKS_SCREEN/${id}")
             })
         }
 
