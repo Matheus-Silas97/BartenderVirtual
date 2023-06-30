@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -36,7 +38,7 @@ fun LoadingComponent(
         verticalArrangement = Arrangement.Center,
     ) {
 
-        Row(horizontalArrangement = Arrangement.Start) {
+        Row(horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
             TextTitle(text = text, modifier = Modifier.padding(end = 50.dp, start = 12.dp))
         }
 
@@ -54,7 +56,7 @@ fun LoadingLottieView(isLoading: Boolean, finishListener: @Composable () -> Unit
         clipSpec = Progress(0.0f, 1.0f)
     )
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier = Modifier.fillMaxWidth().height(400.dp), contentAlignment = Alignment.Center) {
         if (isLoading) {
             LottieAnimation(
                 composition = composition,

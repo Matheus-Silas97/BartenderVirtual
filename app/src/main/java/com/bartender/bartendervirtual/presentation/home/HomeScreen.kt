@@ -92,7 +92,7 @@ fun Content(uiState: HomeState, interaction: (HomeInteraction) -> Unit) {
     ScaffoldCustom(
         titlePage = stringResource(id = string.app_name),
         isLoading = uiState.isLoading,
-        messageLoading = "Carregando categorias"
+        messageLoading = "Carregando categorias..."
     ) {
         val scrollState = rememberScrollState()
 
