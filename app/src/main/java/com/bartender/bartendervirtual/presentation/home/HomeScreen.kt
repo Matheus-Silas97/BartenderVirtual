@@ -166,7 +166,7 @@ private fun SliderImage(uiState: HomeState, interaction: (HomeInteraction) -> Un
                 interaction(HomeInteraction.GoToDetailsDrink(id))
             })
         }
-        Spacer(modifier = Modifier.height(8.dp))
+        SpacerVertical()
         HorizontalPagerIndicator(
             pagerState = pagerState,
             modifier = Modifier
@@ -197,7 +197,7 @@ fun SliderCard(drink: DrinkHome, select: (id: Long) -> Unit) {
             contentScale = ContentScale.FillBounds
         )
 
-        Column() {
+        Column {
             Card(
                 shape = RoundedCornerShape(
                     bottomEnd = 4.dp,
@@ -217,7 +217,7 @@ fun SliderCard(drink: DrinkHome, select: (id: Long) -> Unit) {
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            SpacerVertical()
         }
 
     }
