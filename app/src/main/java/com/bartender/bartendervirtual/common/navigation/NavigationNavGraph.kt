@@ -55,7 +55,6 @@ fun NavigationNavGraph(navController: NavHostController, innerPadding: PaddingVa
                 )
             }, goToDrinkDetails = { id ->
                 navController.navigate(route = "$DETAILS_DRINKS_SCREEN/${id}")
-
             })
         }
 

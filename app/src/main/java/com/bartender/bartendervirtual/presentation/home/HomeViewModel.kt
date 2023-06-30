@@ -35,7 +35,7 @@ class HomeViewModel(private val homeInformationUseCase: HomeInformationUseCase) 
                 )
             )
 
-            is GoToDetailsDrink -> GoToDetailsDrink(interaction.drinkId)
+            is GoToDetailsDrink -> sendEvent(event = HomeScreenEvent.GoToDetailsDrink(interaction.drinkId))
         }
     }
 

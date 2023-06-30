@@ -10,7 +10,7 @@ data class RecommendationsResponse(
     @SerializedName("name")
     val name: String?,
 
-    @SerializedName("description")
+    @SerializedName("image")
     val image: String?,
 
     @SerializedName("category_id")

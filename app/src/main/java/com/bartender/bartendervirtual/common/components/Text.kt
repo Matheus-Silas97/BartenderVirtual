@@ -24,12 +24,14 @@ fun TextTitle(text: String, modifier: Modifier = Modifier, textAlign: TextAlign?
 fun TextSubTitle(
     text: String,
     modifier: Modifier = Modifier,
+    textColor: Color = Color.Black,
     textAlign: TextAlign? = null,
     maxLines: Int = 5
 ) {
     Text(
         text = text,
         modifier = modifier,
+        color = textColor,
         style = Typography.titleMedium,
         fontWeight = FontWeight(600),
         textAlign = textAlign,
@@ -57,7 +59,7 @@ fun TextNormal(
 
 @Composable
 fun TextNormalSmall(
-    text : String,
+    text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.Black,
     textAlign: TextAlign? = null,

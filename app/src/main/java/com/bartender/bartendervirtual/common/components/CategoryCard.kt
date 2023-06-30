@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +16,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,30 +37,36 @@ fun CategoryCard(
     category: Category,
     selectCategory: (categoryId: Long, categoryName: String) -> Unit
 ) {
-    Card(
-        shape = RoundedCornerShape(12.dp),
-        modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.background)
-            .fillMaxWidth(),
-        onClick = { selectCategory(category.id, category.name) }
-    ) {
-        Column(
+    CardGeneric() {
+        Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    color = Color.White,
-                    shape = RoundedCornerShape(8.dp)
-                )
-                .padding(all = 8.dp),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Center
+                .fillMaxSize()
+                .clickable { selectCategory(category.id, category.name) },
+            verticalAlignment = Alignment.CenterVertically
         ) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
 
-            TextNormal(
-                text = category.name, textAlign = TextAlign.Center, modifier = Modifier
-                    .padding(start = 8.dp),
-                maxLines = 2
-            )
+                TextNormal(
+                    text = category.name, textAlign = TextAlign.Center, modifier = Modifier
+                        .padding(start = 8.dp),
+                    maxLines = 2
+                )
+            }
+
+            Row(
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowRight,
+                    contentDescription = "arrow icon",
+                    tint = Color.Black
+                )
+            }
         }
     }
 }

@@ -80,7 +80,7 @@ fun Content(categoryName: String, uiState: DrinksState, interaction: (DrinksInte
     ) {
         Column(
             modifier = Modifier
-                .padding(all = 12.dp)
+                .padding(horizontal = 24.dp, vertical = 8.dp)
                 .fillMaxSize()
         ) {
             if (!uiState.error.isNullOrEmpty()) {
@@ -101,7 +101,7 @@ private fun DrinksList(
 ) {
     val lazyState = rememberLazyListState()
 
-    LazyColumn(state = lazyState, modifier = Modifier.padding(all = 8.dp)) {
+    LazyColumn(state = lazyState) {
         if (uiState.drinks.isNotEmpty()) {
             items(items = uiState.drinks) { drink ->
                 DrinkCard(drink) {

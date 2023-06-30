@@ -1,8 +1,13 @@
 package com.bartender.bartendervirtual.common.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,25 +22,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bartender.bartendervirtual.domain.model.Drinks
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun DrinkCard(model: Drinks, onClick: () -> Unit) {
-    Card(
-        shape = RoundedCornerShape(12.dp),
-        modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.background)
-            .fillMaxWidth(),
-        onClick = { onClick() }
-    ) {
+    CardGeneric {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    color = Color.White,
-                    shape = RoundedCornerShape(8.dp)
-                )
-                .padding(all = 8.dp)
-
+                .clickable { onClick() }
+                .fillMaxSize()
+                .padding(horizontal = 8.dp)
         ) {
             ImageUrl(
                 url = model.image,
@@ -51,5 +46,6 @@ fun DrinkCard(model: Drinks, onClick: () -> Unit) {
                 maxLines = 2
             )
         }
+
     }
 }

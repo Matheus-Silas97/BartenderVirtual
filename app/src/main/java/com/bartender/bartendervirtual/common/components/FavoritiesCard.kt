@@ -22,18 +22,13 @@ import androidx.compose.ui.unit.dp
 import com.bartender.bartendervirtual.R
 import com.bartender.bartendervirtual.domain.model.DrinkFavorite
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavoriteCard(model: DrinkFavorite, onClick: () -> Unit, remove: (id: DrinkFavorite) -> Unit) {
-    Card(
-        shape = RoundedCornerShape(12.dp),
-        modifier = Modifier
-            .fillMaxWidth(),
-        onClick = { onClick() }
-    ) {
+    CardGeneric {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
+                .clickable { onClick() }
                 .fillMaxWidth()
                 .background(
                     color = Color.White,

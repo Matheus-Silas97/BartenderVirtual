@@ -105,7 +105,7 @@ private fun FavoritesList(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(all = 8.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
         if (uiState.favorites.isNotEmpty()) {
             items(uiState.favorites) { favorite ->

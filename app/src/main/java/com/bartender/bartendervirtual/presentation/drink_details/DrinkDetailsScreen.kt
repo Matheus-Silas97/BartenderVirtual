@@ -31,6 +31,7 @@ import com.bartender.bartendervirtual.common.components.ErrorDialog
 import com.bartender.bartendervirtual.common.components.ImageUrl
 import com.bartender.bartendervirtual.common.components.IngredientsCard
 import com.bartender.bartendervirtual.common.components.ScaffoldCustom
+import com.bartender.bartendervirtual.common.components.SpacerVertical
 import com.bartender.bartendervirtual.common.components.TextNormal
 import com.bartender.bartendervirtual.common.components.TextSubTitle
 import com.bartender.bartendervirtual.common.components.TextTitle
@@ -98,15 +99,12 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
                     .height(300.dp),
                 contentScale = ContentScale.FillBounds
             )
-
-
+            SpacerVertical(value = 16)
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(all = 12.dp)
+                    .padding(horizontal = 16.dp)
             ) {
-
-
                 Row {
                     TextTitle(text = uiState.name, modifier = Modifier.weight(1F))
 
@@ -125,16 +123,16 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
                 }
 
                 if (uiState.description.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(height = 12.dp))
+                    SpacerVertical()
                     TextNormal(text = uiState.description, color = Color.Gray)
                 }
 
-                Spacer(modifier = Modifier.height(height = 12.dp))
-
-                TextSubTitle(text = "Ingredientes")
+                SpacerVertical(value = 16)
 
                 if (uiState.ingredients.isNotEmpty()) {
-                    for (ingredient in uiState.ingredients) {
+                    TextSubTitle(text = "Ingredientes")
+                    SpacerVertical()
+                    uiState.ingredients.forEach { ingredient ->
                         IngredientsCard(ingredient) { id ->
                             interaction(CardClickInteraction(id))
                         }
@@ -143,19 +141,19 @@ private fun Content(uiState: DrinkDetailsState, interaction: (DrinkDetailsIntera
                     EmptyListComponent(msg = "Sem ingredientes")
                 }
 
-
                 if (uiState.prepareMode.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(height = 12.dp))
-
+                    SpacerVertical(value = 16)
                     TextSubTitle(text = "Modo de preparo")
+                    SpacerVertical()
                     TextNormal(text = uiState.prepareMode)
+                    SpacerVertical(value = 16)
                 }
 
                 if (uiState.garnish.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(height = 12.dp))
-
                     TextSubTitle(text = "Guarnição")
+                    SpacerVertical()
                     TextNormal(text = uiState.garnish)
+                    SpacerVertical(value = 16)
                 }
             }
         }
