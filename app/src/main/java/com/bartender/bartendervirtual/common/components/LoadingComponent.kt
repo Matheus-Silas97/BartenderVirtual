@@ -53,7 +53,7 @@ fun LoadingLottieView(isLoading: Boolean, finishListener: @Composable () -> Unit
     val composition by rememberLottieComposition(RawRes(raw.ic_loading))
     val progress by animateLottieCompositionAsState(
         composition,
-        clipSpec = Progress(0.0f, 1.0f)
+        clipSpec = Progress(0.4f, 1.0f)
     )
 
     Box(modifier = Modifier.fillMaxWidth().height(400.dp), contentAlignment = Alignment.Center) {
