@@ -12,12 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CardGeneric(content: @Composable () -> Unit) {
+fun CardGeneric(height: Int = 48, content: @Composable () -> Unit) {
     Column {
         Card(
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier
-                .height(48.dp)
+                .height(height.dp)
                 .background(color = MaterialTheme.colorScheme.background)
                 .fillMaxWidth()
         ) {

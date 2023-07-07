@@ -86,7 +86,7 @@ private fun Content(
     ScaffoldCustom(
         titlePage = stringResource(id = string.favorites),
         isLoading = uiState.isLoading,
-        messageLoading = "carregando drinks favoritos..."
+        messageLoading = "Carregando favoritos..."
     ) {
         FavoritesList(uiState, interaction)
 

@@ -15,7 +15,7 @@ import com.bartender.bartendervirtual.domain.model.Drinks
 
 @Composable
 fun DrinkCard(model: Drinks, onClick: () -> Unit) {
-    CardGeneric {
+    CardGeneric(height = 100) {
         Row(
             modifier = Modifier
                 .clickable { onClick() }
@@ -25,7 +25,7 @@ fun DrinkCard(model: Drinks, onClick: () -> Unit) {
             ImageUrl(
                 url = model.image,
                 modifier = Modifier
-                    .size(50.dp)
+                    .size(90.dp)
                     .align(Alignment.CenterVertically)
             )
 

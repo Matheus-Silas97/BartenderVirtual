@@ -121,7 +121,7 @@ private fun DrinksRelatedList(
     interaction: (IngredientsDetailsInteraction) -> Unit
 ) {
     if (uiState.drinks.isNotEmpty()) {
-        TextSubTitle(text = "Drinks que utilizam esse ingrediente")
+        TextSubTitle(text = "${uiState.name} também é ótimo com")
         SpacerVertical()
         uiState.drinks.forEach { drink ->
             DrinkCard(model = drink) {

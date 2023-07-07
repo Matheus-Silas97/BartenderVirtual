@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -22,7 +23,7 @@ import com.bartender.bartendervirtual.domain.model.DrinkFavorite
 
 @Composable
 fun FavoriteCard(model: DrinkFavorite, onClick: () -> Unit, remove: (id: DrinkFavorite) -> Unit) {
-    CardGeneric {
+    CardGeneric(height = 100) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -41,8 +42,8 @@ fun FavoriteCard(model: DrinkFavorite, onClick: () -> Unit, remove: (id: DrinkFa
                 ImageUrl(
                     url = model.image,
                     modifier = Modifier
-                        .height(50.dp)
-                        .width(50.dp)
+                        .size(size = 90.dp)
+                        .align(Alignment.CenterVertically)
                 )
 
                 TextNormal(
