@@ -1,6 +1,7 @@
 package com.bartender.bartendervirtual.presentation.favorite
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -108,7 +109,8 @@ private fun FavoritesList(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        contentPadding = PaddingValues(vertical = 3.dp)
     ) {
         if (uiState.favorites.isNotEmpty()) {
             items(uiState.favorites) { favorite ->
