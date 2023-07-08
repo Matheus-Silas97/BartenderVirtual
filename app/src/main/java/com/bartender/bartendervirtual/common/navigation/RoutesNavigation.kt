@@ -16,13 +16,3 @@ object RoutesArguments {
     const val CATEGORY_ID = "category_id"
     const val CATEGORY_NAME = "category_name"
 }
-
-//object RouterNavigation {
-//    const val CATEGORY_ID = "category_id"
-//    const val CATEGORY_NAME = "category_name"
-//    object DrinkRouter: Router by RouterImpl(
-//        id = "DRINKS_SCREEN",
-//        popBackStack = false,
-//        arguments = listOf(CATEGORY_ID, CATEGORY_NAME)
-//    )
-//}

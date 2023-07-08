@@ -1,6 +1,7 @@
 package com.bartender.bartendervirtual.presentation.drinks
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -100,7 +101,7 @@ private fun DrinksList(
 ) {
     val lazyState = rememberLazyListState()
 
-    LazyColumn(state = lazyState) {
+    LazyColumn(state = lazyState, contentPadding = PaddingValues(vertical = 3.dp)) {
         if (uiState.drinks.isNotEmpty()) {
             items(items = uiState.drinks) { drink ->
                 DrinkCard(drink) {
